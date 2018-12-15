@@ -18,7 +18,7 @@
 }
 
 .banner, .top-bar {
-  background: url("/images/head.jpg");
+  background: url("./../images/head.jpg");
   background-size: cover;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .contact {
-  background: url('/images/contact.jpg');
+  background: url('../images/contact.jpg');
   padding: 80px 0;
   z-index: 1;
   background-size: cover;
