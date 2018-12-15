@@ -1,0 +1,86 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Menu Admin</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/fontello.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+
+<body>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Rezerwazje</a></li>
+            <li><a href="#tabs-2">Dodaj oferty</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div id="row">
+                <table id="tableRezerwacje" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                    <thead>
+                        <tr>
+                            <td>Nr</td>
+                            <td>Numer pokoju</td>
+                            <td>Imię</td>
+                            <td>Nazwisko</td>
+                            <td>Email</td>
+                            <td>Od</td>
+                            <td>Do</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend> Anuluj rezerwacje </legend>
+                    <label> Wybierz numer rezerwacji:
+                        <select>
+                            <!-- <option value="volvo">Volvo</option> -->
+                        </select>
+                    </label>
+                    <button type="button" id='delete'>Usuń rezerwację</button>
+                </fieldset>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="row">
+                <fieldset>
+                    <legend></legend>
+                    <label> Nazwa: <input id="name" name="nazwa" type="text"></label>
+                    <label> Numer pokoju: <input id="nrPokoju" name="number" type="text"></label>
+                    <label> Cena: <input id="cena" name="cena" type="number"></label>
+                    <label> Od: <input id="od" name="index" type="date"></label>
+                    <label> Do: <input id="do" name="index" type="date"></label>
+                    <button type="button" id='buttAddData'>Dodaj ofertę</button>
+                </fieldset>
+            </div>
+            
+            <div id="row">
+                <table id="tableOferty" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                    <thead>
+                        <tr>
+                            <td>Nr</td>
+                            <td>Nazwa</td>
+                            <td>Opis</td>
+                            <td>Od</td>
+                            <td>Do</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>casa-maria</title>
+  <meta name="description" content="hotel">
+
+  <!--CSS-->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/fontello.css">
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+
+</head>
+
+<body>
+  <!--TOP BAR-->
+  <div class="top-bar">
+    <div class="logo">CASA-MARIA</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="#">Hotel</a>
+          <ul class="dropdown">
+            <li><a href="#">O hotelu</a></li>
+            <li><a href="#">Aktualności</a></li>
+            <li><a href="/lokalizacja.html" target="_blank">Położenie</a></li>
+            <li><a href="#">Opinie</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Pokoje</a>
+          <ul class="dropdown">
+            <li><a href="#">Standard</a></li>
+            <li><a href="#">Premium</a></li>
+            <li><a href="#">President</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Oferty specjalne</a></li>
+        <li><a href="/galeria.html" target="_blank">Galeria</a></li>
+        <li><a href="/kontakt.html" target="_blank">Kontakt</a></li>
+        <li><a href="#" id="clickRegister">Zarejestruj się</a></li>
+        <li><a href="#" id="clickLogin">Zaloguj się</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!--MODAL SECTION-->
+  <div class="bg-modal-login">
+    <div class="modal-content-login">
+      <div class="close-login">+</div>
+      <i class="icon-user"></i>
+      <form id="form-login">
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email">
+        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło">
+        <button id="loginButt" type="button" onclick="login()">Zaloguj się</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="bg-modal-register">
+    <div class="modal-content-register">
+      <div class="close-register">+</div>
+      <form id="form-register">
+        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię">
+        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko">
+        <input id="email" type="email" name="email" placeholder="Email">
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło">
+        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło">
+        <button id="registerButt" type="button">Zarejestruj się</button>
+      </form>
+    </div>
+  </div>
+
+  <!--BANNER-->
+  <div class="banner">
+    <div class="banner-text">
+      <div class="banner-text-items">
+        <h2>casa-maria</h2>
+        <p>Pensjonat znajduje się w miejscowości Cuevas del Palmar.
+          Miasta Adeje oraz Puerto de la Cruz oddalone są odpowiednio o 44 km i 20 km. 
+          Odległość od najbliższego lotniska – portu lotniczego Tenerife Norte – wynosi 44 km.
+          Goście są z niej bardziej zadowoleni w porównaniu z innymi obiektami. 
+          Ten pensjonat w mieście Cuevas del Palmar jest także pozytywnie oceniany ze względu na stosunek jakości do ceny!</p>
+      </div>
+    </div>
+  </div>
+
+  <!--OFFER CONTENT-->
+  <div class="main-content">
+    <div class="room-option">
+      <h2>Stantdart</h2>
+      <div class="room-image">
+        <img src="/images/roomStandard.jpg" alt="">
+      </div>
+      <p>Od 60zł/noc</p>
+    </div>
+    <div class="room-option">
+      <h2>Premium</h2>
+      <div class="room-image">
+        <img src="/images/roomPremium.jpg" alt="">
+      </div>
+      <p>Od 80zł/noc</p>
+    </div>
+    <div class="room-option">
+      <h2>Deluxe</h2>
+      <div class="room-image">
+        <img src="/images/roomPresident.JPG" alt="">
+      </div>
+      <p>Od 120zł/noc</p>
+    </div>
+  </div>
+
+  <!-- BOOKING FORM-->
+  <div class="contact">
+    <div class="booking-form">
+      <form>
+        <div class="form-header">
+          <h2>Zarezerwuj swój pobyt</h2>
+        </div>
+
+        <div class="form-group">
+          <span class="form-label">Check In</span>
+          <input class="form-control" type="date">
+        </div>
+
+        <div class="form-group">
+          <span class="form-label">Check out</span>
+          <input class="form-control" type="date">
+        </div>
+
+        <div class="form-group">
+          <span class="form-label">Guests</span>
+          <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <span class="form-label">Kids</span>
+          <select class="form-control">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="formButt">
+          <button class="submit-btn">Check availability</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/javascript.js"></script>
+
+  <!-- jQuery first, then own JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

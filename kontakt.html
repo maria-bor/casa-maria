@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kontakt</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/kontakt.css">
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="contact">
+            <div class="title">Masz jakieś pytania? Napisz do nas!</div>
+            <form id="form-contact" onsubmit="submitForm(); return false;">
+                <div class="input-fields">
+                    <div class="items">
+                        <label for="nameContact" class="label">Pan/Pani</label>
+                        <input id="nameContact" name="nameContact" type="text" class="input" required>
+                    </div>
+                    <div class="items">
+                        <label for="emailContact" class="label">Email</label>
+                        <input id="emailContact" name="emailContact" type="text" class="input" required>
+                    </div>
+                    <!-- <div class="items">
+                        <label for="subjectContact" class="label">subject</label>
+                        <input id="subjectContact" type="text" class="input">
+                    </div> -->
+                    <div class="items">
+                        <label for="messageContact" class="label">Wiadomość</label>
+                        <textarea id="messageContact" name="messageContact" class="text-area" required></textarea>
+                    </div>
+                </div>
+                <!-- <div class="divContactButt"> -->
+                <input type="submit" id="contactButt" name="contactButt" class="contactButt" value="Wyślij wiadomość!">
+                </br><span id="status" style="color: #fff"></span>
+                <!-- </div> -->
+            </form>
+        </div>
+    </div>
+    <script src="/js/kontakt.js"></script>
+</body>
+</html>

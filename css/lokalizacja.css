@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* to avoid scrollbars */
+    font-family: 'Alegreya', serif;
+    font-size: 32px;
+    text-align: center;
+    padding: 10px;
+}
+#wrapper {
+    display: flex;
+    /* use the flex model */
+    min-height: 100%;
+    flex-direction: column;
+    /* learn more: http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+}
+#header {
+    height: 100px;
+    /* can be variable as well */
+}
+#body {
+    flex: 1;
+    height: 100%;
+}
