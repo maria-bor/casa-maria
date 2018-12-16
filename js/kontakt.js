@@ -9,7 +9,7 @@ function submitForm() {
     formData.append('emailContact', _('emailContact').value);
     formData.append('messageContact', _('messageContact').value);
     var ajax = new XMLHttpRequest();
-    ajax.open('POST', '../php/kontakt.php');
+    ajax.open('POST', './php/kontakt.php');
     ajax.onreadystatechange = function() {
         if(ajax.readyState == 4 && ajax.status == 200) {
             if(ajax.responseText == 'success') {
