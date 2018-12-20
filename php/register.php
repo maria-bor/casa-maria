@@ -50,7 +50,7 @@
             } 
             else
             {
-                $result = $db_connection->query("SELECT ul.id_user FROM userlogged ul INNER JOIN user u ON ul.id_user = u.id_user WHERE u.email='$email'");
+                $result = $db_connection->query("SELECT ul.id FROM userlogged ul INNER JOIN user u ON ul.id_user = u.id WHERE u.email='$email'");
                 if(!$result) throw new Exception($db_connection->error);
 
                 if($result->num_rows>0) 
