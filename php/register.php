@@ -42,7 +42,7 @@
         mysqli_report(MYSQLI_REPORT_STRICT);
         try 
         {
-            $db_connection = @new mysqli($host, $db_user, $db_password, $db_name);
+            $db_connection = new mysqli($host, $db_user, $db_password, $db_name);
 
             if($db_connection->connect_errno!=0)
             {
