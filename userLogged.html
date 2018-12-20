@@ -12,9 +12,17 @@
     <h1>USER LOGGED</h1>
     <?php
         if((isset($_SESSION['registered'])) && ($_SESSION['registered']==true))
-            echo "SUCCESFULY";
+            echo "<p><b>SUCCESFULY";
         else
-            echo "UNSUCCESFULY";
+            echo "<p><b></b>UNSUCCESFULY</b></p>";
     ?>
+    <br />
+    E-mail: <br /> <input type="text" value="<?php
+			if (isset($_SESSION['email']))
+			{
+				echo $_SESSION['email'];
+				unset($_SESSION['email']);
+			}
+		?>" name="email" /><br />
 </body>
 </html>
