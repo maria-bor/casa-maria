@@ -1,3 +1,4 @@
+<!-- <?php include('server.php') ?> -->
 <!doctype html>
 <html lang="en">
 
@@ -51,7 +52,7 @@
     <div class="modal-content-login">
       <div class="close-login">+</div>
       <i class="icon-user"></i>
-      <form id="form-login">
+      <form id="form-login" method="POST" action="login.php">
         <input id="emailLogin" type="email" name="emailLogin" placeholder="Email">
         <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło">
         <button id="loginButt" type="button" onclick="login()">Zaloguj się</button>
@@ -62,13 +63,13 @@
   <div class="bg-modal-register">
     <div class="modal-content-register">
       <div class="close-register">+</div>
-      <form id="form-register">
+      <form id="form-register" method="POST" action="php/register.php">
         <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię">
         <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko">
         <input id="email" type="email" name="email" placeholder="Email">
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło">
         <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło">
-        <button id="registerButt" type="button">Zarejestruj się</button>
+        <button id="registerButt" type="submit" name="registerButt">Zarejestruj się</button>
       </form>
     </div>
   </div>
