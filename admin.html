@@ -16,70 +16,144 @@
 </head>
 
 <body>
-    <div id="tabs">
-        <ul>
-            <li><a href="#tabs-1">Rezerwazje</a></li>
-            <li><a href="#tabs-2">Dodaj oferty</a></li>
-        </ul>
-        <div id="tabs-1">
-            <div id="row">
-                <table id="tableRezerwacje" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
-                    <thead>
-                        <tr>
-                            <td>Nr</td>
-                            <td>Numer pokoju</td>
-                            <td>Imię</td>
-                            <td>Nazwisko</td>
-                            <td>Email</td>
-                            <td>Od</td>
-                            <td>Do</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <section>
+        <input id="tab-one" type="radio" name="grp" checked="checked" />
+        <label for="tab-one">Rezerwazje</label>
+        <div class="div-inside">
+            <div class="row">
+                <fieldset>
+                    <legend>Dane o rezerwacjach</legend>
+                    <table id="tableRezerwacje" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                        <thead>
+                            <tr>
+                                <td>Nr</td>
+                                <td>Numer pokoju</td>
+                                <td>Imię</td>
+                                <td>Nazwisko</td>
+                                <td>Email</td>
+                                <td>Od</td>
+                                <td>Do</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
             </div>
             <div class="row">
                 <fieldset>
-                    <legend> Anuluj rezerwacje </legend>
-                    <label> Wybierz numer rezerwacji:
-                        <select>
-                            <!-- <option value="volvo">Volvo</option> -->
-                        </select>
-                    </label>
+                    <legend>Usuń rezerwację</legend>
+                    <select>
+                        <!-- <option value="volvo">Volvo</option> -->
+                    </select>
                     <button type="button" id='delete'>Usuń rezerwację</button>
                 </fieldset>
             </div>
         </div>
-        <div id="tabs-2">
+
+        <input id="tab-two" type="radio" name="grp"/>
+        <label for="tab-two">Dodaj ofertę</label>
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-offer" action="">
+                    <fieldset>
+                        <legend>Dodaj ofertę</legend>
+                        <div class="form-input">
+                            <input id="name" name="nazwa" type="text" placeholder="Nazwa oferty">
+                        </div>
+                        <div class="form-input">
+                            <input id="nrPokoju" name="number" type="text" placeholder="Numer pokoju">
+                        </div>
+                        <div class="form-input">
+                            <input id="cena" name="cena" type="number" placeholder="Cena">
+                        </div>
+                        <div class="form-input">
+                            <input id="od" name="index" type="date" placeholder="Od">
+                        </div>
+                        <div class="form-input">
+                            <input id="do" name="index" type="date" placeholder="Do">
+                        </div>
+                        <div class="form-input">
+                            <button type="button" id='buttAddData' type="submit">Dodaj ofertę</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
             <div class="row">
                 <fieldset>
-                    <legend></legend>
-                    <label> Nazwa: <input id="name" name="nazwa" type="text"></label>
-                    <label> Numer pokoju: <input id="nrPokoju" name="number" type="text"></label>
-                    <label> Cena: <input id="cena" name="cena" type="number"></label>
-                    <label> Od: <input id="od" name="index" type="date"></label>
-                    <label> Do: <input id="do" name="index" type="date"></label>
-                    <button type="button" id='buttAddData'>Dodaj ofertę</button>
+                    <legend>Aktualne oferty</legend>
+                    <table id="tableOferty" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                        <thead>
+                            <tr>
+                                <td>Nr</td>
+                                <td>Nazwa</td>
+                                <td>Opis</td>
+                                <td>Cena</td>
+                                <td>Nr pokoju</td>
+                                <td>Od</td>
+                                <td>Do</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </fieldset>
-            </div>
-            
-            <div id="row">
-                <table id="tableOferty" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
-                    <thead>
-                        <tr>
-                            <td>Nr</td>
-                            <td>Nazwa</td>
-                            <td>Opis</td>
-                            <td>Od</td>
-                            <td>Do</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
             </div>
         </div>
 
-    </div>
+        <input id="tab-three" type="radio" name="grp"/>
+        <label for="tab-three">Zarządzaj administratorami</label>
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-admin" method="POST" action="php/addAdmin.php">
+                    <fieldset>
+                        <legend>Dodaj administratora</legend>
+                        <div class="form-input">
+                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię">
+                        </div>
+                        <div class="form-input">
+                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko">
+                        </div>
+                        <div class="form-input">
+                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email">
+                        </div>
+                        <div class="form-input">
+                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło">
+                        </div>
+                        <div class="form-input">
+                            <input id="passwordConfirmNewAdmin" type="password" name="passwordConfirmNewAdmin"
+                                placeholder="Potwierdź hasło">
+                        </div>
+                        <div class="form-input">
+                            <button id="addAdminButt" type="submit" name="addAdminButt">Dodaj administratora</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Aktualni administratorzy</legend>
+                    <table id="tableAdmin" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                        <thead>
+                            <tr>
+                                <td>Imię</td>
+                                <td>Nazwisko</td>
+                                <td>Email</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Usuń administratora</legend>
+                    <select>
+                        <!-- <option value="volvo">Volvo</option> -->
+                    </select>
+                    <button type="button" id='deleteAdmin'>Usuń administratora</button>
+                </fieldset>
+            </div>
+        </div>
+    </section>
     <script src="./js/admin.js"></script>
 </body>
 
