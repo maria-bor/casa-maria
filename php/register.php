@@ -7,12 +7,12 @@
         $name = $_POST['nameRegister'];
         $surname = $_POST['surnameRegister'];
         $email = $_POST['email'];
-        $emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-        if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false) || ($emailB!=$email)) 
+        if((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)==false) || ($emailSanitized!=$email))
         {
             $allvalid = false;
-            $_SESSION['error_email'] = 'Podaj poprawny adres email!';
+            $_SESSION['errorEmail'] = 'Podaj poprawny adres email!';
         }
 
         $password1 = $_POST['passwordRegister'];
@@ -21,13 +21,13 @@
         if((strlen($password1)<8) || (strlen($password1)>20)) 
         {
             $allvalid = false;
-            $_SESSION['error_password'] = 'Hasło musi posiadać od 8 do 20 znaków!';
+            $_SESSION['errorPassword'] = 'Hasło musi posiadać od 8 do 20 znaków!';
         }
 
         if($password1!=$password2) 
         {
             $allvalid = false;
-            $_SESSION['error_password'] = 'Podane hasła są różne!';
+            $_SESSION['errorPassword'] = 'Podane hasła są różne!';
         }
 
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
@@ -56,7 +56,7 @@
                 if($result->num_rows>0) 
                 {
                     $allvalid = false;
-                    $_SESSION['error_email'] = 'Konto o podanym email już istnieje!';
+                    $_SESSION['errorEmail'] = 'Konto o podanym email już istnieje!';
                 } 
                 
                 if($allvalid==true) 
