@@ -1,4 +1,11 @@
-<!-- <?php include('server.php') ?> -->
+<?php
+  session_start();
+  if ((isset($_SESSION['isUserLogged'])) && ($_SESSION['isUserLogged']==true))
+	{
+		header('Location: userLogged.html');
+		exit();
+	}
+?>
 <!doctype html>
 <html lang="en">
 
