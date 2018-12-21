@@ -2,7 +2,7 @@
     session_start();
     if ((!isset($_POST['emailLogin'])) || (!isset($_POST['passwordLogin'])))
 	{
-		header('Location: index.html');
+		header('Location: ../index.html');
 		exit();
     }
 
@@ -42,13 +42,13 @@
                 else
                 {
                     $_SESSION['error'] = '<span style="color:red">Wprowadzono nieprawidłowy login lub hasło!</span>';
-                    header('Location: index.php');
+                    header('Location: ../index.php');
                 }
             }
             else
             {
                 $_SESSION['error'] = '<span style="color:red">Wprowadzono nieprawidłowy login lub hasło!</span>';
-                header('Location: index.php');
+                header('Location: ../index.php');
             }
         }
         else
@@ -74,13 +74,13 @@
                 else
                 {
                     $_SESSION['error'] = '<span style="color:red">Wprowadzono nieprawidłowy login lub hasło!</span>';
-                    header('Location: index.php');
+                    header('Location: ../index.php');
                 }
             }
             else
             {
                 $_SESSION['error'] = '<span style="color:red">Wprowadzono nieprawidłowy login lub hasło!</span>';
-                header('Location: index.php');
+                header('Location: ../index.php');
             }
         }
         $db_connection->close();
