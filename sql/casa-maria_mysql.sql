@@ -1,124 +1,145 @@
-CREATE TABLE `User` (
-                `id` INT AUTO_INCREMENT NOT NULL,
-                `surname` VARCHAR(50) NOT NULL,
-                `name` VARCHAR(50) NOT NULL,
-                `email` VARCHAR(50) NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE Role (
+                idRole INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                PRIMARY KEY (idRole)
 );
 
-CREATE TABLE `UserLogged` (
-                `id` INT AUTO_INCREMENT NOT NULL,
-                `password` INT NOT NULL,
-                `id_user` INT NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE User (
+                idUser INT AUTO_INCREMENT NOT NULL,
+                surname VARCHAR(50) NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL,
+                PRIMARY KEY (idUser)
 );
 
-CREATE TABLE `Admin` (
-                `id` INT AUTO_INCREMENT NOT NULL,
-                `password` INT NOT NULL,
-                `id_user` INT NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE UserLogged (
+                idUserLogged INT AUTO_INCREMENT NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                idUser INT NOT NULL,
+                PRIMARY KEY (idUserLogged)
 );
 
-CREATE TABLE `Type` (
-                `id` INT AUTO_INCREMENT NOT NULL,
-                `name` VARCHAR(50) NOT NULL,
-                `id_admin` INT NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE Offer (
+                idOffer INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                description TEXT NOT NULL,
+                date_from DATE NOT NULL,
+                date_to DATE NOT NULL,
+                idUserLogged INT NOT NULL,
+                PRIMARY KEY (idOffer)
 );
 
-CREATE TABLE `Offer` (
-                `id` INT AUTO_INCREMENT NOT NULL,
-                `name` VARCHAR(50) NOT NULL,
-                `description` VARCHAR(1024) NOT NULL,
-                `date_from` DATE NOT NULL,
-                `date_to` DATE NOT NULL,
-                `id_admin` INT NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE Type (
+                idType INT NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                idUserLogged INT NOT NULL,
+                PRIMARY KEY (idType)
 );
 
-CREATE TABLE `Room` (
-                `id` INT NOT NULL,
-                `sleeps` INT NOT NULL,
-                `floor` INT NOT NULL,
-                `id_type` INT NOT NULL,
-                `id_admin` INT NOT NULL,
-                PRIMARY KEY (`id`)
+
+CREATE TABLE UserRole (
+                idUserLogged INT NOT NULL,
+                idRole INT NOT NULL,
+                PRIMARY KEY (idUserLogged, idRole)
 );
 
-CREATE TABLE `RoomOffer` (
-                `id_offer` INT NOT NULL,
-                `id_room` INT NOT NULL,
-                `price` DOUBLE PRECISION NOT NULL,
-                PRIMARY KEY (`id_offer`, `id_room`)
+
+CREATE TABLE Room (
+                idRoom INT NOT NULL,
+                sleeps TINYINT NOT NULL,
+                floor TINYINT NOT NULL,
+                idType INT NOT NULL,
+                idUserLogged INT NOT NULL,
+                PRIMARY KEY (idRoom)
 );
 
-CREATE TABLE `Booking` (
-                `id_room` INT NOT NULL,
-                `id_user` INT NOT NULL,
-                `date_from` DATE NOT NULL,
-                `date_to` DATE NOT NULL,
-                `price` DOUBLE PRECISION NOT NULL,
-                `guests` INT NOT NULL,
-                PRIMARY KEY (`id_room`, `id_user`)
+
+CREATE TABLE Room_Offer (
+                idOffer INT NOT NULL,
+                idRoom INT NOT NULL,
+                price DOUBLE PRECISION NOT NULL,
+                PRIMARY KEY (idOffer, idRoom)
 );
 
-ALTER TABLE `Admin` ADD CONSTRAINT `user_admin_fk`
-FOREIGN KEY (`id_user`)
-REFERENCES User (`id`)
+
+CREATE TABLE Booking (
+                idUser INT NOT NULL,
+                idRoom INT NOT NULL,
+                date_from DATE NOT NULL,
+                date_to DATE NOT NULL,
+                price DOUBLE PRECISION NOT NULL,
+                guests TINYINT NOT NULL,
+                PRIMARY KEY (idUser, idRoom)
+);
+
+
+ALTER TABLE UserRole ADD CONSTRAINT role_userrole_fk
+FOREIGN KEY (idRole)
+REFERENCES Role (idRole)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `UserLogged` ADD CONSTRAINT `user_user_logged_fk`
-FOREIGN KEY (`id_user`)
-REFERENCES User (`id`)
+ALTER TABLE Booking ADD CONSTRAINT user_booking_fk
+FOREIGN KEY (idUser)
+REFERENCES User (idUser)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Booking` ADD CONSTRAINT `user_booking_fk`
-FOREIGN KEY (`id_user`)
-REFERENCES User (`id`)
+ALTER TABLE UserLogged ADD CONSTRAINT user_userlogged_fk
+FOREIGN KEY (idUser)
+REFERENCES User (idUser)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Offer` ADD CONSTRAINT `admin_offer_fk`
-FOREIGN KEY (`id_admin`)
-REFERENCES Admin (`id`)
+ALTER TABLE UserRole ADD CONSTRAINT userlogged_userrole_fk
+FOREIGN KEY (idUserLogged)
+REFERENCES UserLogged (idUserLogged)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Room` ADD CONSTRAINT `admin_room_fk`
-FOREIGN KEY (`id_admin`)
-REFERENCES Admin (`id`)
+ALTER TABLE Room ADD CONSTRAINT userlogged_room_fk
+FOREIGN KEY (idUserLogged)
+REFERENCES UserLogged (idUserLogged)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Type` ADD CONSTRAINT `admin_type_fk`
-FOREIGN KEY (`id_admin`)
-REFERENCES Admin (`id`)
+ALTER TABLE Type ADD CONSTRAINT userlogged_type_fk
+FOREIGN KEY (idUserLogged)
+REFERENCES UserLogged (idUserLogged)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Room` ADD CONSTRAINT `typeroom_room_fk`
-FOREIGN KEY (`id_type`)
-REFERENCES Type (`id`)
+ALTER TABLE Offer ADD CONSTRAINT userlogged_offer_fk
+FOREIGN KEY (idUserLogged)
+REFERENCES UserLogged (idUserLogged)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `RoomOffer` ADD CONSTRAINT `offer_room_offer_fk`
-FOREIGN KEY (`id_offer`)
-REFERENCES Offer (`id`)
+ALTER TABLE Room_Offer ADD CONSTRAINT offer_room_offer_fk
+FOREIGN KEY (idOffer)
+REFERENCES Offer (idOffer)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `Booking` ADD CONSTRAINT `room_booking_fk`
-FOREIGN KEY (`id_room`)
-REFERENCES `Room` (id)
+ALTER TABLE Room ADD CONSTRAINT type_room_fk
+FOREIGN KEY (idType)
+REFERENCES Type (idType)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE `RoomOffer` ADD CONSTRAINT `room_room_offer_fk`
-FOREIGN KEY (id_room)
-REFERENCES Room (id)
+ALTER TABLE Booking ADD CONSTRAINT room_booking_fk
+FOREIGN KEY (idRoom)
+REFERENCES Room (idRoom)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE Room_Offer ADD CONSTRAINT room_room_offer_fk
+FOREIGN KEY (idRoom)
+REFERENCES Room (idRoom)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
