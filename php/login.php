@@ -49,10 +49,11 @@
             unset($_SESSION['error_login']);
         } else {
             $_SESSION['error_login'] = true;
-			header('Location: ../index.hml');
+			header('Location: ../index.html');
 			exit();
         }
     } else {
+        $_SESSION['error_login'] = true;
         header('Location: ../index.html');
 		exit();
     }
@@ -62,7 +63,7 @@
     function redirect() {
         // Jesli ktos jest juz zalogowany:
         if (isset($_SESSION['is_user_logged'])) {
-            header('Location: ../userLogged.html');
+            header('Location: ../user.html');
             exit();
         } else
         if (isset($_SESSION['is_admin_logged'])) {

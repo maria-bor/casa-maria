@@ -114,7 +114,7 @@
                 $_SESSION['is_user_logged'] = true;
                 $_SESSION['registered'] = true;
 
-                header('Location: ../userLogged.html');
+                header('Location: ../user.html');
             } else {
                 //TODO
             }
