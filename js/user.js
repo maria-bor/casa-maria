@@ -12,7 +12,7 @@ $(function () {
 });
 
 function logout() {
-    window.open("./index.html");
+    window.location.replace("./index.html");
 }
 
 var card = $('.card');
