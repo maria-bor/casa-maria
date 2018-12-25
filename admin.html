@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <input id="tab-two" type="radio" name="grp"/>
+        <input id="tab-two" type="radio" name="grp" />
         <label for="tab-two">Dodaj ofertę</label>
         <div class="div-inside">
             <div class="row">
@@ -55,22 +55,31 @@
                     <fieldset>
                         <legend>Dodaj ofertę</legend>
                         <div class="form-input">
+                            <label for="name">Nazwa</label>
                             <input id="name" name="nazwa" type="text" placeholder="Nazwa oferty">
                         </div>
                         <div class="form-input">
+                                <label for="description">Opis</label>
+                                <input id="description" name="nazwa" type="text" placeholder="Nazwa oferty">
+                            </div>
+                        <div class="form-input">
+                                <label for="cena">Cena</label>
+                                <input id="cena" name="cena" type="number" placeholder="Cena">
+                            </div>
+                        <div class="form-input">
+                            <label for="nrPokoju">Nr pokoju</label>
                             <input id="nrPokoju" name="number" type="text" placeholder="Numer pokoju">
                         </div>
                         <div class="form-input">
-                            <input id="cena" name="cena" type="number" placeholder="Cena">
-                        </div>
-                        <div class="form-input">
+                            <label for="od">Od</label>
                             <input id="od" name="index" type="date" placeholder="Od">
                         </div>
                         <div class="form-input">
+                            <label for="do">Do</label>
                             <input id="do" name="index" type="date" placeholder="Do">
                         </div>
-                        <div class="form-input">
-                            <button type="button" id='buttAddData' type="submit">Dodaj ofertę</button>
+                        <div class="form-input butt">
+                            <input id='buttAddData' type="submit" value="Dodaj ofertę"></button>
                         </div>
                     </fieldset>
                 </form>
@@ -96,7 +105,7 @@
             </div>
         </div>
 
-        <input id="tab-three" type="radio" name="grp"/>
+        <input id="tab-three" type="radio" name="grp" />
         <label for="tab-three">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
