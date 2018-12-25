@@ -34,12 +34,12 @@
         // print_r($user);
 
         // Sprawdzamy haslo:
-        if ($user ) {//&& password_verify($password, $user['password'])
+        if ($user && password_verify($password, $user['password'])) {
             // Zapamietujemy dane logujacego:
             $_SESSION['id_user'] = $user['id_user'];
-            $_SESSION['user_surname'] = $user['surname'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['surname'] = $user['surname'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
             $_SESSION['id_role'] = $user['id_role'];
             $_SESSION['role_name'] = $user['role_name'];
             if ($user['role_name'] == 'admin')
@@ -62,7 +62,7 @@
     function redirect() {
         // Jesli ktos jest juz zalogowany:
         if (isset($_SESSION['is_user_logged'])) {
-            header('Location: ../loggedUser.html');
+            header('Location: ../userLogged.html');
             exit();
         } else
         if (isset($_SESSION['is_admin_logged'])) {
