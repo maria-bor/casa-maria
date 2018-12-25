@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: url("./../images/head.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+}
+
+header {
+    z-index: 0;
+    flex: 0 64px;
+    display: flex;
+    background: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.24);
+}
+
+header .branding, .page-details, .settings {
+    display: flex;
+    align-items: center;
+}
+
+header .branding {
+    flex: 0 0 256px;
+    order: 0;
+    justify-content: flex-start;
+}
+
+header .branding img {
+    max-height: 32px;
+    max-width: 175px;
+}
+
+header .page-details {
+    flex: 1 1 100%;
+    order: 1;
+    padding: 0 24px;
+    overflow: hidden;
+}
+
+header .page-details .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+header .settings {
+    flex: 0 0 256px;
+    order: 2;
+    justify-content: flex-end;
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 8px;
+}
+
+.menu-button:hover {
+    background: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+}
+
+nav {
+    background: #FAF9F8;
+    flex: 0 0 256px;
+    overflow: auto;
+    order: 0;
+    border-right: 1px solid #d9d9d9;
+}
+
+nav .branding, .title-block {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 8px 0;
+    padding: 0;
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul li a span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+nav ul li a:hover {
+    background: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+nav ul li a i {
+    margin-right: 20px;
+    opacity: 0.5;
+}
+
+article {
+    background: #F3F3F5;
+    flex: 1 1 100px;
+    order: 1;
+    overflow: auto;
+    padding: 24px;
+}
+
+.card {
+    max-width: 960px;
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24);
+}
+
+.card:not(:last-child) {
+    margin-bottom: 24px;
+}
+
+@media (min-width: 800px) {
+    .branding {
+        padding: 0 24px;
+    }
+    .menu-toggle {
+        display: none;
+    }
+    nav .title-block {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    /* header .settings {
+        display: none;
+    } */
+    header .branding, header .settings {
+        flex: 0 0 64px;
+    }
+    header .page-details {
+        padding: 0 24px;
+        justify-content: center;
+    }
+    article {
+        padding: 16px;
+    }
+    .card:not(:last-child) {
+        margin-bottom: 16px;
+    }
+    nav {
+        position: absolute;
+        top: 0;
+        left: -256px;
+        width: 256px;
+        height: 100%;
+        display: block;
+        transition: all 0.2s ease;
+        overflow: auto;
+    }
+    nav.open {
+        left: 0;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.24);
+    }
+}
+
+article p {
+    font-size: 36px;
+    text-align: center
+}
+
+.modal-user-profile {
+    display: none;
+}
+
+.modal-user-reservation {
+    display: none;
+}
+
+.modal-user-reservation-delete {
+    display: none;
+}
