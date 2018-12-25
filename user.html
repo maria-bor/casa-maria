@@ -6,10 +6,11 @@
         unset($_SESSION['registered']);
         unset($_SESSION['form_name']);
         unset($_SESSION['form_surname']);
-        unset($_SESSION['form_password_register']);
+        unset($_SESSION['form_password']);
     }
 ?>
 
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -54,7 +55,7 @@
         </nav>
         <article>
             <div class="card">
-                <p>Stąd możesz zarządać swoimi rezerwacjami!</p>
+                <h3>Stąd możesz zarządać swoimi rezerwacjami!</h3>
             </div>
         </article>
     </div>
@@ -86,7 +87,7 @@
     <!--USER RESERVATION-->
     <div class="modal-user-reservation">
         <div class="reserve-info">
-            <table id="user-reservation-table" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+            <table id="user-reservation-table">
                 <thead>
                     <tr>
                         <td>Nr</td>
@@ -114,7 +115,7 @@
     </div>
     <!--USER RESERVATION DELETE-->
     <div class="modal-user-reservation-delete">
-        <table id="user-reservation-table" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+        <table id="user-reservation-delete-table">
             <thead>
                 <tr>
                     <td>Nr</td>

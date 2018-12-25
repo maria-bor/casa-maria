@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -24,22 +25,22 @@
                 <div id="profile-admin">
                     <div class="input">
                         <label for="userName">Imię</label>
-                        <input type="text" id="userName" name="userName" disabled>
+                        <input type="text" id="userName" name="userName" required disabled>
                         <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
                     </div>
                     <div class="input">
                         <label for="userSurname">Nazwisko</label>
-                        <input type="text" id="userSurname" name="userSurname" disabled>
+                        <input type="text" id="userSurname" name="userSurname" required disabled>
                         <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
                     </div>
                     <div class="input">
                         <label for="userEmail">Email</label>
-                        <input type="email" id="userEmail" name="userEmail" disabled>
+                        <input type="email" id="userEmail" name="userEmail" required disabled>
                         <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
                     </div>
                     <div class="input">
                         <label for="userPassword">Hasło</label>
-                        <input type="password" id="userPassword" name="userPassword" disabled>
+                        <input type="password" id="userPassword" name="userPassword" required disabled>
                         <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
                     </div>
                 </div>
@@ -52,7 +53,7 @@
             <div class="row">
                 <fieldset>
                     <legend>Dane o rezerwacjach</legend>
-                    <table id="tableRezerwacje" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                    <table id="tableRezerwacje">
                         <thead>
                             <tr>
                                 <td>Nr</td>
@@ -88,30 +89,30 @@
                         <legend>Dodaj ofertę</legend>
                         <div class="form-input">
                             <label for="name">Nazwa</label>
-                            <input id="name" name="nazwa" type="text" placeholder="Nazwa oferty">
+                            <input id="name" name="nazwa" type="text" placeholder="Nazwa oferty" required>
                         </div>
                         <div class="form-input">
                             <label for="description">Opis</label>
-                            <input id="description" name="nazwa" type="text" placeholder="Nazwa oferty">
+                            <input id="description" name="nazwa" type="text" placeholder="Nazwa oferty" required>
                         </div>
                         <div class="form-input">
                             <label for="cena">Cena</label>
-                            <input id="cena" name="cena" type="number" placeholder="Cena">
+                            <input id="cena" name="cena" type="number" placeholder="Cena" required>
                         </div>
                         <div class="form-input">
                             <label for="nrPokoju">Nr pokoju</label>
-                            <input id="nrPokoju" name="number" type="text" placeholder="Numer pokoju">
+                            <input id="nrPokoju" name="number" type="text" placeholder="Numer pokoju" required>
                         </div>
                         <div class="form-input">
                             <label for="od">Od</label>
-                            <input id="od" name="index" type="date" placeholder="Od">
+                            <input id="od" name="index" type="date" required>
                         </div>
                         <div class="form-input">
                             <label for="do">Do</label>
-                            <input id="do" name="index" type="date" placeholder="Do">
+                            <input id="do" name="index" type="date" required>
                         </div>
                         <div class="form-input butt">
-                            <input id='buttAddData' type="submit" value="Dodaj ofertę"></button>
+                            <input id='buttAddData' type="submit" value="Dodaj ofertę">
                         </div>
                     </fieldset>
                 </form>
@@ -119,7 +120,7 @@
             <div class="row">
                 <fieldset>
                     <legend>Aktualne oferty</legend>
-                    <table id="tableOferty" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                    <table id="tableOferty">
                         <thead>
                             <tr>
                                 <td>Nr</td>
@@ -145,20 +146,20 @@
                     <fieldset>
                         <legend>Dodaj administratora</legend>
                         <div class="form-input">
-                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię">
+                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię" required>
                         </div>
                         <div class="form-input">
-                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko">
+                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko" required>
                         </div>
                         <div class="form-input">
-                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email">
+                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email" required>
                         </div>
                         <div class="form-input">
-                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło">
+                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło" required>
                         </div>
                         <div class="form-input">
                             <input id="passwordConfirmNewAdmin" type="password" name="passwordConfirmNewAdmin"
-                                placeholder="Potwierdź hasło">
+                                placeholder="Potwierdź hasło" required>
                         </div>
                         <div class="form-input">
                             <button id="addAdminButt" type="submit" name="addAdminButt">Dodaj administratora</button>
@@ -169,7 +170,7 @@
             <div class="row">
                 <fieldset>
                     <legend>Aktualni administratorzy</legend>
-                    <table id="tableAdmin" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                    <table id="tableAdmin">
                         <thead>
                             <tr>
                                 <td>Imię</td>
