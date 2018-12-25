@@ -195,7 +195,7 @@ article {
     }
 }
 
-article p {
+article h3 {
     font-size: 36px;
     text-align: center
 }
@@ -210,4 +210,16 @@ article p {
 
 .modal-user-reservation-delete {
     display: none;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+table, th, td {
+    border: 1px solid grey;
+}
+
+table td {
+    padding: 20px;
 }
