@@ -72,8 +72,8 @@
       <div class="close-login">+</div>
       <i class="icon-user"></i>
       <form id="form-login" method="POST" action="php/login.php">
-        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email">
-        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło">
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" required>
+        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" required>
         <button id="loginButt" type="submit">Zaloguj się</button>
       </form>
     </div>
@@ -83,11 +83,11 @@
     <div class="modal-content-register">
       <div class="close-register">+</div>
       <form id="form-register" method="POST" action="php/register.php">
-        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię">
-        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko">
+        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" required>
+        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" required>
         <input id="email" type="email" name="email" placeholder="Email">
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło">
-        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło">
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" required>
+        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" required>
         <button id="registerButt" type="submit" name="registerButt">Zarejestruj się</button>
       </form>
     </div>
@@ -143,12 +143,12 @@
 
         <div class="form-group">
           <span class="form-label">Check In</span>
-          <input class="form-control" type="date">
+          <input class="form-control" type="date" required>
         </div>
 
         <div class="form-group">
           <span class="form-label">Check out</span>
-          <input class="form-control" type="date">
+          <input class="form-control" type="date" required>
         </div>
 
         <div class="form-group">
