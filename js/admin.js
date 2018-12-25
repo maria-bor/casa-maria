@@ -1,1 +1,3 @@
-$( function() { $( "#tabs" ).tabs(); } );
+function logout() {
+    window.open("./index.html");
+}
