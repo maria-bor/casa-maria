@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 body {
     font-family: 'Alegreya', serif;
     color: #333;
 }
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+ nav i:hover {
+     cursor: pointer;
+ }
 
 section {
     display: -webkit-flex;
@@ -51,7 +60,32 @@ input[type=radio]:checked+label+.div-inside {
     padding: 13px;
 }
 
+.form-input label {
+    width: 100px;
+    text-align: center;
+}
+
+.form-input input {
+    width: 150px;
+}
+
+#buttAddData {
+    width: 100px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+
 .row {
     display: inline-flex;
     margin: 8px;
+}
+
+#profile-admin {
+    display: flex;
+    flex-direction: column;
+}
+
+#profile-admin label {
+    display: block;
+    padding-bottom: 13px;
 }
