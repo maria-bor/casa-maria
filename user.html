@@ -1,0 +1,123 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Logged</title>
+
+    <link rel="stylesheet" href="./css/user.css">
+</head>
+
+<body>
+    <header>
+        <div class="branding">
+            <div class="menu-button menu-toggle nav">
+                <i class="material-icons">menu</i>
+            </div>
+            <p>casa-maria</p>
+        </div>
+        <div class="page-details">
+            <div class="title"></div>
+        </div>
+        <div class="settings">
+            <div class="menu-button profile">
+                <i class="material-icons" onclick="logout()">close</i>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <nav>
+            <div class="title-block">
+                <p>casa-maria</p>
+            </div>
+            <ul>
+                <li><a href="#" id="profile"><i class="material-icons">home</i>
+                        <span>Profil</span></a></li>
+                <li><a href="#" id="reservation"><i class="material-icons">ballot</i>
+                        <span>Twoje rezerwacje</span></a></li>
+                <li><a href="#" id="delete"><i class="material-icons">delete_forever</i>
+                        <span>Usuń rezerwację</span></a></li>
+            </ul>
+        </nav>
+        <article>
+            <div class="card">
+                <p>Stąd możesz zarządać swoimi rezerwacjami!</p>
+            </div>
+        </article>
+    </div>
+
+    <!--MODAL SECTION-->
+    <!--USER PROFILE-->
+    <div class="modal-user-profile">
+        <div class="input">
+            <label for="userName">Imię</label>
+            <input type="text" id="userName" name="userName" disabled>
+            <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
+        </div>
+        <div class="input">
+            <label for="userSurname">Nazwisko</label>
+            <input type="text" id="userSurname" name="userSurname" disabled>
+            <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
+        </div>
+        <div class="input">
+            <label for="userEmail">Email</label>
+            <input type="email" id="userEmail" name="userEmail" disabled>
+            <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
+        </div>
+        <div class="input">
+            <label for="userPassword">Hasło</label>
+            <input type="password" id="userPassword" name="userPassword" disabled>
+            <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
+        </div>
+    </div>
+    <!--USER RESERVATION-->
+    <div class="modal-user-reservation">
+        <div class="reserve-info">
+            <table id="user-reservation-table" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+                <thead>
+                    <tr>
+                        <td>Nr</td>
+                        <td>Od</td>
+                        <td>Do</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="reserve-info">
+            <div class="input">
+                <label for="nr">Nr</label>
+                <input type="number" id="nr" name="nr" disabled>
+
+                <label for="od-reserve">Od</label>
+                <input type="date" id="od-reserve" name="od-reserve" disabled>
+                <input type="button" id="od-change-butt" name="od-change-butt" value="Zmień">
+
+                <label for="do-reserve">Od</label>
+                <input type="date" id="do-reserve" name="do-reserve" disabled>
+                <input type="button" id="do-change-butt" name="do-change-butt" value="Zmień">
+            </div>
+        </div>
+    </div>
+    <!--USER RESERVATION DELETE-->
+    <div class="modal-user-reservation-delete">
+        <table id="user-reservation-table" cellspacing="0px" cellpadding="20px" text-align="center" border='1'>
+            <thead>
+                <tr>
+                    <td>Nr</td>
+                    <td>Od</td>
+                    <td>Do</td>
+                    <td>Usuń</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="./js/user.js"></script>
+</body>
+
+</html>
