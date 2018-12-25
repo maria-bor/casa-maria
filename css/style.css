@@ -41,6 +41,10 @@
   display: none;
 }
 
+.bg-modal-login ul {
+  list-style: none;
+}
+
 .modal-content-login, .modal-content-register {
   width: 500px;
   height: 350px;

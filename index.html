@@ -34,6 +34,9 @@
   <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
 
+  <!--VUE.JS-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </head>
 
 <body>
@@ -71,9 +74,20 @@
     <div class="modal-content-login">
       <div class="close-login">+</div>
       <i class="icon-user"></i>
-      <form id="form-login" method="POST" action="php/login.php">
-        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" required>
-        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" required>
+      <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin' required>
+        <p v-if="errorLogin.length">
+          <ul>
+            <li>{{ errorLogin }}</li>
+          </ul>
+        </p>
+        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
+          required>
+        <p v-if="errorPassword.length">
+          <ul>
+            <li>{{ errorPassword }}</li>
+          </ul>
+        </p>
         <button id="loginButt" type="submit">Zaloguj się</button>
       </form>
     </div>
