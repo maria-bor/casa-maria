@@ -1,88 +1,125 @@
 <?php
     session_start();
-    if(isset($_POST['nameRegister']) && isset($_POST['surnameRegister']) && isset($_POST['email']) &&  isset($_POST['passwordRegister']) && isset($_POST['passwordConfirm'])) 
+    if (isset($_POST['nameRegister']) &&
+        isset($_POST['surnameRegister']) &&
+        isset($_POST['email']) &&
+        isset($_POST['passwordRegister']) &&
+        isset($_POST['passwordConfirm']))
     {
-        $allvalid = true;
+        $all_valid = true;
         //TODO validacja danych
         $name = $_POST['nameRegister'];
         $surname = $_POST['surnameRegister'];
         $email = $_POST['email'];
         $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-        if((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)==false) || ($emailSanitized!=$email))
-        {
-            $allvalid = false;
-            $_SESSION['errorEmail'] = 'Podaj poprawny adres email!';
+        if ((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) == false) ||
+            ($emailSanitized != $email)) {
+            $all_valid = false;
+            $_SESSION['error_email'] = 'Podaj poprawny adres email!';
         }
 
         $password1 = $_POST['passwordRegister'];
         $password2 = $_POST['passwordConfirm'];
         
-        if((strlen($password1)<8) || (strlen($password1)>20)) 
+        if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
-            $allvalid = false;
+            $all_valid = false;
             $_SESSION['errorPassword'] = 'Hasło musi posiadać od 8 do 20 znaków!';
         }
 
-        if($password1!=$password2) 
+        if($password1 != $password2)
         {
-            $allvalid = false;
+            $all_valid = false;
             $_SESSION['errorPassword'] = 'Podane hasła są różne!';
         }
 
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
 
-        $_SESSION['name'] = $name;            
-        $_SESSION['surname'] = $surname;
-        $_SESSION['email'] = $email;
-        $_SESSION['passwordRegister'] = $password1;
-        $_SESSION['passwordConfirm'] = $password2;
+        $_SESSION['form_name'] = $name;
+        $_SESSION['form_surname'] = $surname;
+        $_SESSION['form_email'] = $email;
+        $_SESSION['form_password_register'] = $password1;
         
-        require_once 'connect.php';
-        mysqli_report(MYSQLI_REPORT_STRICT);
+        require_once 'db.php';
+
         try 
         {
-            $db_connection = new mysqli($host, $db_user, $db_password, $db_name);
+            // Sprawdzamy czy nie ma juz konta dla podanego emaila (rola nie wazna):
+            $sql = 'SELECT u.idUser id_user
+                    FROM User u
+                    WHERE u.email = :emailLogin;';
+            $query = $db->prepare($sql);
+            $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
+            $query->execute();
 
-            if($db_connection->connect_errno!=0)
-            {
-                throw new Exception(mysqli_connect_errno());
-            } 
-            else
-            {
-                $result = $db_connection->query("SELECT ul.id FROM userlogged ul INNER JOIN user u ON ul.id_user = u.id WHERE u.email='$email'");
-                if(!$result) throw new Exception($db_connection->error);
+            if ($query->rowCount() > 0) {
+                $all_valid = false;
+                $_SESSION['errorEmail'] = 'Konto o podanym email już istnieje!';
+            }
 
-                if($result->num_rows>0) 
-                {
-                    $allvalid = false;
-                    $_SESSION['errorEmail'] = 'Konto o podanym email już istnieje!';
-                } 
+            if ($all_valid) {
+                $db->beginTransaction();
+                // Wstawienie do tabeli User:
+                $sql = 'INSERT INTO User
+                        VALUES (
+                        NULL,
+                        :surname,
+                        :name,
+                        :email
+                        );';
+                $query = $db->prepare($sql);
+                $query->bindValue(':surname', $surname, PDO::PARAM_STR);
+                $query->bindValue(':name', $name, PDO::PARAM_STR);
+                $query->bindValue(':email', $email, PDO::PARAM_STR);
+                $query->execute();
+                $id_user = $db->lastInsertId();
+
+                // Wstawienie do tabeli UserLogged:
+                $sql = 'INSERT INTO UserLogged
+                        VALUES (
+                            NULL,
+                            :password_hash,
+                            :id_user
+                        );';
+                $query = $db->prepare($sql);
+                $query->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+                $query->bindValue(':id_user', $id_user, PDO::PARAM_STR);
+                $query->execute();
+
+                // Wstawienie do tabeli UserRole:
+                $sql = 'INSERT INTO UserRole
+                        VALUES (
+                        :id_user_logged,
+                        (SELECT idRole
+                            FROM Role r
+                            WHERE r.name = :user_role
+                            LIMIT 1
+                        )
+                        );';
+                $query = $db->prepare($sql);
+                $query->bindValue(':id_user_logged', $db->lastInsertId(), PDO::PARAM_STR);
+                $query->bindValue(':user_role', 'user_logged', PDO::PARAM_STR);
+                $query->execute();
+
+                $db->commit();
                 
-                if($allvalid==true) 
-                {
-                    if($db_connection->query("INSERT INTO user VALUES (NULL, '$surname', '$name', '$email')")) 
-                    {
-                        if($db_connection->query("INSERT INTO userLogged VALUES (NULL, '$password1', LAST_INSERT_ID())"))
-                        {
-                            $_SESSION['registered'] = true;
-                            header('Location: ../userLogged.html');
-                        }
-                        else 
-                        {
-                            throw new Exception($db_connection->error);
-                        }
-                    }
-                    else 
-                    {
-                        throw new Exception($db_connection->error);
-                    }
-                }
-                $db_connection->close();
+                // Zapamietujemy dane rejestrujacego( a potem logujacego):
+                $_SESSION['id_user'] = $id_user;
+                $_SESSION['surname'] = $surname;
+                $_SESSION['name'] = $name;
+                $_SESSION['email'] = $email;
+                $_SESSION['id_role'] = 2; // mozna by tu z selecta wyciagnac
+                $_SESSION['role_name'] = 'user_logged';
+                $_SESSION['is_user_logged'] = true;
+                $_SESSION['registered'] = true;
+
+                header('Location: ../userLogged.html');
+            } else {
+                //TODO
             }
         } catch (Exception $e) 
         {
             echo '<br />'.$e;
         }
     }
-?>

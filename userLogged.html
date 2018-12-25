@@ -11,8 +11,10 @@
 <body>
     <h1>USER LOGGED</h1>
     <?php
-        if((isset($_SESSION['registered'])) && ($_SESSION['registered']==true))
+        if((isset($_SESSION['registered'])) && ($_SESSION['registered'] == true)) {
             echo "<p><b>SUCCESFULY";
+            unset($_SESSION['registered']);
+        }
         else
             echo "<p><b></b>UNSUCCESFULY</b></p>";
     ?>
