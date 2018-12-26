@@ -51,7 +51,78 @@
         </div>
 
         <input id="tab-two" type="radio" name="grp" />
-        <label for="tab-two">Rezerwazje</label>
+        <label for="tab-two">Dodaj pokój</label>
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-type" @submit="checkForm" method="POST" action="" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj typ pokóju</legend>
+                        <div class="form-input">
+                            <label for="nameType">Nazwa</label>
+                            <input id="nameType" name="nameType" type="text" placeholder="Typ pokoju" v-model="nameType" required>
+                        </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input butt">
+                            <input id='add-type-room' type="submit" value="Dodaj">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <form id="form-add-room" @submit="checkForm" method="POST" action="" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj pokój</legend>
+                        <div class="form-input">
+                            <label for="nrRoom">Numer pokoju</label>
+                            <input id="nrRoom" name="nrRoom" type="number" placeholder="Numer pokoju" v-model="nrRoom">
+                        </div>
+                        <p v-if="errorNrRoom.length">
+                            <ul>
+                                <li>{{ errorNrRoom }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="nrFloor">Numer piętra</label>
+                            <input id="nrFloor" name="nrFloor" type="number" placeholder="Numer piętra" v-model="nrFloor" required>
+                        </div>
+                        <p v-if="errorNrFloor.length">
+                            <ul>
+                                <li>{{ errorNrFloor }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="sleeps">Iloosobowy</label>
+                            <input id="sleeps" name="sleeps" type="number" placeholder="Ile osób" v-model="sleeps" required>
+                        </div>
+                        <p v-if="errorSleeps.length">
+                            <ul>
+                                <li>{{ errorSleeps }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="type">Wybierz typ</label>
+                            <!-- <input id="type" name="type" type="text" placeholder="Typ pokoju" v-model="type"> -->
+                            <select name="type" id="type" v-model="type" required></select>
+                        </div>
+                        <p v-if="errorType.length">
+                            <ul>
+                                <li>{{ errorType }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input butt">
+                            <input id='add-room' type="submit" value="Dodaj">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <input id="tab-three" type="radio" name="grp" />
+        <label for="tab-three">Rezerwazje</label>
         <div class="div-inside">
             <div class="row">
                 <fieldset>
@@ -78,42 +149,54 @@
                     <select>
                         <!-- <option value="volvo">Volvo</option> -->
                     </select>
-                    <button type="button" id='delete'>Usuń rezerwację</button>
+                    <button type="submit" id='delete'>Usuń rezerwację</button>
                 </fieldset>
             </div>
         </div>
 
-        <input id="tab-three" type="radio" name="grp" />
-        <label for="tab-three">Dodaj ofertę</label>
+        <input id="tab-four" type="radio" name="grp" />
+        <label for="tab-four">Dodaj ofertę</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-offer" action="">
+                <form id="form-add-offer" @submit="checkForm" method="POST" action="" novalidate="true">
                     <fieldset>
                         <legend>Dodaj ofertę</legend>
                         <div class="form-input">
                             <label for="name">Nazwa</label>
-                            <input id="name" name="nazwa" type="text" placeholder="Nazwa oferty" required>
+                            <input id="name" name="name" type="text" placeholder="Nazwa oferty" v-model="name">
                         </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <label for="description">Opis</label>
-                            <input id="description" name="nazwa" type="text" placeholder="Nazwa oferty" required>
+                            <label for="price">Cena</label>
+                            <input id="price" name="price" type="number" placeholder="Cena" v-model="price" required>
                         </div>
+                        <p v-if="errorPrice.length">
+                            <ul>
+                                <li>{{ errorPrice }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <label for="cena">Cena</label>
-                            <input id="cena" name="cena" type="number" placeholder="Cena" required>
+                            <label for="from">Od</label>
+                            <input id="from" name="index" type="date" v-model="from" required>
                         </div>
+                        <p v-if="errorFrom.length">
+                            <ul>
+                                <li>{{ errorFrom }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <label for="nrPokoju">Nr pokoju</label>
-                            <input id="nrPokoju" name="number" type="text" placeholder="Numer pokoju" required>
+                            <label for="to">Do</label>
+                            <input id="to" name="index" type="date" v-model="to" required>
                         </div>
-                        <div class="form-input">
-                            <label for="od">Od</label>
-                            <input id="od" name="index" type="date" required>
-                        </div>
-                        <div class="form-input">
-                            <label for="do">Do</label>
-                            <input id="do" name="index" type="date" required>
-                        </div>
+                        <p v-if="errorTo.length">
+                            <ul>
+                                <li>{{ errorTo }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input butt">
                             <input id='buttAddData' type="submit" value="Dodaj ofertę">
                         </div>
@@ -128,7 +211,6 @@
                             <tr>
                                 <td>Nr</td>
                                 <td>Nazwa</td>
-                                <td>Opis</td>
                                 <td>Cena</td>
                                 <td>Nr pokoju</td>
                                 <td>Od</td>
@@ -139,10 +221,18 @@
                     </table>
                 </fieldset>
             </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Dodaj pokój do oferty</legend>
+                    <select name="offers" id="offers"></select>
+                    <select name="rooms" id="rooms"></select>
+                    <button type="submit" id='add-room-offer'>Dodaj</button>
+                    </fieldset>
+            </div>
         </div>
 
-        <input id="tab-four" type="radio" name="grp" />
-        <label for="tab-four">Zarządzaj administratorami</label>
+        <input id="tab-five" type="radio" name="grp" />
+        <label for="tab-five">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
                 <form id="form-add-admin" @submit="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
@@ -220,7 +310,7 @@
                     <select>
                         <!-- <option value="volvo">Volvo</option> -->
                     </select>
-                    <button type="button" id='deleteAdmin'>Usuń administratora</button>
+                    <button type="submit" id='deleteAdmin'>Usuń administratora</button>
                 </fieldset>
             </div>
         </div>
