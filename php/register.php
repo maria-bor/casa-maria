@@ -25,13 +25,13 @@
         if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
             $all_valid = false;
-            $_SESSION['errorPassword'] = 'Hasło musi posiadać od 8 do 20 znaków!';
+            $_SESSION['error_password'] = 'Hasło musi posiadać od 8 do 20 znaków!';
         }
 
         if($password1 != $password2)
         {
             $all_valid = false;
-            $_SESSION['errorPassword'] = 'Podane hasła są różne!';
+            $_SESSION['error_password'] = 'Podane hasła są różne!';
         }
 
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
@@ -39,7 +39,7 @@
         $_SESSION['form_name'] = $name;
         $_SESSION['form_surname'] = $surname;
         $_SESSION['form_email'] = $email;
-        $_SESSION['form_password_register'] = $password1;
+        $_SESSION['form_password'] = $password1;
         
         require_once 'db.php';
 
@@ -55,7 +55,7 @@
 
             if ($query->rowCount() > 0) {
                 $all_valid = false;
-                $_SESSION['errorEmail'] = 'Konto o podanym email już istnieje!';
+                $_SESSION['error_email'] = 'Konto o podanym email już istnieje!';
             }
 
             if ($all_valid) {
@@ -116,7 +116,7 @@
 
                 header('Location: ../user.html');
             } else {
-                //TODO
+                header('Location: ../index.html');
             }
         } catch (Exception $e) 
         {

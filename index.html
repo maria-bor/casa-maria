@@ -75,12 +75,19 @@
       <div class="close-login">+</div>
       <i class="icon-user"></i>
       <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
-        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin' required>
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin'
+          <?= isset($_SESSION['form_email']) ? 'value="' . $_SESSION['form_email'] . '"' : '' ?> required>
         <p v-if="errorLogin.length">
           <ul>
             <li>{{ errorLogin }}</li>
           </ul>
         </p>
+        <?php
+				  if (isset($_SESSION['error_email'])) {
+					  echo '<p>'.$_SESSION['error_email'].'</p>';
+					  unset($_SESSION['error_email']);
+				  }
+				?>
         <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
           required>
         <p v-if="errorPassword.length">
@@ -88,6 +95,12 @@
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
+        <?php
+					if (isset($_SESSION['error_password'])) {
+					  echo '<p>'.$_SESSION['error_password'].'</p>';
+					  unset($_SESSION['error_password']);
+					}
+				?>
         <button id="loginButt" type="submit">Zaloguj się</button>
       </form>
     </div>
@@ -97,11 +110,40 @@
     <div class="modal-content-register">
       <div class="close-register">+</div>
       <form id="form-register" method="POST" action="php/register.php">
-        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" required>
-        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" required>
-        <input id="email" type="email" name="email" placeholder="Email">
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" required>
-        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" required>
+        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię"
+          <?= isset($_SESSION['form_name']) ? 'value="' . $_SESSION['form_name'] . '"' : '' ?> required>
+        <?php
+				  if (isset($_SESSION['error_name'])) {
+					  echo '<p>'.$_SESSION['error_name'].'</p>';
+					  unset($_SESSION['error_name']);
+				  }
+				?>
+        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko"
+          <?= isset($_SESSION['form_surname']) ? 'value="' . $_SESSION['form_surname'] . '"' : '' ?> required>
+        <?php
+				  if (isset($_SESSION['error_surname'])) {
+					  echo '<p>'.$_SESSION['error_surname'].'</p>';
+					  unset($_SESSION['error_surname']);
+				  }
+				?>
+        <input id="email" type="email" name="email" placeholder="Email"
+          <?= isset($_SESSION['form_email']) ? 'value="' . $_SESSION['form_email'] . '"' : '' ?> required>
+        <?php
+				  if (isset($_SESSION['error_email'])) {
+					  echo '<p>'.$_SESSION['error_email'].'</p>';
+					  unset($_SESSION['error_email']);
+				  }
+				?>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło"
+          <?= isset($_SESSION['form_password']) ? 'value="' . $_SESSION['form_password'] . '"' : '' ?> required>
+        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło"
+          <?= isset($_SESSION['form_password']) ? 'value="' . $_SESSION['form_password'] . '"' : '' ?> required>
+        <?php
+				  if (isset($_SESSION['error_password'])) {
+					  echo '<p>'.$_SESSION['error_password'].'</p>';
+					  unset($_SESSION['error_password']);
+				  }
+				?>
         <button id="registerButt" type="submit" name="registerButt">Zarejestruj się</button>
       </form>
     </div>
