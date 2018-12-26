@@ -14,6 +14,7 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                 checkForm: function (e) {
                     this.errorLogin = '';
                     this.errorPassword = '';
+
                     if (!this.passwordLogin) {
                         this.errorPassword = "Wprowadź hasło.";
                     } else if (!this.validPassword(this.passwordLogin)) {
@@ -26,17 +27,19 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                         this.errorLogin = "Niepoprawny email.";
                     }
 
-                    if (!this.errorLogin.length) return true;
-                    e.preventDefault();
-                    if (!this.errorPassword.length) return true;
+                    if (!this.errorLogin.length && !this.errorPassword.length) {
+                        return true;
+                    } 
                     e.preventDefault();
                 },
                 validPassword: function (passwordLogin) {
-                    return passwordLogin.length > 8 && passwordLogin.length < 20;
+                    var pass = passwordLogin.trim();
+                    return (pass.length >= 8) && (pass.length <= 20);
+                    // return !isNaN(parseFloat(passwordLogin.trim())) && !isFinite(passwordLogin.trim()) || !(passwordLogin.trim() === '');
                 },
                 validEmail: function (emailLogin) {
-                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return re.test(emailLogin);
+                    var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return mailFormat.test(emailLogin);
                 }
             }
         });
