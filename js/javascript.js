@@ -56,24 +56,89 @@ function showRegistrationForm() {
 }
 document.getElementById('clickRegister').addEventListener('click', function () {
     showRegistrationForm();
+    
+    const formRegister = new Vue(
+        {
+            el: '#form-register',
+            data: {
+                errorName: '',
+                errorSurname: '',
+                errorEmail: '',
+                errorPassword: '',
+                errorPasswordConfirm: '',
+
+                nameRegister: null,
+                surnameRegister: null,
+                email: null,
+                passwordRegister: null,
+                passwordConfirm: null
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errorName = '';
+                    this.errorSurname = '';
+                    this.errorEmail = '';
+                    this.errorPassword = '';
+                    this.errorPasswordConfirm = '';
+
+                    if (!this.nameRegister) {
+                        this.errorName = "Wprowadź imię.";
+                    } else if (!this.validNameSurname(this.nameRegister)) {
+                        this.errorName = "Niepoprawny format.";
+                    }
+
+                    if (!this.surnameRegister) {
+                        this.errorSurname = "Wprowadź nazwisko.";
+                    } else if (!this.validNameSurname(this.surnameRegister)) {
+                        this.errorSurname = "Niepoprawny format.";
+                    }
+
+                    if (!this.email) {
+                        this.errorEmail = "Wprowadź email.";
+                    } else if (!this.validEmail(this.email)) {
+                        this.errorEmail = "Niepoprawny email.";
+                    }
+>>>>>>> 7ca1c5e067525798771da0b3ea47b38802cec50b
+
+                    if (!this.passwordRegister) {
+                        this.errorPassword = "Wprowadź hasło.";
+                    } else if (!this.validPassword(this.passwordRegister)) {
+                        this.errorPassword = "Niepoprawny format hasła.";
+                    }
+
+                    if (!this.passwordConfirm) {
+                        this.errorPasswordConfirm = "Wprowadź hasło.";
+                    } else if (!this.validPasswordConfirm(this.passwordConfirm)) {
+                        this.errorPasswordConfirm = "Hasła nie zgadzają się.";
+                    }
+
+                    if (!this.errorName.length && !this.errorSurname.length 
+                        && !this.errorEmail.length && !this.errorPassword.length
+                        && !this.errorPasswordConfirm.length) {
+                        return true;
+                    } 
+                    e.preventDefault();
+                },
+                validNameSurname:function (str) {
+                    var nameOrSurname = str.trim();
+                    var nameOrSurnameFormat = /^[a-zA-Z]{3,20}?$/;
+                    return nameOrSurnameFormat.test(nameOrSurname);
+                },
+                validEmail: function (email) {
+                    var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return mailFormat.test(email);
+                },
+                validPassword: function (passwordRegister) {
+                    var pass = passwordRegister.trim();
+                    return (pass.length >= 8) && (pass.length <= 20);
+                },
+                validPasswordConfirm: function (passwordConfirm) {
+                    var passConfirm = passwordConfirm.trim();
+                    return passConfirm === this.passwordRegister;
+                  }
+            }
+        });
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
 });
-
-/*LOGIN ADMIN*/
-// document.getElementById('loginButt').addEventListener('click', login()) 
-function login() {
-    var emailLogin = document.getElementById('emailLogin')
-    var passwordLogin = document.getElementById('passwordLogin')
-
-    if (emailLogin.value === 'a' && passwordLogin.value === 'a') {
-        console.log('AAA')
-        console.log(emailLogin)
-        console.log(passwordLogin)
-        window.open("/admin.html");
-    }
-    else {
-
-    }
-}
