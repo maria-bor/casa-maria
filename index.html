@@ -34,6 +34,9 @@
   <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
 
+  <!--VUE.JS-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </head>
 
 <body>
@@ -71,16 +74,27 @@
     <div class="modal-content-login">
       <div class="close-login">+</div>
       <i class="icon-user"></i>
-      <form id="form-login" method="POST" action="php/login.php">
-        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email"
+      <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin'
           <?= isset($_SESSION['form_email']) ? 'value="' . $_SESSION['form_email'] . '"' : '' ?> required>
+        <p v-if="errorLogin.length">
+          <ul>
+            <li>{{ errorLogin }}</li>
+          </ul>
+        </p>
         <?php
 				  if (isset($_SESSION['error_email'])) {
 					  echo '<p>'.$_SESSION['error_email'].'</p>';
 					  unset($_SESSION['error_email']);
 				  }
 				?>
-        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" required>
+        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
+          required>
+        <p v-if="errorPassword.length">
+          <ul>
+            <li>{{ errorPassword }}</li>
+          </ul>
+        </p>
         <?php
 					if (isset($_SESSION['error_password'])) {
 					  echo '<p>'.$_SESSION['error_password'].'</p>';
