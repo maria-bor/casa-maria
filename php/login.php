@@ -9,8 +9,8 @@
     if (isset($_POST['emailLogin']) && isset($_POST['passwordLogin'])) {
         $login = $_POST['emailLogin'];
         $password = $_POST['passwordLogin'];
-        $_SESSION['form_email'] = $login;
-        $_SESSION['form_password'] = $password;
+        $_SESSION['form_login_email'] = $login;
+        $_SESSION['form_login_password'] = $password;
 
         $sql = 'SELECT u.idUser id_user,
                        surname,
@@ -36,7 +36,7 @@
         // print_r($user);
         // Sprawdzenie czy jest taki user o podanym emailu:
         if ($query->rowCount() == 0) {
-            $_SESSION['error_email'] = 'Konto nie istnieje!';
+            $_SESSION['error_login_email'] = 'Konto nie istnieje!';
             header('Location: ../index.html');
 		    exit();
         }
@@ -55,7 +55,7 @@
             else if ($user['role_name'] == 'user_logged')
                 $_SESSION['is_user_logged'] = true;
         } else {
-            $_SESSION['error_password'] = 'Nieprawidłowe hasło!';
+            $_SESSION['error_login_password'] = 'Nieprawidłowe hasło!';
             $_SESSION['error_login'] = true;
 			header('Location: ../index.html');
 			exit();
