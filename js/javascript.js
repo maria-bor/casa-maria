@@ -1,6 +1,9 @@
 /*** POPUP LOGIN ***/
-document.getElementById('clickLogin').addEventListener('click', function () {
+function showLoginForm() {
     document.querySelector('.bg-modal-login').style.display = 'flex';
+}
+document.getElementById('clickLogin').addEventListener('click', function () {
+    showLoginForm();
     const formLogin = new Vue(
         {
             el: '#form-login',
