@@ -51,8 +51,11 @@ document.querySelector('.close-login').addEventListener('click', function () {
 });
 
 /*** POPUP REGISTER ***/
-document.getElementById('clickRegister').addEventListener('click', function () {
+function showRegistrationForm() {
     document.querySelector('.bg-modal-register').style.display = 'flex';
+}
+document.getElementById('clickRegister').addEventListener('click', function () {
+    showRegistrationForm();
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';

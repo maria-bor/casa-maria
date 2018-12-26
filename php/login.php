@@ -10,6 +10,7 @@
         $login = $_POST['emailLogin'];
         $password = $_POST['passwordLogin'];
         $_SESSION['form_email'] = $login;
+        $_SESSION['form_password'] = $password;
 
         $sql = 'SELECT u.idUser id_user,
                        surname,
@@ -53,7 +54,6 @@
                 $_SESSION['is_admin_logged'] = true;
             else if ($user['role_name'] == 'user_logged')
                 $_SESSION['is_user_logged'] = true;
-            // unset($_SESSION['error_login']);
         } else {
             $_SESSION['error_password'] = 'Nieprawidłowe hasło!';
             $_SESSION['error_login'] = true;
