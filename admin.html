@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
     <link rel="stylesheet" type="text/css" href="./css/fontello.css">
 
+    <!--VUE.JS-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </head>
 
 <body>
@@ -142,25 +145,54 @@
         <label for="tab-four">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-admin" method="POST" action="php/addAdmin.php">
+                <form id="form-add-admin" @submit="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
                     <fieldset>
                         <legend>Dodaj administratora</legend>
                         <div class="form-input">
-                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię" required>
+                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię" v-model="nameNewAdmin"
+                                required>
                         </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko" required>
+                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko"
+                                v-model="surnameNewAdmin" required>
                         </div>
+                        <p v-if="errorSurname.length">
+                            <ul>
+                                <li>{{ errorSurname }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email" required>
+                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email" v-model="emailNewAdmin"
+                                required>
                         </div>
+                        <p v-if="errorEmail.length">
+                            <ul>
+                                <li>{{ errorEmail }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
-                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło" required>
+                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło"
+                                v-model="passwordNewAdmin" required>
                         </div>
+                        <p v-if="errorPassword.length">
+                            <ul>
+                                <li>{{ errorPassword }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
                             <input id="passwordConfirmNewAdmin" type="password" name="passwordConfirmNewAdmin"
-                                placeholder="Potwierdź hasło" required>
+                                placeholder="Potwierdź hasło" v-model="passwordConfirmNewAdmin" required>
                         </div>
+                        <p v-if="errorPasswordConfirm.length">
+                            <ul>
+                                <li>{{ errorPasswordConfirm }}</li>
+                            </ul>
+                        </p>
                         <div class="form-input">
                             <button id="addAdminButt" type="submit" name="addAdminButt">Dodaj administratora</button>
                         </div>

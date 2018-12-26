@@ -57,7 +57,6 @@ input[type=radio]:checked+label+.div-inside {
 .form-input {
     display: flex;
     flex-flow: row wrap;
-    padding: 13px;
 }
 
 .form-input label {
@@ -100,4 +99,10 @@ table, th, td {
 
 table td {
     padding: 20px;
+}
+
+form ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
 }
