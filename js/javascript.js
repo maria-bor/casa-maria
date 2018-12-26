@@ -35,7 +35,6 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                 validPassword: function (passwordLogin) {
                     var pass = passwordLogin.trim();
                     return (pass.length >= 8) && (pass.length <= 20);
-                    // return !isNaN(parseFloat(passwordLogin.trim())) && !isFinite(passwordLogin.trim()) || !(passwordLogin.trim() === '');
                 },
                 validEmail: function (emailLogin) {
                     var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
