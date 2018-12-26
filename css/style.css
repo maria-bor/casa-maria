@@ -44,10 +44,11 @@
 .bg-modal-login ul {
   list-style: none;
 }
-
+.bg-modal-register ul {
+  list-style: none;
+}
 .modal-content-login, .modal-content-register {
-  width: 500px;
-  height: 350px;
+  width: 25%;
   background-color: #FFF;
   border-radius: 4px;
   text-align: center;
