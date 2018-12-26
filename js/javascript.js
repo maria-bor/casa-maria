@@ -56,7 +56,6 @@ function showRegistrationForm() {
 }
 document.getElementById('clickRegister').addEventListener('click', function () {
     showRegistrationForm();
-    
     const formRegister = new Vue(
         {
             el: '#form-register',
@@ -98,7 +97,6 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                     } else if (!this.validEmail(this.email)) {
                         this.errorEmail = "Niepoprawny email.";
                     }
->>>>>>> 7ca1c5e067525798771da0b3ea47b38802cec50b
 
                     if (!this.passwordRegister) {
                         this.errorPassword = "Wprowadź hasło.";
