@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    require_once './php/helpers/inputValue.php';
+
     if (isset($_SESSION['registered'])) {
         unset($_SESSION['registered']);
         unset($_SESSION['form_name']);
@@ -12,6 +14,11 @@
     else {
         unset($_SESSION['form_login_email']);
         unset($_SESSION['form_login_password']);
+    }
+
+    if (!isset($_SESSION['is_user_logged'])) {
+        header('Location: index.html');
+		exit();
     }
 ?>
 
@@ -70,22 +77,22 @@
     <div class="modal-user-profile">
         <div class="input">
             <label for="userName">Imię</label>
-            <input type="text" id="userName" name="userName" disabled>
+            <input type="text" id="userName" name="userName" disabled <?= inputValue('name'); ?> >
             <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
         </div>
         <div class="input">
             <label for="userSurname">Nazwisko</label>
-            <input type="text" id="userSurname" name="userSurname" disabled>
+            <input type="text" id="userSurname" name="userSurname" disabled <?= inputValue('surname'); ?> >
             <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
         </div>
         <div class="input">
             <label for="userEmail">Email</label>
-            <input type="email" id="userEmail" name="userEmail" disabled>
+            <input type="email" id="userEmail" name="userEmail" disabled <?= inputValue('email'); ?> >
             <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
         </div>
         <div class="input">
             <label for="userPassword">Hasło</label>
-            <input type="password" id="userPassword" name="userPassword" disabled>
+            <input type="password" id="userPassword" name="userPassword" disabled <?= inputValue('password'); ?> >
             <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
         </div>
     </div>
