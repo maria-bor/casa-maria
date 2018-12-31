@@ -48,7 +48,7 @@
             $_SESSION['surname'] = $user['surname'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['password'] = $user['password'];
+            $_SESSION['password'] = $password;
             $_SESSION['id_role'] = $user['id_role'];
             $_SESSION['role_name'] = $user['role_name'];
             if ($user['role_name'] == 'admin')
