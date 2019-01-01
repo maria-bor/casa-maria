@@ -66,22 +66,26 @@
         <div class="input">
             <label for="userName">Imię</label>
             <input type="text" id="userName" name="userName" disabled>
-            <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
+            <input type="submit" id="name-change-butt" name="name-change-butt" value="Zmień">
+            <p id="errorName"></p>
         </div>
         <div class="input">
             <label for="userSurname">Nazwisko</label>
             <input type="text" id="userSurname" name="userSurname" disabled>
-            <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
+            <input type="submit" id="surname-change-butt" name="surname-change-butt" value="Zmień">
+            <p id="errorSurname"></p>
         </div>
         <div class="input">
             <label for="userEmail">Email</label>
             <input type="email" id="userEmail" name="userEmail" disabled>
-            <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
+            <input type="submit" id="email-change-butt" name="email-change-butt" value="Zmień">
+            <p id="errorEmail"></p>
         </div>
         <div class="input">
             <label for="userPassword">Hasło</label>
             <input type="password" id="userPassword" name="userPassword" disabled>
-            <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
+            <input type="submit" id="password-change-butt" name="password-change-butt" value="Zmień">
+            <p id="errorPassword"></p>
         </div>
     </div>
     <!--USER RESERVATION-->
@@ -100,16 +104,22 @@
         </div>
         <div class="reserve-info">
             <div class="input">
-                <label for="nr">Nr</label>
-                <input type="number" id="nr" name="nr" disabled>
-
-                <label for="od-reserve">Od</label>
-                <input type="date" id="od-reserve" name="od-reserve" disabled>
-                <input type="button" id="od-change-butt" name="od-change-butt" value="Zmień">
-
-                <label for="do-reserve">Od</label>
-                <input type="date" id="do-reserve" name="do-reserve" disabled>
-                <input type="button" id="do-change-butt" name="do-change-butt" value="Zmień">
+                <p>
+                    <label for="nr">Nr</label>
+                    <input type="number" id="nr" name="nr" disabled>
+                </p>
+                <p>
+                    <label for="od-reserve">Od</label>
+                    <input type="date" id="od-reserve" name="od-reserve" disabled>
+                    <input type="button" id="od-change-butt" name="od-change-butt" value="Zmień">
+                    <p id="errorTo"></p>
+                </p>
+                <p>
+                    <label for="do-reserve">Do</label>
+                    <input type="date" id="do-reserve" name="do-reserve" disabled>
+                    <input type="submit" id="do-change-butt" name="do-change-butt" value="Zmień">
+                    <p id="errorDateTo"></p>
+                </p>
             </div>
         </div>
     </div>

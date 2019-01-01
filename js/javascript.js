@@ -134,3 +134,11 @@ document.getElementById('clickRegister').addEventListener('click', function () {
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
 });
+
+document.getElementById('clickBooking').addEventListener('click', function () {
+    document.querySelector('.bg-modal-booking').style.display = 'flex';
+    console.log('JESTEM')
+});
+document.querySelector('.close-booking').addEventListener('click', function () {
+    document.querySelector('.bg-modal-booking').style.display = 'none';
+});

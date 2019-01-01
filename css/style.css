@@ -30,7 +30,7 @@
   text-transform: uppercase;
 }
 
-.bg-modal-login, .bg-modal-register {
+.bg-modal-login, .bg-modal-register, .bg-modal-booking {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
@@ -47,7 +47,8 @@
 .bg-modal-register ul {
   list-style: none;
 }
-.modal-content-login, .modal-content-register {
+
+.modal-content-login, .modal-content-register, .modal-content-booking {
   width: 25%;
   background-color: #FFF;
   border-radius: 4px;
@@ -69,7 +70,7 @@
   border-color: #80b5ea;
 }
 
-.close-login, .close-register {
+.close-login, .close-register, .close-booking {
   position: absolute;
   top: 0;
   right: 14px;
