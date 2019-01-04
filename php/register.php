@@ -118,7 +118,7 @@
 
                 header('Location: ../user.html');
             } else {
-                $_SESSION['error_registration'] = true;
+                $_SESSION['error_register'] = true;
                 header('Location: ../index.html');
             }
         } catch (Exception $e) 

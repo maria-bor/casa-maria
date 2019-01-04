@@ -12,11 +12,4 @@ function checkError($error_name) {
     } else {
         return '';
     }
-
-    // if(isset($_SESSION['error_login'])) {
-    //     unset($_SESSION['error_login']);
-    //     return '<script>showLoginForm();</script>';
-    // } else {
-    //     return '';
-    // }
 }
