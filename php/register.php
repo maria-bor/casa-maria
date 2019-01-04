@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     if (isset($_POST['nameRegister']) &&
         isset($_POST['surnameRegister']) &&
         isset($_POST['email']) &&
@@ -31,7 +32,7 @@
         if($password1 != $password2)
         {
             $all_valid = false;
-            $_SESSION['error_password'] = 'Podane hasła są różne!';
+            $_SESSION['error_confirm'] = 'Podane hasła są różne!';
         }
 
         $password_hash = password_hash($password1, PASSWORD_DEFAULT);
@@ -40,6 +41,7 @@
         $_SESSION['form_surname'] = $surname;
         $_SESSION['form_email'] = $email;
         $_SESSION['form_password'] = $password1;
+        $_SESSION['form_confirm'] = $password2;
         
         require_once 'db.php';
 
@@ -116,6 +118,7 @@
 
                 header('Location: ../user.html');
             } else {
+                $_SESSION['error_registration'] = true;
                 header('Location: ../index.html');
             }
         } catch (Exception $e) 

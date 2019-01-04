@@ -1,6 +1,9 @@
 /*** POPUP LOGIN ***/
-document.getElementById('clickLogin').addEventListener('click', function () {
+function showLoginForm() {
     document.querySelector('.bg-modal-login').style.display = 'flex';
+}
+document.getElementById('clickLogin').addEventListener('click', function () {
+    showLoginForm();
     const formLogin = new Vue(
         {
             el: '#form-login',
@@ -48,8 +51,11 @@ document.querySelector('.close-login').addEventListener('click', function () {
 });
 
 /*** POPUP REGISTER ***/
-document.getElementById('clickRegister').addEventListener('click', function () {
+function showRegistrationForm() {
     document.querySelector('.bg-modal-register').style.display = 'flex';
+}
+document.getElementById('clickRegister').addEventListener('click', function () {
+    showRegistrationForm();
     const formRegister = new Vue(
         {
             el: '#form-register',

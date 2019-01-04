@@ -1,12 +1,17 @@
 <?php
     session_start();
 
-    unset($_SESSION['form_email']);
     if (isset($_SESSION['registered'])) {
         unset($_SESSION['registered']);
         unset($_SESSION['form_name']);
         unset($_SESSION['form_surname']);
+        unset($_SESSION['form_email']);
         unset($_SESSION['form_password']);
+        unset($_SESSION['form_confirm']);
+    }
+    else {
+        unset($_SESSION['form_login_email']);
+        unset($_SESSION['form_login_password']);
     }
 ?>
 

@@ -1,11 +1,9 @@
 <?php
   session_start();
 
-  if(isset($_SESSION['error_login']))
-  {
-    echo 'Error:'.$_SESSION['error_login'];
-    unset($_SESSION['error_login']);
-  }
+  require_once './php/helpers/checkError.php';
+  require_once './php/helpers/inputValue.php';
+
   if ((isset($_SESSION['is_user_logged'])) && ($_SESSION['is_user_logged'] == true))
 	{
 		header('Location: userLogged.html');
@@ -76,31 +74,21 @@
       <i class="icon-user"></i>
       <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
         <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin'
-          <?= isset($_SESSION['form_email']) ? 'value="' . $_SESSION['form_email'] . '"' : '' ?> required>
+          <?= inputValue('form_login_email'); ?> required>
         <p v-if="errorLogin.length">
           <ul>
             <li>{{ errorLogin }}</li>
           </ul>
         </p>
-        <?php
-				  if (isset($_SESSION['error_email'])) {
-					  echo '<p>'.$_SESSION['error_email'].'</p>';
-					  unset($_SESSION['error_email']);
-				  }
-				?>
+        <?= checkError('error_login_email'); ?>
         <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
-          required>
+          <?= inputValue('form_login_password'); ?> required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
-        <?php
-					if (isset($_SESSION['error_password'])) {
-					  echo '<p>'.$_SESSION['error_password'].'</p>';
-					  unset($_SESSION['error_password']);
-					}
-				?>
+        <?= checkError('error_login_password'); ?>
         <button id="loginButt" type="submit" name="loginButt">Zaloguj się</button>
       </form>
     </div>
@@ -111,64 +99,45 @@
       <div class="close-register">+</div>
       <form id="form-register" @submit="checkForm" method="POST" action="php/register.php" novalidate="true">
         <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister'
-          <?= isset($_SESSION['form_name']) ? 'value="' . $_SESSION['form_name'] . '"' : '' ?> required>
+          <?= inputValue('form_name'); ?> required>
         <p v-if="errorName.length">
           <ul>
             <li>{{ errorName }}</li>
           </ul>
         </p>
-        <?php
-				  if (isset($_SESSION['error_name'])) {
-					  echo '<p>'.$_SESSION['error_name'].'</p>';
-					  unset($_SESSION['error_name']);
-				  }
-				?>
+        <?= checkError('error_name'); ?>
         <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" v-model='surnameRegister'
-          <?= isset($_SESSION['form_surname']) ? 'value="' . $_SESSION['form_surname'] . '"' : '' ?> required>
+          <?= inputValue('form_surname'); ?> required>
         <p v-if="errorSurname.length">
           <ul>
             <li>{{ errorSurname }}</li>
           </ul>
         </p>
-        <?php
-				  if (isset($_SESSION['error_surname'])) {
-					  echo '<p>'.$_SESSION['error_surname'].'</p>';
-					  unset($_SESSION['error_surname']);
-				  }
-				?>
+        <?= checkError('error_surname'); ?>
         <input id="email" type="email" name="email" placeholder="Email" v-model="email"
-          <?= isset($_SESSION['form_email']) ? 'value="' . $_SESSION['form_email'] . '"' : '' ?> required>
+          <?= inputValue('form_email'); ?> required>
         <p v-if="errorEmail.length">
           <ul>
             <li>{{ errorEmail }}</li>
           </ul>
         </p>
-        <?php
-				  if (isset($_SESSION['error_email'])) {
-					  echo '<p>'.$_SESSION['error_email'].'</p>';
-					  unset($_SESSION['error_email']);
-				  }
-				?>
+        <?= checkError('error_email'); ?>
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister"
-          <?= isset($_SESSION['form_password']) ? 'value="' . $_SESSION['form_password'] . '"' : '' ?> required>
+          <?= inputValue('form_password'); ?> required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
+        <?= checkError('error_password'); ?>
         <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm"
-          <?= isset($_SESSION['form_password']) ? 'value="' . $_SESSION['form_password'] . '"' : '' ?> required>
+          <?= inputValue('form_confirm'); ?> required>
         <p v-if="errorPasswordConfirm.length">
           <ul>
             <li>{{ errorPasswordConfirm }}</li>
           </ul>
         </p>
-        <?php
-				  if (isset($_SESSION['error_password'])) {
-					  echo '<p>'.$_SESSION['error_password'].'</p>';
-					  unset($_SESSION['error_password']);
-				  }
-				?>
+        <?= checkError('error_confirm'); ?>
         <button id="registerButt" type="submit" name="registerButt">Zarejestruj się</button>
       </form>
     </div>
@@ -277,6 +246,8 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <script src="./js/javascript.js"></script>
+  <?= require_once './php/helpers/checkErrorLogin.php'; ?>
+  <?= require_once './php/helpers/checkErrorRegistration.php'; ?>
 </body>
 
 </html>
