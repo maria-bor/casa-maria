@@ -152,3 +152,27 @@ function checkError(error) {
     ajax.open("GET", "./php/helpers/checkError"+error+".php", true);
     ajax.send();
 }
+
+var dateFrom = document.getElementById('book-date-from');
+var dateTo = document.getElementById("book-date-to");
+dateFrom.addEventListener('change', setDateTo);
+function setDateTo() {
+    var from = dateFrom.value;
+    dateTo.min = from;
+}
+
+/*** POPUP BOOKING ***/
+document.getElementById('clickBooking').addEventListener('click', function () {
+
+    var dateFrom = document.getElementById('book-date-from').value;
+    var dateTo = document.getElementById('book-date-to').value;
+    console.log('przed')
+    
+    document.querySelector('.bg-modal-booking').style.display = 'flex';
+    console.log('po')
+    document.getElementById('book-from').value = dateFrom;
+    document.getElementById('book-to').value = dateTo;
+});
+document.querySelector('.close-booking').addEventListener('click', function () {
+    document.querySelector('.bg-modal-booking').style.display = 'none';
+});
