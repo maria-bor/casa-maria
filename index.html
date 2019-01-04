@@ -177,8 +177,16 @@
   <div class="bg-modal-booking">
     <div class="modal-content-booking">
       <div class="close-booking">+</div>
-      <form id="" @submit="checkForm" method="POST" action="php/" novalidate="true">
-      </form>
+      <div class="labels-booking">
+        <input id="book-from" type="text" disabled>
+        <label> - </label>
+        <input id="book-to" type="text" disabled>
+      </div>
+      <div class="input-booking">
+        <input id="type-room" type="text" disabled>
+        <input id="price-room" type="number" disabled>
+        <input id="bookButt" type="submit" value="Zarezerwuj">
+      </div>
     </div>
   </div>
 
@@ -225,23 +233,23 @@
   <!-- BOOKING FORM-->
   <div class="contact">
     <div class="booking-form">
-      <form novalidate>
+      <form id="form-booking" novalidate>
         <div class="form-header">
           <h2>Zarezerwuj swój pobyt</h2>
         </div>
 
         <div class="form-group">
-          <span class="form-label">Check In</span>
-          <input class="form-control" type="date" required>
+          <span class="form-label">Przyjazd</span>
+          <input id="book-date-from" class="form-control" type="date" required>
         </div>
 
         <div class="form-group">
-          <span class="form-label">Check out</span>
-          <input class="form-control" type="date" required>
+          <span class="form-label">Wyjazd</span>
+          <input id="book-date-to" class="form-control" min="" type="date" required>
         </div>
 
         <div class="form-group">
-          <span class="form-label">Guests</span>
+          <span class="form-label">Goście</span>
           <select class="form-control">
             <option>1</option>
             <option>2</option>
@@ -250,7 +258,7 @@
         </div>
 
         <div class="form-group">
-          <span class="form-label">Kids</span>
+          <span class="form-label">Dzieci</span>
           <select class="form-control">
             <option>0</option>
             <option>1</option>
@@ -259,7 +267,7 @@
         </div>
 
         <div class="formButt">
-          <input id="clickBooking" type="submit" class="submit-btn" value="Sprawdź dostępność"></input>
+          <input id="clickBooking" type="submit" class="submit-btn" value="Sprawdź dostępność">
         </div>
       </form>
     </div>
