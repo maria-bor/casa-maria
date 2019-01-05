@@ -59,19 +59,48 @@ $(function () {
     })
 });
 
+function changeProfile(changedName, changedValue) {
+    $.ajax({
+        type: "POST",
+        url: "./php/changeUserProfile.php",
+        data: {
+            name : changedName,
+            value : changedValue
+        },
+        dataType : "text",
+        success: function(response) {
+            console.log(response);
+        }
+    })
+    .done(function(response) {
+        alert(response);
+    })
+    .fail(function( xhr, status, errorThrown ) {
+        alert("Przepraszamy, wystąpił problem!");
+        console.warn(xhr.responseText)
+        console.log("Error: " + errorThrown);
+        console.log("Status: " + status);
+        console.dir(xhr);
+    });
+}
 // CHANGE NAME ON PROFILE
 var changedName;
 $('#name-change-butt').on('click', function () {
     if ($('#name-change-butt').val() === 'Zmień') {
+        changedName = $('#userName').val();
         $('#userName').prop('disabled', false);
         $('#name-change-butt').prop('value', 'Ok');
     }
     else if ($('#name-change-butt').val() === 'Ok') {
-        changedName = $('#userName').val();
-        if (/^[a-zA-Z]{3,20}?$/.test(changedName)) {
+        let newChangedName = $('#userName').val();
+        if (/^[a-zA-Z]{3,20}?$/.test(newChangedName)) {
             $('#userName').prop('disabled', true);
             $('#name-change-butt').prop('value', 'Zmień');
             $('#errorName').empty();
+            if (changedName != newChangedName) {
+                changedName = newChangedName;
+                changeProfile("new_name", changedName);
+            }
         }
         else {
             $('#errorName').text('Niepoprawny format.');
@@ -83,15 +112,20 @@ $('#name-change-butt').on('click', function () {
 var changedSurname;
 $('#surname-change-butt').on('click', function () {
     if ($('#surname-change-butt').val() === 'Zmień') {
+        changedSurname = $('#userSurname').val();
         $('#userSurname').prop('disabled', false);
         $('#surname-change-butt').prop('value', 'Ok');
     }
     else if ($('#surname-change-butt').val() === 'Ok') {
-        changedSurname = $('#userSurname').val();
-        if (/^[a-zA-Z]{3,20}?$/.test(changedSurname)) {
+        let newChangedSurname = $('#userSurname').val();
+        if (/^[a-zA-Z]{3,20}?$/.test(newChangedSurname)) {
             $('#userSurname').prop('disabled', true);
             $('#surname-change-butt').prop('value', 'Zmień');
             $('#errorSurname').empty();
+            if (changedSurname != newChangedSurname) {
+                changedSurname = newChangedSurname;
+                changeProfile("new_surname", changedSurname);
+            }
         }
         else {
             $('#errorSurname').text('Niepoprawny format.');
