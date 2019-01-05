@@ -12,8 +12,10 @@ if (!isset($_SESSION['id_user'])) {
 if (isset($_POST['name']) && isset($_POST['value']))
     if ($_POST['name'] == 'new_name')
         changeName($_POST['value']);
-    else if ($_POST['name'] = 'new_surname')
+    else if ($_POST['name'] == 'new_surname')
         changeSurname($_POST['value']);
+    else if ($_POST['name'] == 'new_email')
+        changeEmail($_POST['value']);
 
 echo "Dane zostały zmienione";
 
@@ -50,6 +52,25 @@ function changeSurname($new_surname) {
         $query->bindValue(':id_user', $id_user, PDO::PARAM_STR);
         $query->execute();
         $_SESSION['surname'] = $new_surname;
+    } catch (Exception $e)
+    {
+        echo '<br />'.$e;
+    }
+}
+
+function changeEmail($new_email) {
+    $id_user = $_SESSION['id_user'];
+    require_once 'db.php';
+    try
+    {
+        $sql = 'UPDATE User
+                SET email = :new_email
+                WHERE idUser = :id_user;';
+        $query = $db->prepare($sql);
+        $query->bindValue(':new_email', $new_email, PDO::PARAM_STR);
+        $query->bindValue(':id_user', $id_user, PDO::PARAM_STR);
+        $query->execute();
+        $_SESSION['email'] = $new_email;
     } catch (Exception $e)
     {
         echo '<br />'.$e;

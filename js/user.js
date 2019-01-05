@@ -137,15 +137,20 @@ $('#surname-change-butt').on('click', function () {
 var changedEmail;
 $('#email-change-butt').on('click', function () {
     if ($('#email-change-butt').val() === 'Zmień') {
+        changedEmail = $('#userEmail').val();
         $('#userEmail').prop('disabled', false);
         $('#email-change-butt').prop('value', 'Ok');
     }
     else if ($('#email-change-butt').val() === 'Ok') {
-        changedEmail = $('#userEmail').val();
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(changedEmail)) {
+        let newChangedEmail = $('#userEmail').val();
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newChangedEmail)) {
             $('#userEmail').prop('disabled', true);
             $('#email-change-butt').prop('value', 'Zmień');
             $('#errorEmail').empty();
+            if (changedEmail != newChangedEmail) {
+                changedEmail = newChangedEmail;
+                changeProfile("new_email", changedEmail);
+            }
         }
         else {
             $('#errorEmail').text('Niepoprawny format.');
