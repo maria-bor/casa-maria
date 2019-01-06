@@ -59,7 +59,7 @@ $(function () {
     })
 });
 
-function changeProfile(changedName, changedValue, tagName) {
+function changeProfile(changedName, changedValue, attributeName) {
     $.ajax({
         type: "POST",
         url: "./php/changeUserProfile.php",
@@ -69,9 +69,13 @@ function changeProfile(changedName, changedValue, tagName) {
         },
         dataType : "json",
         success: function(response) {
-            console.log(response);
             if (response.value.length != 0)
-                $(tagName).val(response.value);
+                $('#user'+attributeName).val(response.value);
+            if (response.result == 'OK') {
+                alert(response.message);
+            }
+            else
+                $('#error'+attributeName).text(response.message);
         }
     })
     .fail(function( xhr, status, errorThrown ) {
@@ -98,7 +102,7 @@ $('#name-change-butt').on('click', function () {
             $('#errorName').empty();
             if (changedName != newChangedName) {
                 changedName = newChangedName;
-                changeProfile("new_name", changedName, '#userName');
+                changeProfile("new_name", changedName, 'Name');
             }
         }
         else {
@@ -123,7 +127,7 @@ $('#surname-change-butt').on('click', function () {
             $('#errorSurname').empty();
             if (changedSurname != newChangedSurname) {
                 changedSurname = newChangedSurname;
-                changeProfile("new_surname", changedSurname, '#userSurname');
+                changeProfile("new_surname", changedSurname, 'Surname');
             }
         }
         else {
@@ -148,7 +152,7 @@ $('#email-change-butt').on('click', function () {
             $('#errorEmail').empty();
             if (changedEmail != newChangedEmail) {
                 changedEmail = newChangedEmail;
-                changeProfile("new_email", changedEmail, '#userEmail');
+                changeProfile("new_email", changedEmail, 'Email');
             }
         }
         else {

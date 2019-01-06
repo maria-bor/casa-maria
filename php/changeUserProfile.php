@@ -3,7 +3,7 @@ session_start();
 
 $result_obj = new stdClass();
 $result_obj->result = 'ERROR';
-$result_obj->message = 'Niepoprawne dane';
+$result_obj->message = 'Niepoprawne dane.';
 $result_obj->value = '';
 
 if (!isset($_SESSION['id_user'])) {
@@ -40,7 +40,7 @@ function changeName($new_name, $result_obj) {
         $query->execute();
         $_SESSION['name'] = $new_name;
         $result_obj->result = 'OK';
-        $result_obj->message = 'Imię zostało zmienione';
+        $result_obj->message = 'Imię zostało zmienione.';
         $result_obj->value = $new_name;
         return $result_obj;
     } catch (Exception $e)
@@ -64,7 +64,7 @@ function changeSurname($new_surname, $result_obj) {
         $query->execute();
         $_SESSION['surname'] = $new_surname;
         $result_obj->result = 'OK';
-        $result_obj->message = 'Nazwisko zostało zmienione';
+        $result_obj->message = 'Nazwisko zostało zmienione.';
         $result_obj->value = $new_surname;
         return $result_obj;
     } catch (Exception $e)
@@ -103,7 +103,7 @@ function changeEmail($new_email, $result_obj) {
         $query->execute();
         $_SESSION['email'] = $new_email;
         $result_obj->result = 'OK';
-        $result_obj->message = 'Email został zmieniony';
+        $result_obj->message = 'Email został zmieniony.';
         $result_obj->value = $new_email;
         return $result_obj;
     } catch (Exception $e)
