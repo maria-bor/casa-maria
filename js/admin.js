@@ -1,5 +1,5 @@
 function logout() {
-    window.open("./index.html");
+    window.location.replace("./php/logout.php");
 }
 
 const formAddTypeRoom = new Vue(
