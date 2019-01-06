@@ -59,7 +59,7 @@ $(function () {
     })
 });
 
-function changeProfile(changedName, changedValue) {
+function changeProfile(changedName, changedValue, tagName) {
     $.ajax({
         type: "POST",
         url: "./php/changeUserProfile.php",
@@ -67,13 +67,12 @@ function changeProfile(changedName, changedValue) {
             name : changedName,
             value : changedValue
         },
-        dataType : "text",
+        dataType : "json",
         success: function(response) {
             console.log(response);
+            if (response.value.length != 0)
+                $(tagName).val(response.value);
         }
-    })
-    .done(function(response) {
-        alert(response);
     })
     .fail(function( xhr, status, errorThrown ) {
         alert("Przepraszamy, wystąpił problem!");
@@ -99,7 +98,7 @@ $('#name-change-butt').on('click', function () {
             $('#errorName').empty();
             if (changedName != newChangedName) {
                 changedName = newChangedName;
-                changeProfile("new_name", changedName);
+                changeProfile("new_name", changedName, '#userName');
             }
         }
         else {
@@ -124,7 +123,7 @@ $('#surname-change-butt').on('click', function () {
             $('#errorSurname').empty();
             if (changedSurname != newChangedSurname) {
                 changedSurname = newChangedSurname;
-                changeProfile("new_surname", changedSurname);
+                changeProfile("new_surname", changedSurname, '#userSurname');
             }
         }
         else {
@@ -149,7 +148,7 @@ $('#email-change-butt').on('click', function () {
             $('#errorEmail').empty();
             if (changedEmail != newChangedEmail) {
                 changedEmail = newChangedEmail;
-                changeProfile("new_email", changedEmail);
+                changeProfile("new_email", changedEmail, '#userEmail');
             }
         }
         else {
