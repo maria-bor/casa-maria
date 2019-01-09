@@ -1,9 +1,6 @@
 /*** POPUP LOGIN ***/
-function showLoginForm() {
-    document.querySelector('.bg-modal-login').style.display = 'flex';
-}
 document.getElementById('clickLogin').addEventListener('click', function () {
-    showLoginForm();
+    document.querySelector('.bg-modal-login').style.display = 'flex';
     const formLogin = new Vue(
         {
             el: '#form-login',
@@ -51,11 +48,8 @@ document.querySelector('.close-login').addEventListener('click', function () {
 });
 
 /*** POPUP REGISTER ***/
-function showRegistrationForm() {
-    document.querySelector('.bg-modal-register').style.display = 'flex';
-}
 document.getElementById('clickRegister').addEventListener('click', function () {
-    showRegistrationForm();
+    document.querySelector('.bg-modal-register').style.display = 'flex';
     const formRegister = new Vue(
         {
             el: '#form-register',
@@ -141,6 +135,24 @@ document.querySelector('.close-register').addEventListener('click', function () 
     document.querySelector('.bg-modal-register').style.display = 'none';
 });
 
+/***CHECK LOGIN OR REGISTER ERROR (RESPONSE FROM SERVER)***/
+$(document).ready(function() {
+    checkError("Register");
+    checkError("Login");
+});
+
+function checkError(error) {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == ("error_"+error.toLowerCase()))
+                document.getElementById("click"+error).click();
+        }
+    }
+    ajax.open("GET", "./php/helpers/checkError"+error+".php", true);
+    ajax.send();
+}
+
 var dateFrom = document.getElementById('book-date-from');
 var dateTo = document.getElementById("book-date-to");
 dateFrom.addEventListener('change', setDateTo);
@@ -164,4 +176,3 @@ document.getElementById('clickBooking').addEventListener('click', function () {
 document.querySelector('.close-booking').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
 });
-

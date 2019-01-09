@@ -1,12 +1,12 @@
 <?php
   session_start();
 
-  require_once './php/helpers/checkError.php';
+  require_once './php/helpers/checkFormError.php';
   require_once './php/helpers/inputValue.php';
 
   if ((isset($_SESSION['is_user_logged'])) && ($_SESSION['is_user_logged'] == true))
 	{
-		header('Location: userLogged.html');
+		header('Location: user.html');
 		exit();
   }
   if ((isset($_SESSION['is_admin_logged'])) && ($_SESSION['is_admin_logged'] == true))
@@ -76,7 +76,7 @@
             <li>{{ errorLogin }}</li>
           </ul>
         </p>
-        <?= checkError('error_login_email'); ?>
+        <?= checkFormError('error_login_email'); ?>
         <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
           <?= inputValue('form_login_password'); ?> required>
         <p v-if="errorPassword.length">
@@ -84,7 +84,7 @@
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
-        <?= checkError('error_login_password'); ?>
+        <?= checkFormError('error_login_password'); ?>
         <button id="loginButt" type="submit" name="loginButt">Zaloguj się</button>
       </form>
     </div>
@@ -101,7 +101,7 @@
             <li>{{ errorName }}</li>
           </ul>
         </p>
-        <?= checkError('error_name'); ?>
+        <?= checkFormError('error_name'); ?>
         <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" v-model='surnameRegister'
           <?= inputValue('form_surname'); ?> required>
         <p v-if="errorSurname.length">
@@ -109,7 +109,7 @@
             <li>{{ errorSurname }}</li>
           </ul>
         </p>
-        <?= checkError('error_surname'); ?>
+        <?= checkFormError('error_surname'); ?>
         <input id="email" type="email" name="email" placeholder="Email" v-model="email"
           <?= inputValue('form_email'); ?> required>
         <p v-if="errorEmail.length">
@@ -117,7 +117,7 @@
             <li>{{ errorEmail }}</li>
           </ul>
         </p>
-        <?= checkError('error_email'); ?>
+        <?= checkFormError('error_email'); ?>
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister"
           <?= inputValue('form_password'); ?> required>
         <p v-if="errorPassword.length">
@@ -125,7 +125,7 @@
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
-        <?= checkError('error_password'); ?>
+        <?= checkFormError('error_password'); ?>
         <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm"
           <?= inputValue('form_confirm'); ?> required>
         <p v-if="errorPasswordConfirm.length">
@@ -133,7 +133,7 @@
             <li>{{ errorPasswordConfirm }}</li>
           </ul>
         </p>
-        <?= checkError('error_confirm'); ?>
+        <?= checkFormError('error_confirm'); ?>
         <button id="registerButt" type="submit" name="registerButt">Zarejestruj się</button>
       </form>
     </div>
@@ -244,8 +244,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <script src="./js/javascript.js"></script>
-  <?= require_once './php/helpers/checkErrorLogin.php'; ?>
-  <?= require_once './php/helpers/checkErrorRegistration.php'; ?>
 </body>
 
 </html>
