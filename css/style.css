@@ -20,6 +20,7 @@
 .banner, .top-bar {
   background: url("./../images/head.jpg");
   background-size: cover;
+  z-index: 1;
 }
 
 .logo {

@@ -164,3 +164,4 @@ document.getElementById('clickBooking').addEventListener('click', function () {
 document.querySelector('.close-booking').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
 });
+
