@@ -1,4 +1,4 @@
-import {setupChangeNameHandler, setupChangeSurnameHandler, setupChangeEmailHandler} from './changeProfile.js';
+import { setupChangeNameHandler, setupChangeSurnameHandler, setupChangeEmailHandler } from './changeProfile.js';
 
 $(function () {
     $(".menu-toggle").on("click", function (e) {
@@ -13,6 +13,7 @@ $(function () {
     });
 });
 
+window.logout = logout;
 function logout() {
     window.location.replace("./php/logout.php");
 }

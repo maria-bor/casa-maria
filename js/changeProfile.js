@@ -1,5 +1,3 @@
-export {setupChangeNameHandler, setupChangeSurnameHandler, setupChangeEmailHandler};
-
 function changeProfile(changedName, changedValue, attributeName) {
     $.ajax({
         type: "POST",
@@ -30,7 +28,7 @@ function changeProfile(changedName, changedValue, attributeName) {
 
 // CHANGE NAME ON PROFILE
 var changedName;
-function setupChangeNameHandler() {
+export function setupChangeNameHandler() {
     $('#name-change-butt').on('click', function () {
         if ($('#name-change-butt').val() === 'Zmień') {
             changedName = $('#userName').val();
@@ -57,7 +55,7 @@ function setupChangeNameHandler() {
 
 // CHANGE SURNAME ON PROFILE
 var changedSurname;
-function setupChangeSurnameHandler() {
+export function setupChangeSurnameHandler() {
     $('#surname-change-butt').on('click', function () {
         if ($('#surname-change-butt').val() === 'Zmień') {
             changedSurname = $('#userSurname').val();
@@ -83,7 +81,7 @@ function setupChangeSurnameHandler() {
 }
 
 var changedEmail;
-function setupChangeEmailHandler() {
+export function setupChangeEmailHandler() {
     // CHANGE EMAIL ON PROFILE
     $('#email-change-butt').on('click', function () {
         if ($('#email-change-butt').val() === 'Zmień') {
