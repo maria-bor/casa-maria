@@ -1,4 +1,8 @@
-import { setupChangeNameHandler, setupChangeSurnameHandler, setupChangeEmailHandler } from './changeProfile.js';
+import {
+    setupChangeNameHandler,
+    setupChangeSurnameHandler,
+    setupChangeEmailHandler }
+    from './changeProfile.js';
 
 $(function () {
     $(".menu-toggle").on("click", function (e) {
@@ -13,6 +17,7 @@ $(function () {
     });
 });
 
+// Putting the logout function as a property on the window object
 window.logout = logout;
 function logout() {
     window.location.replace("./php/logout.php");
@@ -63,8 +68,11 @@ $(function () {
 });
 
 // ***USER DATA***
+// CHANGE NAME ON PROFILE
 $(setupChangeNameHandler());
+// CHANGE SURNAME ON PROFILE
 $(setupChangeSurnameHandler());
+// CHANGE EMAIL ON PROFILE
 $(setupChangeEmailHandler());
 
 // CHANGE PASSWORD ON PROFILE

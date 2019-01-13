@@ -81,8 +81,8 @@ export function setupChangeSurnameHandler() {
 }
 
 var changedEmail;
+// CHANGE EMAIL ON PROFILE
 export function setupChangeEmailHandler() {
-    // CHANGE EMAIL ON PROFILE
     $('#email-change-butt').on('click', function () {
         if ($('#email-change-butt').val() === 'Zmień') {
             changedEmail = $('#userEmail').val();
