@@ -1,4 +1,3 @@
-
 CREATE TABLE Role (
                 idRole INT AUTO_INCREMENT NOT NULL,
                 name VARCHAR(50) NOT NULL,
@@ -143,3 +142,7 @@ FOREIGN KEY (idRoom)
 REFERENCES Room (idRoom)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+
+INSERT INTO `role` (`idRole`, `name`) VALUES
+	(1, 'admin'),
+	(2, 'user_logged');
