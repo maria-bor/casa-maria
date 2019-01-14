@@ -15,7 +15,7 @@ const formAddTypeRoom = new Vue(
                 this.errorName = '';
 
                 if (!this.nameType) {
-                    this.errorName = "Wprowadź nazwę oferty.";
+                    this.errorName = "Wprowadź typ pokoju.";
                 } else if (!this.validName(this.nameType)) {
                     this.errorName = "Niepoprawny format.";
                 }
