@@ -1,3 +1,8 @@
+<?php
+    session_start();
+
+    require_once './php/helpers/inputValue.php';
+?>
 <!doctype html>
 <html lang="en">
 
@@ -28,25 +33,25 @@
                 <div id="profile-admin">
                     <div class="input">
                         <label for="userName">Imię</label>
-                        <input type="text" id="userName" name="userName" required disabled>
+                        <input type="text" id="userName" name="userName" required disabled <?= inputValue("name"); ?> >
                         <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
                         <p id="errorName"></p>
                     </div>
                     <div class="input">
                         <label for="userSurname">Nazwisko</label>
-                        <input type="text" id="userSurname" name="userSurname" required disabled>
+                        <input type="text" id="userSurname" name="userSurname" required disabled <?= inputValue("surname"); ?> >
                         <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
                         <p id="errorSurname"></p>
                     </div>
                     <div class="input">
                         <label for="userEmail">Email</label>
-                        <input type="email" id="userEmail" name="userEmail" required disabled>
+                        <input type="email" id="userEmail" name="userEmail" required disabled <?= inputValue("email"); ?> >
                         <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
                         <p id="errorEmail"></p>
                     </div>
                     <div class="input">
                         <label for="userPassword">Hasło</label>
-                        <input type="password" id="userPassword" name="userPassword" required disabled>
+                        <input type="password" id="userPassword" name="userPassword" required disabled <?= inputValue("password"); ?> >
                         <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
                         <p id="errorPassword"></p>
                     </div>
@@ -60,7 +65,7 @@
             <div class="row">
                 <form id="form-add-type" @submit="checkForm" method="POST" action="" novalidate="true">
                     <fieldset>
-                        <legend>Dodaj typ pokóju</legend>
+                        <legend>Dodaj typ pokoju</legend>
                         <div class="form-input">
                             <label for="nameType">Nazwa</label>
                             <input id="nameType" name="nameType" type="text" placeholder="Typ pokoju" v-model="nameType" required>
@@ -320,9 +325,9 @@
         </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-    <script src="./js/admin.js"></script>
+    <script src="./js/admin.js" type="module"></script>
 </body>
 
 </html>

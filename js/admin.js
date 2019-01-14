@@ -1,5 +1,13 @@
+import {
+    setupChangeNameHandler,
+    setupChangeSurnameHandler,
+    setupChangeEmailHandler }
+    from './changeProfile.js';
+
+// Putting the logout function as a property on the window object
+window.logout = logout;
 function logout() {
-    window.open("./index.html");
+    window.location.replace("./php/logout.php");
 }
 
 const formAddTypeRoom = new Vue(
@@ -15,7 +23,11 @@ const formAddTypeRoom = new Vue(
                 this.errorName = '';
 
                 if (!this.nameType) {
+<<<<<<< HEAD
                     this.errorName = "Wprowadź typ pokoju.";
+=======
+                    this.errorName = "Wprowadź nazwę typu.";
+>>>>>>> 0e5e364505b52f4ad287e444dead0e8c61fda3b4
                 } else if (!this.validName(this.nameType)) {
                     this.errorName = "Niepoprawny format.";
                 }
@@ -237,66 +249,13 @@ const formRegisterAdmin = new Vue(
 
 // ***ADMIN DATA***
 // CHANGE ADMIN NAME
-var changedName;
-$('#name-change-butt').on('click', function () {
-    if ($('#name-change-butt').val() === 'Zmień') {
-        $('#userName').prop('disabled', false);
-        $('#name-change-butt').prop('value', 'Ok');
-    }
-    else if ($('#name-change-butt').val() === 'Ok') {
-        changedName = $('#userName').val();
-        if (/^[a-zA-Z]{3,20}?$/.test(changedName)) {
-            $('#userName').prop('disabled', true);
-            $('#name-change-butt').prop('value', 'Zmień');
-            $('#errorName').empty();
-        }
-        else {
-            $('#errorName').text('Niepoprawny format.');
-        }
-    }
-});
-
+$(setupChangeNameHandler());
 // CHANGE ADMIN SURNAME
-var changedSurname;
-$('#surname-change-butt').on('click', function () {
-    if ($('#surname-change-butt').val() === 'Zmień') {
-        $('#userSurname').prop('disabled', false);
-        $('#surname-change-butt').prop('value', 'Ok');
-    }
-    else if ($('#surname-change-butt').val() === 'Ok') {
-        changedSurname = $('#userSurname').val();
-        if (/^[a-zA-Z]{3,20}?$/.test(changedSurname)) {
-            $('#userSurname').prop('disabled', true);
-            $('#surname-change-butt').prop('value', 'Zmień');
-            $('#errorSurname').empty();
-        }
-        else {
-            $('#errorSurname').text('Niepoprawny format.');
-        }
-    }
-});
-
+$(setupChangeSurnameHandler());
 // CHANGE ADMIN EMAIL
-var changedEmail;
-$('#email-change-butt').on('click', function () {
-    if ($('#email-change-butt').val() === 'Zmień') {
-        $('#userEmail').prop('disabled', false);
-        $('#email-change-butt').prop('value', 'Ok');
-    }
-    else if ($('#email-change-butt').val() === 'Ok') {
-        changedEmail = $('#userEmail').val();
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(changedEmail)) {
-            $('#userEmail').prop('disabled', true);
-            $('#email-change-butt').prop('value', 'Zmień');
-            $('#errorEmail').empty();
-        }
-        else {
-            $('#errorEmail').text('Niepoprawny format.');
-        }
-    }
-});
+$(setupChangeEmailHandler());
 
-// CHANGE ADMIN ASSWORD
+// CHANGE ADMIN PASSWORD
 var changedPassword;
 $('#password-change-butt').on('click', function () {
     if ($('#password-change-butt').val() === 'Zmień') {
