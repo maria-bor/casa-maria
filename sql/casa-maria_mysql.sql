@@ -34,7 +34,7 @@ CREATE TABLE Offer (
 
 
 CREATE TABLE Type (
-                idType INT NOT NULL,
+                idType INT AUTO_INCREMENT NOT NULL,
                 name VARCHAR(50) NOT NULL,
                 idUserLogged INT NOT NULL,
                 PRIMARY KEY (idType)
@@ -49,7 +49,7 @@ CREATE TABLE UserRole (
 
 
 CREATE TABLE Room (
-                idRoom INT NOT NULL,
+                idRoom INT AUTO_INCREMENT NOT NULL,
                 sleeps TINYINT NOT NULL,
                 floor TINYINT NOT NULL,
                 idType INT NOT NULL,
