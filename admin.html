@@ -1,6 +1,6 @@
 <?php
     session_start();
-
+    require_once './php/helpers/checkFormError.php';
     require_once './php/helpers/inputValue.php';
 ?>
 <!doctype html>
@@ -63,7 +63,7 @@
         <label for="tab-two">Dodaj pokój</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-type" @submit="checkForm" method="POST" action="" novalidate="true">
+                <form id="form-add-type" @submit="checkForm" method="POST" action="php/admin.php" novalidate="true">
                     <fieldset>
                         <legend>Dodaj typ pokoju</legend>
                         <div class="form-input">
@@ -75,6 +75,7 @@
                                 <li>{{ errorName }}</li>
                             </ul>
                         </p>
+                        <?= checkFormError('error_name_type'); ?>
                         <div class="form-input butt">
                             <input id='add-type-room' type="submit" value="Dodaj">
                         </div>
