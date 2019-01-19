@@ -1,0 +1,359 @@
+<?php
+    session_start();
+
+    require_once './php/helpers/inputValue.php';
+?>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Menu Admin</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="./css/admin.css">
+    <link rel="stylesheet" type="text/css" href="./css/fontello.css">
+
+    <!--VUE.JS-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <button class="tablink" onclick="openPage('profile-admin', this, 'rgb(161, 156, 156)')" id="defaultOpen">Twoje dane</button>
+    <button class="tablink" onclick="openPage('dodaj-pokoj', this, 'rgb(161, 156, 156)')">Dodaj pokój</button>
+    <button class="tablink" onclick="openPage('rezerwacje', this, 'rgb(161, 156, 156)')">Rezerwacje</button>
+    <button class="tablink" onclick="openPage('dodaj-oferte', this, 'rgb(161, 156, 156)')">Dodaj ofertę</button>
+    <button class="tablink" onclick="openPage('zarzadzaj-admin', this, 'rgb(161, 156, 156)')">Zarządzaj administratorami</button>
+    <button class="tablink" onclick="logout()"><i class="material-icons">close</i></button>
+
+    <div id="profile-admin" class="tabcontent">
+        <div class="div-inside">
+            <div class="row">
+                <div id="profile-admin">
+                    <div class="input">
+                        <label for="userName">Imię</label>
+                        <input type="text" id="userName" name="userName" required disabled <?=inputValue("name"); ?> >
+                        <input type="button" id="name-change-butt" name="name-change-butt" value="Zmień">
+                        <p id="errorName"></p>
+                    </div>
+                    <div class="input">
+                        <label for="userSurname">Nazwisko</label>
+                        <input type="text" id="userSurname" name="userSurname" required disabled <?=inputValue("surname");
+                            ?> >
+                        <input type="button" id="surname-change-butt" name="surname-change-butt" value="Zmień">
+                        <p id="errorSurname"></p>
+                    </div>
+                    <div class="input">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" name="userEmail" required disabled <?=inputValue("email"); ?>
+                        >
+                        <input type="button" id="email-change-butt" name="email-change-butt" value="Zmień">
+                        <p id="errorEmail"></p>
+                    </div>
+                    <div class="input">
+                        <label for="userPassword">Hasło</label>
+                        <input type="password" id="userPassword" name="userPassword" required disabled <?=inputValue("password");
+                            ?> >
+                        <input type="button" id="password-change-butt" name="password-change-butt" value="Zmień">
+                        <p id="errorPassword"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dodaj-pokoj" class="tabcontent">
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-type" @submit="checkForm" method="POST" action="" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj typ pokoju</legend>
+                        <div class="form-input">
+                            <label for="nameType">Nazwa</label>
+                            <input id="nameType" name="nameType" type="text" placeholder="Typ pokoju" v-model="nameType"
+                                required>
+                        </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input butt">
+                            <input id='add-type-room' type="submit" value="Dodaj">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <form id="form-add-room" @submit="checkForm" method="POST" action="" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj pokój</legend>
+                        <div class="form-input">
+                            <label for="nrRoom">Numer pokoju</label>
+                            <input id="nrRoom" name="nrRoom" type="number" placeholder="Numer pokoju" v-model="nrRoom">
+                        </div>
+                        <p v-if="errorNrRoom.length">
+                            <ul>
+                                <li>{{ errorNrRoom }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="nrFloor">Numer piętra</label>
+                            <input id="nrFloor" name="nrFloor" type="number" placeholder="Numer piętra" v-model="nrFloor"
+                                required>
+                        </div>
+                        <p v-if="errorNrFloor.length">
+                            <ul>
+                                <li>{{ errorNrFloor }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="sleeps">Iloosobowy</label>
+                            <input id="sleeps" name="sleeps" type="number" placeholder="Ile osób" v-model="sleeps"
+                                required>
+                        </div>
+                        <p v-if="errorSleeps.length">
+                            <ul>
+                                <li>{{ errorSleeps }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="type">Wybierz typ</label>
+                            <!-- <input id="type" name="type" type="text" placeholder="Typ pokoju" v-model="type"> -->
+                            <select name="type" id="type" v-model="type" required></select>
+                        </div>
+                        <p v-if="errorType.length">
+                            <ul>
+                                <li>{{ errorType }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input butt">
+                            <input id='add-room' type="submit" value="Dodaj">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="rezerwacje" class="tabcontent">
+        <div class="div-inside">
+            <div class="row">
+                <fieldset>
+                    <legend>Dane o rezerwacjach</legend>
+                    <table id="tableRezerwacje">
+                        <thead>
+                            <tr>
+                                <td>Nr</td>
+                                <td>Numer pokoju</td>
+                                <td>Imię</td>
+                                <td>Nazwisko</td>
+                                <td>Email</td>
+                                <td>Od</td>
+                                <td>Do</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Usuń rezerwację</legend>
+                    <select>
+                        <!-- <option value="volvo">Volvo</option> -->
+                    </select>
+                    <button type="submit" id='delete'>Usuń rezerwację</button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div id="dodaj-oferte" class="tabcontent">
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-offer" @submit="checkForm" method="POST" action="" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj ofertę</legend>
+                        <div class="form-input">
+                            <label for="name">Nazwa</label>
+                            <input id="name" name="name" type="text" placeholder="Nazwa oferty" v-model="name">
+                        </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="price">Cena</label>
+                            <input id="price" name="price" type="number" placeholder="Cena" v-model="price" required>
+                        </div>
+                        <p v-if="errorPrice.length">
+                            <ul>
+                                <li>{{ errorPrice }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="from">Od</label>
+                            <input id="from" name="index" type="date" v-model="from" required>
+                        </div>
+                        <p v-if="errorFrom.length">
+                            <ul>
+                                <li>{{ errorFrom }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <label for="to">Do</label>
+                            <input id="to" name="index" type="date" v-model="to" required>
+                        </div>
+                        <p v-if="errorTo.length">
+                            <ul>
+                                <li>{{ errorTo }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input butt">
+                            <input id='buttAddData' type="submit" value="Dodaj ofertę">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Aktualne oferty</legend>
+                    <table id="tableOferty">
+                        <thead>
+                            <tr>
+                                <td>Nr</td>
+                                <td>Nazwa</td>
+                                <td>Cena</td>
+                                <td>Nr pokoju</td>
+                                <td>Od</td>
+                                <td>Do</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Dodaj pokój do oferty</legend>
+                    <select name="offers" id="offers"></select>
+                    <select name="rooms" id="rooms"></select>
+                    <button type="submit" id='add-room-offer'>Dodaj</button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div id="zarzadzaj-admin" class="tabcontent">
+        <div class="div-inside">
+            <div class="row">
+                <form id="form-add-admin" @submit="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
+                    <fieldset>
+                        <legend>Dodaj administratora</legend>
+                        <div class="form-input">
+                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię" v-model="nameNewAdmin"
+                                required>
+                        </div>
+                        <p v-if="errorName.length">
+                            <ul>
+                                <li>{{ errorName }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko"
+                                v-model="surnameNewAdmin" required>
+                        </div>
+                        <p v-if="errorSurname.length">
+                            <ul>
+                                <li>{{ errorSurname }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email" v-model="emailNewAdmin"
+                                required>
+                        </div>
+                        <p v-if="errorEmail.length">
+                            <ul>
+                                <li>{{ errorEmail }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło"
+                                v-model="passwordNewAdmin" required>
+                        </div>
+                        <p v-if="errorPassword.length">
+                            <ul>
+                                <li>{{ errorPassword }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <input id="passwordConfirmNewAdmin" type="password" name="passwordConfirmNewAdmin"
+                                placeholder="Potwierdź hasło" v-model="passwordConfirmNewAdmin" required>
+                        </div>
+                        <p v-if="errorPasswordConfirm.length">
+                            <ul>
+                                <li>{{ errorPasswordConfirm }}</li>
+                            </ul>
+                        </p>
+                        <div class="form-input">
+                            <button id="addAdminButt" type="submit" name="addAdminButt">Dodaj administratora</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Aktualni administratorzy</legend>
+                    <table id="tableAdmin">
+                        <thead>
+                            <tr>
+                                <td>Imię</td>
+                                <td>Nazwisko</td>
+                                <td>Email</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset>
+                    <legend>Usuń administratora</legend>
+                    <select>
+                        <!-- <option value="volvo">Volvo</option> -->
+                    </select>
+                    <button type="submit" id='deleteAdmin'>Usuń administratora</button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script src="./js/adminNew.js" type="module"></script>
+
+    <script>
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+
+</html>
