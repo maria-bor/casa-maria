@@ -162,14 +162,25 @@ function setDateTo() {
 }
 
 /*** POPUP BOOKING ***/
-document.getElementById('clickBooking').addEventListener('click', function () {
+$(document).ready(function (){
+    validateDateInput();
+    $('#book-date-from, #book-date-to').change(validateDateInput);
+});
 
+function validateDateInput(){
+    if ($('#book-date-from').val().length > 0   &&
+        $('#book-date-to').val().length > 0) {
+        $("#clickBooking").prop("disabled", false);
+    }
+    else {
+        $("#clickBooking").prop("disabled", true);
+    }
+} 
+document.getElementById('clickBooking').addEventListener('click', function () {
     var dateFrom = document.getElementById('book-date-from').value;
     var dateTo = document.getElementById('book-date-to').value;
-    console.log('przed')
     
     document.querySelector('.bg-modal-booking').style.display = 'flex';
-    console.log('po')
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
 });
