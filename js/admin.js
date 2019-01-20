@@ -3,12 +3,22 @@ import {
     setupChangeSurnameHandler,
     setupChangeEmailHandler }
     from './changeProfile.js';
+import {
+    loadTab,
+    setupTabClickHandlers }
+    from './modules/tabsModule.js'
 
 // Putting the logout function as a property on the window object
 window.logout = logout;
 function logout() {
     window.location.replace("./php/logout.php");
 }
+
+window.onload = function () {
+    loadTab();
+}
+
+$(setupTabClickHandlers());
 
 const formAddTypeRoom = new Vue(
     {

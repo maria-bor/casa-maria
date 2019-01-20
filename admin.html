@@ -26,8 +26,8 @@
         <i class="material-icons" onclick="logout()">close</i>
     </nav>
     <section>
-        <input id="tab-one" type="radio" name="grp" checked="checked" />
-        <label for="tab-one">Twoje dane</label>
+        <input id="tab-1" type="radio" name="grp" />
+        <label for="tab-1">Twoje dane</label>
         <div class="div-inside">
             <div class="row">
                 <div id="profile-admin">
@@ -59,8 +59,8 @@
             </div>
         </div>
 
-        <input id="tab-two" type="radio" name="grp" />
-        <label for="tab-two">Dodaj pokój</label>
+        <input id="tab-2" type="radio" name="grp" />
+        <label for="tab-2">Dodaj pokój</label>
         <div class="div-inside">
             <div class="row">
                 <form id="form-add-type" @submit="checkForm" method="POST" action="php/admin.php" novalidate="true">
@@ -131,8 +131,8 @@
             </div>
         </div>
 
-        <input id="tab-three" type="radio" name="grp" />
-        <label for="tab-three">Rezerwacje</label>
+        <input id="tab-3" type="radio" name="grp" />
+        <label for="tab-3">Rezerwacje</label>
         <div class="div-inside">
             <div class="row">
                 <fieldset>
@@ -164,8 +164,8 @@
             </div>
         </div>
 
-        <input id="tab-four" type="radio" name="grp" />
-        <label for="tab-four">Dodaj ofertę</label>
+        <input id="tab-4" type="radio" name="grp" />
+        <label for="tab-4">Dodaj ofertę</label>
         <div class="div-inside">
             <div class="row">
                 <form id="form-add-offer" @submit="checkForm" method="POST" action="" novalidate="true">
@@ -241,8 +241,8 @@
             </div>
         </div>
 
-        <input id="tab-five" type="radio" name="grp" />
-        <label for="tab-five">Zarządzaj administratorami</label>
+        <input id="tab-5" type="radio" name="grp" />
+        <label for="tab-5">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
                 <form id="form-add-admin" @submit="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
