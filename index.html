@@ -69,16 +69,16 @@
       <div class="close-login">+</div>
       <i class="icon-user"></i>
       <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
-        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin'
-          <?= inputValue('form_login_email'); ?> required>
+        <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin' <?=inputValue('form_login_email');
+          ?> required>
         <p v-if="errorLogin.length">
           <ul>
             <li>{{ errorLogin }}</li>
           </ul>
         </p>
         <?= checkFormError('error_login_email'); ?>
-        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin'
-          <?= inputValue('form_login_password'); ?> required>
+        <input id="passwordLogin" type="password" name="passwordLogin" placeholder="Hasło" v-model='passwordLogin' <?=inputValue('form_login_password');
+          ?> required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
@@ -94,8 +94,8 @@
     <div class="modal-content-register">
       <div class="close-register">+</div>
       <form id="form-register" @submit="checkForm" method="POST" action="php/register.php" novalidate="true">
-        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister'
-          <?= inputValue('form_name'); ?> required>
+        <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister' <?=inputValue('form_name');
+          ?> required>
         <p v-if="errorName.length">
           <ul>
             <li>{{ errorName }}</li>
@@ -103,15 +103,15 @@
         </p>
         <?= checkFormError('error_name'); ?>
         <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" v-model='surnameRegister'
-          <?= inputValue('form_surname'); ?> required>
+          <?=inputValue('form_surname'); ?> required>
         <p v-if="errorSurname.length">
           <ul>
             <li>{{ errorSurname }}</li>
           </ul>
         </p>
         <?= checkFormError('error_surname'); ?>
-        <input id="email" type="email" name="email" placeholder="Email" v-model="email"
-          <?= inputValue('form_email'); ?> required>
+        <input id="email" type="email" name="email" placeholder="Email" v-model="email" <?=inputValue('form_email'); ?>
+        required>
         <p v-if="errorEmail.length">
           <ul>
             <li>{{ errorEmail }}</li>
@@ -119,7 +119,7 @@
         </p>
         <?= checkFormError('error_email'); ?>
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister"
-          <?= inputValue('form_password'); ?> required>
+          <?=inputValue('form_password'); ?> required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
@@ -127,7 +127,7 @@
         </p>
         <?= checkFormError('error_password'); ?>
         <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm"
-          <?= inputValue('form_confirm'); ?> required>
+          <?=inputValue('form_confirm'); ?> required>
         <p v-if="errorPasswordConfirm.length">
           <ul>
             <li>{{ errorPasswordConfirm }}</li>
@@ -142,12 +142,12 @@
   <div class="bg-modal-booking">
     <div class="modal-content-booking">
       <div class="close-booking">+</div>
+      <div class="labels-booking">
+        <input id="book-from" type="text" disabled>
+        <label> - </label>
+        <input id="book-to" type="text" disabled>
+      </div>
       <fieldset>
-        <div class="labels-booking">
-          <input id="book-from" type="text" disabled>
-          <label> - </label>
-          <input id="book-to" type="text" disabled>
-        </div>
         <div class="input-booking">
           <input id="type-room" type="text" disabled>
           <input id="price-room" type="text" disabled>
