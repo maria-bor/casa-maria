@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/* @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 body {
     font-family: 'Alegreya', serif;
     color: #333;
@@ -52,6 +52,137 @@ input[type=radio]:checked+label {
 
 input[type=radio]:checked+label+.div-inside {
     display: block;
+}
+
+.form-input {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.form-input label {
+    width: 100px;
+    text-align: center;
+}
+
+.form-input input {
+    width: 150px;
+}
+
+#buttAddData {
+    width: 100px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+
+.row {
+    display: inline-flex;
+    margin: 8px;
+}
+
+#profile-admin {
+    display: flex;
+    flex-direction: column;
+}
+
+#profile-admin label {
+    display: block;
+    padding-bottom: 13px;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+table, th, td {
+    border: 1px solid grey;
+}
+
+table td {
+    padding: 20px;
+}
+
+form ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+
+input[type="button"] {
+    width: 60px;
+} */
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+* {
+    box-sizing: border-box
+}
+
+/* Set height of body and the document to 100% */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Alegreya', serif;
+}
+
+/* Style tab links */
+.tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 16.5%;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+}
+
+/* nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav i:hover {
+    cursor: pointer;
+}    */
+
+/* section {
+display: -webkit-flex;
+display: flex;
+-webkit-flex-wrap: wrap;
+flex-wrap: wrap;
+} */
+
+label {
+    background: #eee;
+    border: 1px solid #ddd;
+    padding: .7em 1em;
+    cursor: pointer;
+    z-index: 1;
+    margin-left: -1px;
+}
+
+label:first-of-type {
+    margin-left: 0;
+}
+
+.div-inside {
+    width: 100%;
+    margin-top: -1px;
+    padding: 1em;
+    border: 1px solid #ddd;
+    -webkit-order: 1;
+    order: 1;
 }
 
 .form-input {
