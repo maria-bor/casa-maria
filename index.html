@@ -27,6 +27,8 @@
   <!--CSS-->
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="./css/fontello.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+    crossorigin="anonymous">
 
   <!-- Google font -->
   <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
@@ -64,11 +66,12 @@
   </div>
 
   <!--MODAL SECTION-->
+  <!--MODAL LOGIN-->
   <div class="bg-modal-login">
     <div class="modal-content-login">
       <div class="close-login">+</div>
       <i class="icon-user"></i>
-      <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
+      <form id="form-login" @submit.prevent="checkForm" method="POST" action="php/login.php" novalidate="true">
         <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin' <?=inputValue('form_login_email');
           ?> required>
         <p v-if="errorLogin.length">
@@ -90,10 +93,11 @@
     </div>
   </div>
 
+  <!--MODAL REGISTER-->
   <div class="bg-modal-register">
     <div class="modal-content-register">
       <div class="close-register">+</div>
-      <form id="form-register" @submit="checkForm" method="POST" action="php/register.php" novalidate="true">
+      <form id="form-register" @submit.prevent="checkForm" method="POST" action="php/register.php" novalidate="true">
         <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister' <?=inputValue('form_name');
           ?> required>
         <p v-if="errorName.length">
@@ -139,24 +143,69 @@
     </div>
   </div>
 
+  <!--MODAL BOOKING-->
   <div class="bg-modal-booking">
     <div class="modal-content-booking">
       <div class="close-booking">+</div>
       <div class="labels-booking">
         <input id="book-from" type="text" disabled>
         <label> - </label>
-        <input id="book-to" type="text" disabled>
+        <input id="book-to" type="text" style="margin-left: 11px;" disabled>
       </div>
       <fieldset>
-        <div class="input-booking">
-          <input id="type-room" type="text" disabled>
-          <input id="price-room" type="text" disabled>
-          <input id="bookButt" type="submit" value="Zarezerwuj">
-        </div>
+        <ul class="input-booking">
+          <li>
+            <label for="type-room">Typ pokoju:</label>
+            <input id="type-room" type="text" disabled>
+          </li>
+          <li>
+            <label for="price-room">Cena:</label>
+            <input id="price-room" type="text" disabled>
+          </li>
+          <li>
+            <label for="numbers-person-room">Ilość osób:</label>
+            <input id="numbers-person-room" type="text" style="width: 20px;" disabled>
+          </li>
+        </ul>
+        <input id="bookButt" type="submit" value="Zarezerwuj">
+      </fieldset>
+      <hr/>
+      <fieldset>
+        <p>Tu dodać następną ofertę</p>
       </fieldset>
     </div>
   </div>
 
+  <!--MODAL RESERVE-->
+  <div class="bg-modal-reserve">
+    <div class="modal-content-reserve">
+      <div class="close-reserve">+</div>
+      <i class="far fa-address-card" style="font-size: 76px; margin-bottom: 20px; margin-top: 15px; color: #bddbfa;"></i>
+      <h3>Podaj swoje dane, żeby dokonać rezerwacji.</h3>
+      <form id="form-reserve" @submit.prevent="checkForm" method="POST" action="php/login.php" novalidate="true">
+        <input id="nameReserve" type="text" name="nameReserve" placeholder="Imię" v-model='nameReserve' required>
+        <p v-if="errorName.length">
+          <ul>
+            <li>{{ errorName }}</li>
+          </ul>
+        </p>
+        <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko" v-model='surnameRegister'
+          required>
+        <p v-if="errorSurname.length">
+          <ul>
+            <li>{{ errorSurname }}</li>
+          </ul>
+        </p>
+        <input id="emailReserve" type="email" name="emailReserve" placeholder="Email" v-model='emailReserve' required>
+        <p v-if="errorEmail.length">
+          <ul>
+            <li>{{ errorEmail }}</li>
+          </ul>
+        </p>
+        <button id="reserveButt" type="submit" name="reserveButt">Rezerwuj</button>
+      </form>
+    </div>
+  </div>
   <!--BANNER-->
   <div class="banner">
     <div class="banner-text">
@@ -217,19 +266,10 @@
 
         <div class="form-group">
           <span class="form-label">Goście</span>
-          <select class="form-control">
+          <select id="nrPersons" class="form-control">
             <option>1</option>
             <option>2</option>
             <option>3</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <span class="form-label">Dzieci</span>
-          <select class="form-control">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
           </select>
         </div>
 
