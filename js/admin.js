@@ -7,6 +7,10 @@ import {
     loadTab,
     setupTabClickHandlers }
     from './modules/tabsModule.js'
+import {
+    requestAddNewRoomType,
+    requestAllRoomTypes }
+    from './modules/adminServerCalls.js'
 
 // Putting the logout function as a property on the window object
 window.logout = logout;
@@ -15,7 +19,10 @@ function logout() {
 }
 
 window.onload = function () {
-    loadTab();
+    var tab = loadTab();
+    if (tab === "#tab-2") {
+        requestAllRoomTypes();
+    }
 }
 
 $(setupTabClickHandlers());
@@ -33,9 +40,12 @@ const formAddTypeRoom = new Vue(
                 this.errorName = '';
 
                 if (!this.nameType) {
-                    this.errorName = "Wprowadź typ pokoju.";
+                    this.errorName = "Wprowadź nazwe typu pokoju.";
                 } else if (!this.validName(this.nameType)) {
                     this.errorName = "Niepoprawny format.";
+                }
+                else {// Jak sukces walidacji to zapytanie do serwera o dodanie nowego typu
+                    requestAddNewRoomType(this.nameType);
                 }
 
                 if (!this.errorName.length) {

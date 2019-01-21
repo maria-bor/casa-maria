@@ -10,6 +10,7 @@ export function loadTab() {
         setCookie("nameOfLastTabClicked", nameOfLastTabClicked, 30);
     }
     $(nameOfLastTabClicked).click();
+    return nameOfLastTabClicked;
 }
 
 export function setupTabClickHandlers() {

@@ -63,7 +63,7 @@
         <label for="tab-2">Dodaj pokój</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-type" @submit="checkForm" method="POST" action="php/admin.php" novalidate="true">
+                <form id="form-add-type" @submit.prevent="checkForm" novalidate="true">
                     <fieldset>
                         <legend>Dodaj typ pokoju</legend>
                         <div class="form-input">
@@ -75,7 +75,7 @@
                                 <li>{{ errorName }}</li>
                             </ul>
                         </p>
-                        <?= checkFormError('error_name_type'); ?>
+                        <p id=nameTypeInfo></p>
                         <div class="form-input butt">
                             <input id='add-type-room' type="submit" value="Dodaj">
                         </div>
