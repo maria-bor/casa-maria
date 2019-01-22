@@ -1,8 +1,9 @@
 import { requestServer }
     from './requestServer.js'
 
+var url = "./php/admin.php";
+
 export function requestAddNewRoomType(nameType) {
-    var url = "./php/admin.php";
     var data = {
         nameType: nameType
     };
@@ -18,7 +19,6 @@ export function requestAddNewRoomType(nameType) {
 }
 
 export function requestAllRoomTypes() {
-    var url = "./php/admin.php";
     var data = {
         roomTypes: 'name'
     };
@@ -40,4 +40,20 @@ function fillTypesCombobox(types) {
         option.innerHTML = t.name;
         select.appendChild(option);
     }
+}
+
+export function requestAddNewRoom(nrRoom, nrFloor, sleeps, type) {
+    var data = {
+        nrRoom: nrRoom,
+        nrFloor: nrFloor,
+        sleeps: sleeps,
+        nameType: type
+    };
+    function callback(response) {
+        $('#addRoomInfo').text(response.message);
+        if (response.result !== 'OK') {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
 }

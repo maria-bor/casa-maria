@@ -9,7 +9,8 @@ import {
     from './modules/tabsModule.js'
 import {
     requestAddNewRoomType,
-    requestAllRoomTypes }
+    requestAllRoomTypes,
+    requestAddNewRoom }
     from './modules/adminServerCalls.js'
 
 // Putting the logout function as a property on the window object
@@ -102,8 +103,10 @@ const formRoom = new Vue(
                     this.errorType = "Wybierz typ pokoju.";
                 }
 
+                // Jak sukces walidacji to zapytanie do serwera o dodanie nowego pokoju
                 if (!this.errorNrRoom.length && !this.errorNrFloor.length
                     && !this.errorSleeps.length && !this.errorType.length) {
+                    requestAddNewRoom(this.nrRoom, this.nrFloor, this.sleeps, this.type);
                     return true;
                 }
                 e.preventDefault();

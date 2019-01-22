@@ -6,10 +6,13 @@
     require_once "helpers/requestResult.php";
 
     // Mozna tu przyjsc tylko z konkretnych formularzy:
-    if (isset($_POST['nameType'])) { // dodawanie typu pokoju
+    if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
         addNewRoomType($result_obj);
-    } else if (isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
+    } else if (count($_POST) == 1 && isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
         getAllRoomTypes($result_obj);
+    } else if(count($_POST) == 4 && isset($_POST['nrRoom']) && isset($_POST['nrFloor']) &&
+              isset($_POST['sleeps']) && isset($_POST['nameType'])) {
+        addNewRoom($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -28,11 +31,12 @@
     }
 
     function addNewRoomType($result_obj) {
-        require_once "db.php";
         $name_type = $_POST['nameType'];
         $_SESSION['form_name_type'] = $name_type;
 
-        // Sprawdzamy czy nie ma juz takiego typu:
+        require_once "db.php";
+        // TODO wykorzystać getNameTypeId()
+        // Sprawdzamy czy nie ma już takiego typu:
         $sql = 'SELECT idType as id_type
                 FROM type t
                 WHERE t.name = :nameType';
@@ -61,7 +65,7 @@
             $id = $db->lastInsertId();
             if ($id) {
                 $result_obj->result = 'OK';
-                $result_obj->message = 'Typ '.$name_type.' zostal dodany';
+                $result_obj->message = 'Typ '.$name_type.' został dodany';
             }
         }
     }
@@ -93,5 +97,70 @@
         }
         else {
             $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
+        }
+    }
+
+    function getNameTypeId($db, $name_type) {
+        $sql = 'SELECT idType as id_type
+                FROM type t
+                WHERE t.name = :nameType';
+        $query = $db->prepare($sql);
+		$query->bindValue(':nameType', $name_type, PDO::PARAM_STR);
+        $query->execute();
+
+        $type = $query->fetch();
+        // print_r($user);
+        // Jak jest to info, ze juz jest
+        if ($query->rowCount() != 0) {
+            return $type['id_type'];
+        } else {
+            return -1;
+        }
+    }
+
+    function addNewRoom($result_obj) {
+        $nr_room = $_POST['nrRoom'];
+        $nr_floor = $_POST['nrFloor'];
+        $sleeps = $_POST['sleeps'];
+        $name_type = $_POST['nameType'];
+
+        if ($nr_room < 0) {
+            $result_obj->message = 'Niepoprawny numer pokoju';
+            return;
+        } else if ($nr_floor < 0) {
+            $result_obj->message = 'Niepoprawny numer piętra';
+            return;
+        } else if ($sleeps <= 0) {
+            $result_obj->message = 'Niepoprawna liczba osób w pokoju';
+            return;
+        }
+        require_once "db.php";
+        $id_type = getNameTypeId($db, $name_type);
+        if ($id_type == -1) {
+            $result_obj->message = 'Niepoprawan nazwa pokoju: '.$name_type;
+            return;
+        }
+        // TODO spr czy takiego już nie ma!
+        // Wstawienie do tabeli Type:
+        $sql = 'INSERT INTO Room
+                VALUES (
+                    NULL,
+                    :sleeps,
+                    :nr_floor,
+                    :id_type,
+                    :id_user
+                );';
+        $query = $db->prepare($sql);
+        $query->bindValue(':sleeps', $sleeps, PDO::PARAM_INT);
+        $query->bindValue(':nr_floor', $nr_floor, PDO::PARAM_INT);
+        $query->bindValue(':id_type', $id_type, PDO::PARAM_INT);
+        $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_INT);
+        $query->execute();
+        $id = $db->lastInsertId();
+        if ($id) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Nowy pokój został dodany';
+        } else {
+            $result_obj->message = 'Nie udało się dodać pokoju, spróbuj jeszcze raz';
         }
     }

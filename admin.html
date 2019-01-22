@@ -83,7 +83,7 @@
                 </form>
             </div>
             <div class="row">
-                <form id="form-add-room" @submit="checkForm" method="POST" action="" novalidate="true">
+                <form id="form-add-room" @submit.prevent="checkForm" method="POST" action="" novalidate="true">
                     <fieldset>
                         <legend>Dodaj pokój</legend>
                         <div class="form-input">
@@ -123,6 +123,7 @@
                                 <li>{{ errorType }}</li>
                             </ul>
                         </p>
+                        <p id=addRoomInfo></p>
                         <div class="form-input butt">
                             <input id='add-room' type="submit" value="Dodaj">
                         </div>

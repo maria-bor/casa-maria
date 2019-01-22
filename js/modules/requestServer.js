@@ -7,10 +7,10 @@ export function requestServer(url, json, callback) {
         success: callback
     })
     .fail(function( xhr, status, errorThrown ) {
-        alert("Przepraszamy, wystąpił problem!");
         console.warn(xhr.responseText)
         console.log("Error: " + errorThrown);
         console.log("Status: " + status);
         console.dir(xhr);
+        alert("Przepraszamy, wystąpił problem!");
     });
 }
