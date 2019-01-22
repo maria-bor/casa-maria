@@ -5,7 +5,7 @@
 
     require_once "helpers/requestResult.php";
 
-    // Mozna tu przyjsc tylko z konkretnych formularzy:
+    // Mozna tu przyjść tylko z konkretnych formularzy:
     if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
         addNewRoomType($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
@@ -141,7 +141,7 @@
             return;
         }
         // TODO spr czy takiego już nie ma!
-        // Wstawienie do tabeli Type:
+        // Wstawienie do tabeli Room:
         $sql = 'INSERT INTO Room
                 VALUES (
                     NULL,
