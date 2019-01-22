@@ -44,11 +44,9 @@ const formAddTypeRoom = new Vue(
                 } else if (!this.validName(this.nameType)) {
                     this.errorName = "Niepoprawny format.";
                 }
-                else {// Jak sukces walidacji to zapytanie do serwera o dodanie nowego typu
-                    requestAddNewRoomType(this.nameType);
-                }
 
-                if (!this.errorName.length) {
+                if (!this.errorName.length) { // Jak sukces walidacji to zapytanie do serwera o dodanie nowego typu
+                    requestAddNewRoomType(this.nameType);
                     return true;
                 }
                 e.preventDefault();

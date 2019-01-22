@@ -2,15 +2,15 @@ import { requestServer }
     from './requestServer.js'
 
 export function requestAddNewRoomType(nameType) {
-    console.log("requestAddNewRoomType");
     var url = "./php/admin.php";
     var data = {
         nameType: nameType
     };
     function callback(response) {
-        document.getElementById("nameTypeInfo").innerHTML = response.message;
+        $('#nameTypeInfo').text(response.message);
         if (response.result === 'OK') {
-
+            $("#nameType").val('');
+            requestAllRoomTypes();
         }
     }
 
@@ -18,7 +18,6 @@ export function requestAddNewRoomType(nameType) {
 }
 
 export function requestAllRoomTypes() {
-    console.log("requestAllRoomTypes");
     var url = "./php/admin.php";
     var data = {
         roomTypes: 'name'
