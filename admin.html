@@ -14,7 +14,6 @@
 
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="./css/admin.css">
-    <link rel="stylesheet" type="text/css" href="./css/fontello.css">
 
     <!--VUE.JS-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -93,7 +92,7 @@
                         <legend>Dodaj pokój</legend>
                         <div class="form-input">
                             <label for="nrRoom">Numer pokoju</label>
-                            <input id="nrRoom" name="nrRoom" type="number" min="0" placeholder="Numer pokoju" v-model="nrRoom">
+                            <input id="nrRoom" name="nrRoom" type="text" placeholder="Numer pokoju" v-model="nrRoom">
                         </div>
                         <p v-if="errorNrRoom.length">
                             <ul>
@@ -188,7 +187,7 @@
                         </p>
                         <div class="form-input">
                             <label for="price">Cena</label>
-                            <input id="price" name="price" type="number" placeholder="Cena" v-model="price" required>
+                            <input id="price" name="price" type="number" min="0" placeholder="Cena" v-model="price" required>
                         </div>
                         <p v-if="errorPrice.length">
                             <ul>
@@ -197,7 +196,7 @@
                         </p>
                         <div class="form-input">
                             <label for="from">Od</label>
-                            <input id="from" name="index" type="date" v-model="from" required>
+                            <input id="from" name="index" type="date" value="" min="" v-model="from" required>
                         </div>
                         <p v-if="errorFrom.length">
                             <ul>
@@ -206,7 +205,7 @@
                         </p>
                         <div class="form-input">
                             <label for="to">Do</label>
-                            <input id="to" name="index" type="date" v-model="to" required>
+                            <input id="to" name="index" type="date" min="" v-model="to" required>
                         </div>
                         <p v-if="errorTo.length">
                             <ul>

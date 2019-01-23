@@ -86,13 +86,13 @@ const formRoom = new Vue(
 
                 if (!this.nrRoom) {
                     this.errorNrRoom = "Wprowadź numer pokoju.";
-                } else if (!this.validNumber(this.nrRoom)) {
-                    this.errorNrRoom = "Niepoprawny format.";
+                } else if (!this.validNumberRoom(this.nrRoom)) {
+                    this.errorNrRoom = "Niepoprawny format. Na przykład: 001";
                 }
 
                 if (!this.nrFloor) {
                     this.errorNrFloor = "Wprowadź numer piętra.";
-                } else if (!this.validNumber(this.nrFloor)) {
+                } else if (!this.validNumberFloor(this.nrFloor)) {
                     this.errorNrFloor = "Niepoprawny format.";
                 }
 
@@ -114,7 +114,10 @@ const formRoom = new Vue(
                 }
                 e.preventDefault();
             },
-            validNumber: function (nr) {
+            validNumberRoom: function (nr) {
+                return /^\d{3}$/.test(nr);
+            },
+            validNumberFloor: function (nr) {
                 return /^[1-9]\d*$/.test(nr);
             },
             validSleeps: function (nr) {
@@ -122,6 +125,15 @@ const formRoom = new Vue(
             }
         }
     });
+
+let tmp = new Date(Date.now()); // tmp now like: "2018-08-21T11:54:50.580Z"
+let dateInputFormatted = tmp.toISOString().split('T')[0]; // 0, as split produces: ["2018-08-21", "11:54:50.580Z"]
+
+var dateFromMin = document.getElementById('from');
+dateFromMin.min = dateInputFormatted;
+
+var dateToMin = document.getElementById('to');
+dateToMin.min = dateInputFormatted;
 
 const formAddOffer = new Vue(
     {
@@ -134,8 +146,8 @@ const formAddOffer = new Vue(
 
             name: null,
             price: null,
-            from: null,
-            to: null
+            from: dateFromMin,
+            to: dateToMin
         },
         methods: {
             checkForm: function (e) {
