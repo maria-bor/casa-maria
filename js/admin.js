@@ -126,6 +126,15 @@ const formRoom = new Vue(
         }
     });
 
+let tmp = new Date(Date.now()); // tmp now like: "2018-08-21T11:54:50.580Z"
+let dateInputFormatted = tmp.toISOString().split('T')[0]; // 0, as split produces: ["2018-08-21", "11:54:50.580Z"]
+
+var dateFromMin = document.getElementById('from');
+dateFromMin.min = dateInputFormatted;
+
+var dateToMin = document.getElementById('to');
+dateToMin.min = dateInputFormatted;
+
 const formAddOffer = new Vue(
     {
         el: '#form-add-offer',
@@ -137,8 +146,8 @@ const formAddOffer = new Vue(
 
             name: null,
             price: null,
-            from: null,
-            to: null
+            from: dateFromMin,
+            to: dateToMin
         },
         methods: {
             checkForm: function (e) {

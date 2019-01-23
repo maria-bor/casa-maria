@@ -153,7 +153,12 @@ function checkError(error) {
     ajax.send();
 }
 
+let tmp = new Date(Date.now()); // tmp now like: "2018-08-21T11:54:50.580Z"
+let dateInputFormatted = tmp.toISOString().split('T')[0]; // 0, as split produces: ["2018-08-21", "11:54:50.580Z"]
+
 var dateFrom = document.getElementById('book-date-from');
+dateFrom.min = dateInputFormatted;
+
 var dateTo = document.getElementById("book-date-to");
 dateFrom.addEventListener('change', setDateTo);
 function setDateTo() {
