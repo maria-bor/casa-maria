@@ -50,8 +50,9 @@ CREATE TABLE UserRole (
 
 CREATE TABLE Room (
                 idRoom INT AUTO_INCREMENT NOT NULL,
-                sleeps TINYINT NOT NULL,
+                nrRoom VARCHAR(50) NOT NULL,
                 floor TINYINT NOT NULL,
+                sleeps TINYINT NOT NULL,
                 idType INT NOT NULL,
                 idUserLogged INT NOT NULL,
                 PRIMARY KEY (idRoom)

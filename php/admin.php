@@ -19,7 +19,7 @@
 
     echo json_encode($result_obj);
 
-//*****DEFINICJE METOD*****/
+/*****DEFINICJE METOD*****/
     function redirect() {
         // Admin musi byc zalogowany:
         if (!isset($_SESSION['is_admin_logged'])) {
@@ -124,13 +124,13 @@
         $sleeps = $_POST['sleeps'];
         $name_type = $_POST['nameType'];
 
-        if ($nr_room < 0) {
-            $result_obj->message = 'Niepoprawny numer pokoju';
+        if (!preg_match('/^\d{3}$/', $nr_room)) {
+            $result_obj->message = 'Niepoprawny numer pokoju'.$nr_room;
             return;
-        } else if ($nr_floor < 0) {
+        } else if (!preg_match('/^[1-9]\d*$/', $nr_floor)) {
             $result_obj->message = 'Niepoprawny numer piętra';
             return;
-        } else if ($sleeps <= 0) {
+        } else if (!preg_match('/^[1-9]$/', $sleeps)) {
             $result_obj->message = 'Niepoprawna liczba osób w pokoju';
             return;
         }
@@ -145,14 +145,16 @@
         $sql = 'INSERT INTO Room
                 VALUES (
                     NULL,
-                    :sleeps,
+                    :nr_room,
                     :nr_floor,
+                    :sleeps,
                     :id_type,
                     :id_user
                 );';
         $query = $db->prepare($sql);
-        $query->bindValue(':sleeps', $sleeps, PDO::PARAM_INT);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
         $query->bindValue(':nr_floor', $nr_floor, PDO::PARAM_INT);
+        $query->bindValue(':sleeps', $sleeps, PDO::PARAM_INT);
         $query->bindValue(':id_type', $id_type, PDO::PARAM_INT);
         $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_INT);
         $query->execute();
