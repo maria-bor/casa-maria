@@ -206,7 +206,7 @@ document.getElementById('bookButt').addEventListener('click', function () {
                 errorEmail: '',
                 
                 nameReserve: null,
-                surnameRegister: null,
+                surnameReserve: null,
                 emailReserve: null
             },
             methods: {
@@ -221,9 +221,9 @@ document.getElementById('bookButt').addEventListener('click', function () {
                         this.errorName = "Niepoprawny format.";
                     }
 
-                    if (!this.surnameRegister) {
+                    if (!this.surnameReserve) {
                         this.errorSurname = "Wprowadź nazwisko.";
-                    } else if (!this.validNameSurname(this.surnameRegister)) {
+                    } else if (!this.validNameSurname(this.surnameReserve)) {
                         this.errorSurname = "Niepoprawny format.";
                     }
 
