@@ -86,13 +86,13 @@ const formRoom = new Vue(
 
                 if (!this.nrRoom) {
                     this.errorNrRoom = "Wprowadź numer pokoju.";
-                } else if (!this.validNumber(this.nrRoom)) {
-                    this.errorNrRoom = "Niepoprawny format.";
+                } else if (!this.validNumberRoom(this.nrRoom)) {
+                    this.errorNrRoom = "Niepoprawny format. Na przykład: 001";
                 }
 
                 if (!this.nrFloor) {
                     this.errorNrFloor = "Wprowadź numer piętra.";
-                } else if (!this.validNumber(this.nrFloor)) {
+                } else if (!this.validNumberFloor(this.nrFloor)) {
                     this.errorNrFloor = "Niepoprawny format.";
                 }
 
@@ -114,7 +114,10 @@ const formRoom = new Vue(
                 }
                 e.preventDefault();
             },
-            validNumber: function (nr) {
+            validNumberRoom: function (nr) {
+                return /^\d{3}$/.test(nr);
+            },
+            validNumberFloor: function (nr) {
                 return /^[1-9]\d*$/.test(nr);
             },
             validSleeps: function (nr) {
