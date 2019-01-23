@@ -37,6 +37,7 @@ $(function () {
         $('.modal-user-profile div label').css({
             'display': 'block',
         });
+        onLoadProfileTab();
     })
 });
 
@@ -68,82 +69,84 @@ $(function () {
     })
 });
 
-// ***USER DATA***
-// CHANGE NAME ON PROFILE
-$(setupChangeNameHandler());
-// CHANGE SURNAME ON PROFILE
-$(setupChangeSurnameHandler());
-// CHANGE EMAIL ON PROFILE
-$(setupChangeEmailHandler());
+function onLoadProfileTab() {
+    // ***USER DATA***
+    // CHANGE NAME ON PROFILE
+    $(setupChangeNameHandler());
+    // CHANGE SURNAME ON PROFILE
+    $(setupChangeSurnameHandler());
+    // CHANGE EMAIL ON PROFILE
+    $(setupChangeEmailHandler());
 
-// CHANGE PASSWORD ON PROFILE
-var changedPassword;
-var changedPasswordConfirm;
-$('#password-change-butt').on('click', function () {
-    if ($('#password-change-butt').val() === 'Zmień') {
-        $('#userPassword').prop('disabled', false);
-        $('#password-change-butt').prop('value', 'Ok');
-        $('.hidden').css('visibility', 'visible');
-    }
-    else if ($('#password-change-butt').val() === 'Ok') {
-        changedPassword = $('#userPassword').val().trim();
-        changedPasswordConfirm = $('#userPasswordConfirm').val().trim();
+    // CHANGE PASSWORD ON PROFILE
+    var changedPassword;
+    var changedPasswordConfirm;
+    $('#password-change-butt').on('click', function () {
+        if ($('#password-change-butt').val() === 'Zmień') {
+            $('#userPassword').prop('disabled', false);
+            $('#password-change-butt').prop('value', 'Ok');
+            $('.hidden').css('visibility', 'visible');
+        }
+        else if ($('#password-change-butt').val() === 'Ok') {
+            changedPassword = $('#userPassword').val().trim();
+            changedPasswordConfirm = $('#userPasswordConfirm').val().trim();
 
-        if ((changedPassword.length >= 8) && (changedPassword.length <= 20)) {
-            $('#errorPassword').empty();
-            if (changedPassword !== changedPasswordConfirm) {
-                $('#errorPasswordConfirm').text('Hasła nie zgadzają się!');
+            if ((changedPassword.length >= 8) && (changedPassword.length <= 20)) {
+                $('#errorPassword').empty();
+                if (changedPassword !== changedPasswordConfirm) {
+                    $('#errorPasswordConfirm').text('Hasła nie zgadzają się!');
+                }
+                else {
+                    $('#userPassword').prop('disabled', true);
+                    $('.hidden').css('visibility', 'hidden');
+                    $('#password-change-butt').prop('value', 'Zmień');
+                    $('#errorPassword').empty();
+                    $('#errorPasswordConfirm').empty();
+                }
             }
             else {
-                $('#userPassword').prop('disabled', true);
-                $('.hidden').css('visibility', 'hidden');
-                $('#password-change-butt').prop('value', 'Zmień');
-                $('#errorPassword').empty();
-                $('#errorPasswordConfirm').empty();
+                $('#errorPassword').text('Niepoprawny format.');
             }
         }
-        else {
-            $('#errorPassword').text('Niepoprawny format.');
-        }
-    }
-});
+    });
 
-// CHANGE DATE TO ON PROFILE
-var changedTo;
-$('#od-change-butt').on('click', function () {
-    if ($('#od-change-butt').val() === 'Zmień') {
-        $('#od-reserve').prop('disabled', false);
-        $('#od-change-butt').prop('value', 'Ok');
-    }
-    else if ($('#od-change-butt').val() === 'Ok') {
-        changedTo = $('#od-reserve').val();
-        if (changedTo < $('#do-reserve').val()) {
-            $('#od-reserve').prop('disabled', true);
-            $('#od-change-butt').prop('value', 'Zmień');
-            $('#errorTo').empty();
+    // CHANGE DATE TO ON PROFILE
+    var changedTo;
+    $('#od-change-butt').on('click', function () {
+        if ($('#od-change-butt').val() === 'Zmień') {
+            $('#od-reserve').prop('disabled', false);
+            $('#od-change-butt').prop('value', 'Ok');
         }
-        else {
-            $('#errorTo').text('Niepoprawny format.');
+        else if ($('#od-change-butt').val() === 'Ok') {
+            changedTo = $('#od-reserve').val();
+            if (changedTo < $('#do-reserve').val()) {
+                $('#od-reserve').prop('disabled', true);
+                $('#od-change-butt').prop('value', 'Zmień');
+                $('#errorTo').empty();
+            }
+            else {
+                $('#errorTo').text('Niepoprawny format.');
+            }
         }
-    }
-});
+    });
 
-// CHANGE DATE FROM ON PROFILE
-var changedDateTo;
-$('#do-change-butt').on('click', function () {
-    if ($('#do-change-butt').val() === 'Zmień') {
-        $('#do-reserve').prop('disabled', false);
-        $('#do-change-butt').prop('value', 'Ok');
-    }
-    else if ($('#do-change-butt').val() === 'Ok') {
-        changedDateTo = $('#do-reserve').val();
-        if (changedDateTo > $('#od-reserve').val()) {
-            $('#do-reserve').prop('disabled', true);
-            $('#do-change-butt').prop('value', 'Zmień');
-            $('#errorDateTo').empty();
+    // CHANGE DATE FROM ON PROFILE
+    var changedDateTo;
+    $('#do-change-butt').on('click', function () {
+        if ($('#do-change-butt').val() === 'Zmień') {
+            $('#do-reserve').prop('disabled', false);
+            $('#do-change-butt').prop('value', 'Ok');
         }
-        else {
-            $('#errorDateTo').text('Data wyjazdu powinna być później aniżeli przyjazdu.');
+        else if ($('#do-change-butt').val() === 'Ok') {
+            changedDateTo = $('#do-reserve').val();
+            if (changedDateTo > $('#od-reserve').val()) {
+                $('#do-reserve').prop('disabled', true);
+                $('#do-change-butt').prop('value', 'Zmień');
+                $('#errorDateTo').empty();
+            }
+            else {
+                $('#errorDateTo').text('Data wyjazdu powinna być później aniżeli przyjazdu.');
+            }
         }
-    }
-});
+    });
+}
