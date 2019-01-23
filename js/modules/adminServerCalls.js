@@ -51,9 +51,6 @@ export function requestAddNewRoom(nrRoom, nrFloor, sleeps, type) {
     };
     function callback(response) {
         $('#addRoomInfo').text(response.message);
-        if (response.result !== 'OK') {
-            alert(response.message);
-        }
     }
     requestServer(url, data, callback);
 }

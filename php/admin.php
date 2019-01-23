@@ -140,7 +140,23 @@
             $result_obj->message = 'Niepoprawan nazwa pokoju: '.$name_type;
             return;
         }
-        // TODO spr czy takiego już nie ma!
+
+        $sql = 'SELECT idRoom FROM Room WHERE
+                    nrRoom = :nr_room AND
+                    floor = :nr_floor AND
+                    sleeps = :sleeps AND
+                    idType = :id_type
+                ;';
+        $query = $db->prepare($sql);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
+        $query->bindValue(':nr_floor', $nr_floor, PDO::PARAM_INT);
+        $query->bindValue(':sleeps', $sleeps, PDO::PARAM_INT);
+        $query->bindValue(':id_type', $id_type, PDO::PARAM_INT);
+        $query->execute();
+        if ($query->rowCount() != 0) {
+            $result_obj->message = 'Istnieje już pokój o podanych parametrach';
+            return;
+        }
         // Wstawienie do tabeli Room:
         $sql = 'INSERT INTO Room
                 VALUES (
