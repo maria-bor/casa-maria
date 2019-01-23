@@ -1,16 +1,19 @@
 import {
     setupChangeNameHandler,
     setupChangeSurnameHandler,
-    setupChangeEmailHandler }
+    setupChangeEmailHandler
+}
     from './changeProfile.js';
 import {
     loadTab,
-    setupTabClickHandlers }
+    setupTabClickHandlers
+}
     from './modules/tabsModule.js'
 import {
     requestAddNewRoomType,
     requestAllRoomTypes,
-    requestAddNewRoom }
+    requestAddNewRoom
+}
     from './modules/adminServerCalls.js'
 
 // Putting the logout function as a property on the window object
@@ -274,20 +277,33 @@ $(setupChangeEmailHandler());
 
 // CHANGE ADMIN PASSWORD
 var changedPassword;
+var changedPasswordConfirm;
 $('#password-change-butt').on('click', function () {
     if ($('#password-change-butt').val() === 'Zmień') {
         $('#userPassword').prop('disabled', false);
         $('#password-change-butt').prop('value', 'Ok');
+        $('.hidden').css('visibility', 'visible');
     }
     else if ($('#password-change-butt').val() === 'Ok') {
         changedPassword = $('#userPassword').val().trim();
+        changedPasswordConfirm = $('#userPasswordConfirm').val().trim();
+
         if ((changedPassword.length >= 8) && (changedPassword.length <= 20)) {
-            $('#userPassword').prop('disabled', true);
-            $('#password-change-butt').prop('value', 'Zmień');
             $('#errorPassword').empty();
+            if (changedPassword !== changedPasswordConfirm) {
+                $('#errorPasswordConfirm').text('Hasła nie zgadzają się!');
+            }
+            else {
+                $('#userPassword').prop('disabled', true);
+                $('.hidden').css('visibility', 'hidden');
+                $('#password-change-butt').prop('value', 'Zmień');
+                $('#errorPassword').empty();
+                $('#errorPasswordConfirm').empty();
+            }
         }
         else {
             $('#errorPassword').text('Niepoprawny format.');
         }
     }
 });
+

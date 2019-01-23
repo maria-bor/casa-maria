@@ -68,6 +68,10 @@ input[type=radio]:checked+label+.div-inside {
     width: 150px;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 #buttAddData {
     width: 100px;
     margin: 0 auto;
