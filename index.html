@@ -70,7 +70,7 @@
     <div class="modal-content-login">
       <div class="close-login">+</div>
       <i class="fa fa-user"></i>
-      <form id="form-login" @submit.prevent="checkForm" method="POST" action="php/login.php" novalidate="true">
+      <form id="form-login" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
         <input id="emailLogin" type="email" name="emailLogin" placeholder="Email" v-model='emailLogin' <?=inputValue('form_login_email');
           ?> required>
         <p v-if="errorLogin.length">
@@ -96,7 +96,7 @@
   <div class="bg-modal-register">
     <div class="modal-content-register">
       <div class="close-register">+</div>
-      <form id="form-register" @submit.prevent="checkForm" method="POST" action="php/register.php" novalidate="true">
+      <form id="form-register" @submit="checkForm" method="POST" action="php/register.php" novalidate="true">
         <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister' <?=inputValue('form_name');
           ?> required>
         <p v-if="errorName.length">
@@ -181,7 +181,7 @@
       <div class="close-reserve">+</div>
       <i class="far fa-address-card"></i>
       <h3>Podaj swoje dane, żeby dokonać rezerwacji.</h3>
-      <form id="form-reserve" @submit.prevent="checkForm" method="POST" action="php/login.php" novalidate="true">
+      <form id="form-reserve" @submit="checkForm" method="POST" action="php/login.php" novalidate="true">
         <input id="nameReserve" type="text" name="nameReserve" placeholder="Imię" v-model='nameReserve' required>
         <p v-if="errorName.length">
           <ul>

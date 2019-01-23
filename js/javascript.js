@@ -177,15 +177,15 @@ function validateDateInput(){
     }
 } 
 document.getElementById('clickBooking').addEventListener('click', function () {
-    var dateFrom = document.getElementById('book-date-from').value;
-    var dateTo = document.getElementById('book-date-to').value;
+    // var dateFrom = document.getElementById('book-date-from').value;
+    // var dateTo = document.getElementById('book-date-to').value;
     var selectList = document.getElementById('nrPersons');
     var nrPersons = selectList.options[selectList.selectedIndex].text;
     console.log(nrPersons);
     
     document.querySelector('.bg-modal-booking').style.display = 'flex';
-    document.getElementById('book-from').value = dateFrom;
-    document.getElementById('book-to').value = dateTo;
+    document.getElementById('book-from').value = dateFrom.value;
+    document.getElementById('book-to').value = dateTo.value;
     document.getElementById('numbers-person-room').value = nrPersons;
 });
 document.querySelector('.close-booking').addEventListener('click', function () {
@@ -193,7 +193,6 @@ document.querySelector('.close-booking').addEventListener('click', function () {
 });
 
 /*** POPUP RESERVE***/
-/*** POPUP LOGIN ***/
 document.getElementById('bookButt').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
     document.querySelector('.bg-modal-reserve').style.display = 'flex';
