@@ -45,6 +45,13 @@
   display: none;
 }
 
+i {
+  font-size: 82px; 
+  margin-bottom: 20px; 
+  margin-top: 15px; 
+  color: #bddbfa;
+}
+
 .bg-modal-login ul, .bg-modal-register ul, .bg-modal-booking ul, .bg-modal-reserve ul {
   list-style: none;
 }
@@ -328,14 +335,10 @@
 }
 
 .booking-form .form-header {
-	padding: 15px 100px;
+	padding: 15px 80px;
 	height: 110px;
 	line-height: 110px;
 	text-align: center;
-}
-
-.form-header h2 {
-  font-size: 32px; 
 }
 
 .booking-form .form-header h2 {

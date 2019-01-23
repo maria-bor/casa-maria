@@ -88,7 +88,7 @@
                         <legend>Dodaj pokój</legend>
                         <div class="form-input">
                             <label for="nrRoom">Numer pokoju</label>
-                            <input id="nrRoom" name="nrRoom" type="number" placeholder="Numer pokoju" v-model="nrRoom">
+                            <input id="nrRoom" name="nrRoom" type="number" min="0" placeholder="Numer pokoju" v-model="nrRoom">
                         </div>
                         <p v-if="errorNrRoom.length">
                             <ul>
@@ -97,7 +97,7 @@
                         </p>
                         <div class="form-input">
                             <label for="nrFloor">Numer piętra</label>
-                            <input id="nrFloor" name="nrFloor" type="number" placeholder="Numer piętra" v-model="nrFloor" required>
+                            <input id="nrFloor" name="nrFloor" type="number" min="0" placeholder="Numer piętra" v-model="nrFloor" required>
                         </div>
                         <p v-if="errorNrFloor.length">
                             <ul>
@@ -106,7 +106,7 @@
                         </p>
                         <div class="form-input">
                             <label for="sleeps">Iloosobowy</label>
-                            <input id="sleeps" name="sleeps" type="number" placeholder="Ile osób" v-model="sleeps" required>
+                            <input id="sleeps" name="sleeps" type="number" min="1" placeholder="Ile osób" v-model="sleeps" required>
                         </div>
                         <p v-if="errorSleeps.length">
                             <ul>
