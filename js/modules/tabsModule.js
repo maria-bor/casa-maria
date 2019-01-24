@@ -4,7 +4,8 @@ import {
     from './cookieModule.js';
 import {
     requestAllRoomTypes,
-    requestAllOffers
+    requestAllOffers,
+    requestAllRooms
 }
     from './adminServerCalls.js'
 
@@ -44,5 +45,6 @@ function setupTab4ClickHandler() {
     $("#tab-4").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
         requestAllOffers();
+        requestAllRooms();
     });
 }

@@ -18,6 +18,8 @@
         addNewOffer($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
         getAllOffers($result_obj);
+    } else if (count($_POST) == 1 && isset($_POST['room'])) { // pobranie wszystkich ofert
+        getAllRooms($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -236,6 +238,25 @@
         if ($query->rowCount() > 0) {
             $result_obj->result = 'OK';
             $result_obj->message = 'Pobrano '.$query->rowCount().' ofert';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
+        }
+    }
+
+    function getAllRooms($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT *
+                FROM room
+                ORDER BY nrRoom;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() > 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' pokoi';
             $result_obj->value = $results;
         }
         else {

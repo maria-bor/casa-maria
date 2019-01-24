@@ -84,9 +84,7 @@ export function requestAllOffers() {
     requestServer(url, data, callback);
 }
 
-var offers = null;
 export function fillOffersTable(values) {
-    offers = values;
     // table
     var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
     tableRef.innerHTML = '';
@@ -108,6 +106,30 @@ export function fillOffersTable(values) {
 
         var option = document.createElement('option')
         option.innerHTML = idx++;
+        select.appendChild(option);
+    }
+}
+
+export function requestAllRooms() {
+    var data = {
+        room: 'all'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            fillOffersCombobox(response.value);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function fillOffersCombobox(values) {
+    var select = document.getElementById("rooms");
+    select.innerHTML = '';
+    for (var v of values) {
+        var option = document.createElement('option')
+        option.innerHTML = v.nrRoom;
         select.appendChild(option);
     }
 }
