@@ -3,7 +3,8 @@ import {
     getCookie } 
     from './cookieModule.js';
 import {
-    requestAllRoomTypes
+    requestAllRoomTypes,
+    requestAllOffers
 }
     from './adminServerCalls.js'
 
@@ -21,7 +22,7 @@ export function setupTabClickHandlers() {
     setupTabClickHandler("#tab-1");
     setupTab2ClickHandler();
     setupTabClickHandler("#tab-3");
-    setupTabClickHandler("#tab-4");
+    setupTab4ClickHandler();
     setupTabClickHandler("#tab-5");
 }
 
@@ -36,5 +37,12 @@ function setupTab2ClickHandler() {
     $("#tab-2").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-2", 30);
         requestAllRoomTypes();
+    });
+}
+
+function setupTab4ClickHandler() {
+    $("#tab-4").on('click', function () {
+        setCookie("nameOfLastTabClicked", "#tab-4", 30);
+        requestAllOffers();
     });
 }

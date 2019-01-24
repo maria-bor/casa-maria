@@ -16,6 +16,8 @@
     } else if(count($_POST) == 4 && isset($_POST['name']) && isset($_POST['price']) &&
         isset($_POST['from']) && isset($_POST['to'])) {
         addNewOffer($result_obj);
+    } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
+        getAllOffers($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -219,5 +221,24 @@
             $result_obj->message = 'Nowa oferta została dodana';
         } else {
             $result_obj->message = 'Nie udało się dodać oferty, spróbuj jeszcze raz';
+        }
+    }
+
+    function getAllOffers($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT *
+                FROM offer
+                ORDER BY name;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() > 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' ofert';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
         }
     }
