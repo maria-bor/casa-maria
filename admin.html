@@ -173,7 +173,7 @@
         <label for="tab-4">Dodaj ofertę</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-offer" @submit="checkForm" method="POST" action="" novalidate="true">
+                <form id="form-add-offer" @submit.prevent="checkForm" method="POST" action="" novalidate="true">
                     <fieldset>
                         <legend>Dodaj ofertę</legend>
                         <div class="form-input">
@@ -212,6 +212,7 @@
                                 <li>{{ errorTo }}</li>
                             </ul>
                         </p>
+                        <p id=addOfferInfo></p>
                         <div class="form-input butt">
                             <input id='buttAddData' type="submit" value="Dodaj ofertę">
                         </div>
@@ -250,7 +251,7 @@
         <label for="tab-5">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-admin" @submit="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
+                <form id="form-add-admin" @submit.prevent="checkForm" method="POST" action="php/addAdmin.php" novalidate="true">
                     <fieldset>
                         <legend>Dodaj administratora</legend>
                         <div class="form-input">

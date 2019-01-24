@@ -13,6 +13,9 @@
     } else if(count($_POST) == 4 && isset($_POST['nrRoom']) && isset($_POST['nrFloor']) &&
               isset($_POST['sleeps']) && isset($_POST['nameType'])) {
         addNewRoom($result_obj);
+    } else if(count($_POST) == 4 && isset($_POST['name']) && isset($_POST['price']) &&
+        isset($_POST['from']) && isset($_POST['to'])) {
+        addNewOffer($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -157,15 +160,9 @@
             $result_obj->message = 'Istnieje już pokój o podanych parametrach';
             return;
         }
-        // Wstawienie do tabeli Room:
+        // Wstawienie do tabeli:
         $sql = 'INSERT INTO Room
-                VALUES (
-                    NULL,
-                    :nr_room,
-                    :nr_floor,
-                    :sleeps,
-                    :id_type,
-                    :id_user
+                VALUES (NULL, :nr_room, :nr_floor, :sleeps, :id_type, :id_user
                 );';
         $query = $db->prepare($sql);
         $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
@@ -180,5 +177,47 @@
             $result_obj->message = 'Nowy pokój został dodany';
         } else {
             $result_obj->message = 'Nie udało się dodać pokoju, spróbuj jeszcze raz';
+        }
+    }
+
+    function addNewOffer($result_obj) {
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $from = new DateTime($_POST['from']);
+        $to = new DateTime($_POST['to']);
+        require_once "db.php";
+        $sql = 'SELECT idOffer FROM Offer WHERE
+                    name = :name AND
+                    price = :price AND
+                    date_from = :date_from AND
+                    date_to = :date_to
+        ;';
+        $query = $db->prepare($sql);
+        $query->bindValue(':name', $name, PDO::PARAM_STR);
+        $query->bindValue(':price', $price, PDO::PARAM_INT);
+        $query->bindValue(':date_from', $from->format('Y-m-d'), PDO::PARAM_STR);
+        $query->bindValue(':date_to', $to->format('Y-m-d'), PDO::PARAM_STR);
+        $query->execute();
+        if ($query->rowCount() != 0) {
+            $result_obj->message = 'Istnieje już oferta o podanych parametrach';
+            return;
+        }
+        // Wstawienie do tabeli:
+        $sql = 'INSERT INTO Offer
+                VALUES (NULL, :name, :price, :date_from, :date_to, :id_user
+                );';
+        $query = $db->prepare($sql);
+        $query->bindValue(':name', $name, PDO::PARAM_STR);
+        $query->bindValue(':price', $price, PDO::PARAM_INT);
+        $query->bindValue(':date_from', $from->format('Y-m-d'), PDO::PARAM_STR);
+        $query->bindValue(':date_to', $to->format('Y-m-d'), PDO::PARAM_STR);
+        $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_INT);
+        $query->execute();
+        $id = $db->lastInsertId();
+        if ($id) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Nowa oferta została dodana';
+        } else {
+            $result_obj->message = 'Nie udało się dodać oferty, spróbuj jeszcze raz';
         }
     }

@@ -54,3 +54,16 @@ export function requestAddNewRoom(nrRoom, nrFloor, sleeps, type) {
     }
     requestServer(url, data, callback);
 }
+
+export function requestAddNewOffer(name, price, from, to) {
+    var data = {
+        name: name,
+        price: price,
+        from: from,
+        to: to
+    };
+    function callback(response) {
+        $('#addOfferInfo').text(response.message);
+    }
+    requestServer(url, data, callback);
+}
