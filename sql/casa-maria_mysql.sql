@@ -25,7 +25,6 @@ CREATE TABLE UserLogged (
 CREATE TABLE Offer (
                 idOffer INT AUTO_INCREMENT NOT NULL,
                 name VARCHAR(50) NOT NULL,
-                price TINYINT NOT NULL,
                 date_from DATE NOT NULL,
                 date_to DATE NOT NULL,
                 idUserLogged INT NOT NULL,

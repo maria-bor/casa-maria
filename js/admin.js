@@ -15,7 +15,8 @@ import {
     requestAddNewRoom,
     requestAddNewOffer,
     requestAllOffers,
-    requestAllRooms
+    requestAllRooms,
+    requestAddRoomToOffer
 }
     from './modules/adminServerCalls.js'
 
@@ -320,3 +321,10 @@ $('#password-change-butt').on('click', function () {
     }
 });
 
+$('#add-room-offer').on('click', function () {
+    var selectOffer = document.querySelector('offers');
+    var nrOffer = selectOffer.options[selectOffer.selectedIndex].value;
+    var selectRoom = document.querySelector('rooms');
+    var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
+    requestAddRoomToOffer(nrOffer, nrRoom);
+});

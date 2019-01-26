@@ -54,10 +54,9 @@ export function requestAddNewRoom(nrRoom, nrFloor, sleeps, type) {
     requestServer(url, data, callback);
 }
 
-export function requestAddNewOffer(name, price, from, to) {
+export function requestAddNewOffer(name, from, to) {
     var data = {
         name: name,
-        price: price,
         from: from,
         to: to
     };
@@ -70,13 +69,15 @@ export function requestAddNewOffer(name, price, from, to) {
     requestServer(url, data, callback);
 }
 
+var allOffers = null;
 export function requestAllOffers() {
     var data = {
         offer: 'all'
     };
     function callback(response) {
         if (response.result === 'OK') {
-            fillOffersTable(response.value);
+            allOffers = response.value;
+            fillOffersTable(allOffers);
         } else {
             alert(response.message);
         }
@@ -132,4 +133,19 @@ function fillOffersCombobox(values) {
         option.innerHTML = v.nrRoom;
         select.appendChild(option);
     }
+}
+
+export function requestAddRoomToOffer(nrOffer, nrRoom) {
+    let idOffer = allOffers[nrOffer].idOffer;
+    var data = {
+        idOffer: idOffer,
+        nrRoom: nrRoom
+    };
+    function callback(response) {
+        $('#addOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            fillRoomInOffers(idOffer, nrRoom);
+        }
+    }
+    requestServer(url, data, callback);
 }
