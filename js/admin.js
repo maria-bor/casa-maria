@@ -18,7 +18,8 @@ import {
     requestAllRoomsNumbers,
     requestAddRoomToOffer,
     requestAllRooms,
-    requestAllBooking
+    requestAllBooking,
+    deleteAdminBooking
 }
     from './modules/adminServerCalls.js'
 
@@ -348,5 +349,5 @@ $('#delete').on('click', function() {
     var dateFrom = row.cells[6].innerHTML;
     var dateTo = row.cells[7].innerHTML;
 
-    deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
+    deleteAdminBooking(nrRoom, dateFrom, dateTo);
 });

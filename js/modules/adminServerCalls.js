@@ -239,3 +239,18 @@ export function requestAddRoomToOffer(nrOffer, nrRoom) {
     }
     requestServer(url, data, callback);
 }
+
+export function deleteAdminBooking(nrRoom, dateFrom, dateTo) {
+    var data = {
+        nrRoom: nrRoom,
+        dateFrom: dateFrom,
+        dateTo: dateTo
+    };
+    function callback(response) {
+        $('#addOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            daleteBooking(nrRoom, dateFrom, dateTo);
+        }
+    }
+    requestServer(url, data, callback);
+}
