@@ -95,7 +95,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                     if (!this.passwordRegister) {
                         this.errorPassword = "Wprowadź hasło.";
                     } else if (!this.validPassword(this.passwordRegister)) {
-                        this.errorPassword = "Niepoprawny format hasła.";
+                        this.errorPassword = "Niepoprawny format hasła. Min 8 znaków.";
                     }
 
                     if (!this.passwordConfirm) {
