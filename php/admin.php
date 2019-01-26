@@ -267,10 +267,10 @@
         $id_offer = $_POST['idOffer'];
         $nr_room = $_POST['nrRoom'];
         $price = $_POST['price'];
-        
+
         try {
             $sql = 'INSERT INTO room_offer VALUES (
-                        :id_offer, 
+                        :id_offer,
                         (SELECT idRoom FROM room WHERE nrRoom = :nr_room),
                         :price);';
             $query = $db->prepare($sql);
@@ -278,7 +278,7 @@
             $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
             $query->bindValue(':price', $price, PDO::PARAM_INT);
             $query->execute();
-        
+
             $result_obj->result = 'OK';
             $result_obj->message = 'Pokój został dodany do oferty';
         }
