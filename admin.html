@@ -280,12 +280,12 @@
         <label for="tab-5">Zarządzaj administratorami</label>
         <div class="div-inside">
             <div class="row">
-                <form id="form-add-admin" @submit.prevent="checkForm" method="POST" action="php/addAdmin.php"
+                <form id="form-add-admin" @submit="checkForm" method="POST" action="php/register.php"
                     novalidate="true">
                     <fieldset>
                         <legend>Dodaj administratora</legend>
                         <div class="form-input">
-                            <input id="nameNewAdmin" type="text" name="nameNewAdmin" placeholder="Imię" v-model="nameNewAdmin"
+                            <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model="nameNewAdmin"
                                 required>
                         </div>
                         <p v-if="errorName.length">
@@ -294,7 +294,7 @@
                             </ul>
                         </p>
                         <div class="form-input">
-                            <input id="surnameNewAdmin" type="text" name="surnameNewAdmin" placeholder="Nazwisko"
+                            <input id="surnameRegister" type="text" name="surnameRegister" placeholder="Nazwisko"
                                 v-model="surnameNewAdmin" required>
                         </div>
                         <p v-if="errorSurname.length">
@@ -303,7 +303,7 @@
                             </ul>
                         </p>
                         <div class="form-input">
-                            <input id="emailNewAdmin" type="email" name="emailNewAdmin" placeholder="Email" v-model="emailNewAdmin"
+                            <input id="email" type="email" name="email" placeholder="Email" v-model="emailNewAdmin"
                                 required>
                         </div>
                         <p v-if="errorEmail.length">
@@ -312,7 +312,7 @@
                             </ul>
                         </p>
                         <div class="form-input">
-                            <input id="passwordNewAdmin" type="password" name="passwordNewAdmin" placeholder="Hasło"
+                            <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło"
                                 v-model="passwordNewAdmin" required>
                         </div>
                         <p v-if="errorPassword.length">
@@ -321,7 +321,7 @@
                             </ul>
                         </p>
                         <div class="form-input">
-                            <input id="passwordConfirmNewAdmin" type="password" name="passwordConfirmNewAdmin"
+                            <input id="passwordConfirm" type="password" name="passwordConfirm"
                                 placeholder="Potwierdź hasło" v-model="passwordConfirmNewAdmin" required>
                         </div>
                         <p v-if="errorPasswordConfirm.length">

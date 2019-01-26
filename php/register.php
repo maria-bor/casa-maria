@@ -42,7 +42,7 @@
         $_SESSION['form_email'] = $email;
         $_SESSION['form_password'] = $password1;
         $_SESSION['form_confirm'] = $password2;
-        
+
         require_once 'db.php';
 
         try 
@@ -54,14 +54,31 @@
             $query = $db->prepare($sql);
             $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
             $query->execute();
-
             if ($query->rowCount() > 0) {
                 $all_valid = false;
                 $_SESSION['error_email'] = 'Konto o podanym email już istnieje!';
             }
 
             if ($all_valid) {
+                // Wyciągnięcie roli jeszcze przed transakcją
+                $sql = 'SELECT idRole
+                        FROM Role r
+                        WHERE r.name = :user_role
+                        LIMIT 1;';
+                $query = $db->prepare($sql);
+                $role_name = '';
+                if (isset($_SESSION['is_admin_logged'])) {
+                    $role_name = 'admin';
+                } else {
+                    $role_name = 'user_logged';
+                }
+                $query->bindValue(':user_role', $role_name, PDO::PARAM_STR);
+                $query->execute();
+                $result = $query->fetch();
+                $id_role = $result['idRole'];
+
                 $db->beginTransaction();
+
                 // Wstawienie do tabeli User:
                 $sql = 'INSERT INTO User
                         VALUES (
@@ -91,32 +108,30 @@
 
                 // Wstawienie do tabeli UserRole:
                 $sql = 'INSERT INTO UserRole
-                        VALUES (
-                        :id_user_logged,
-                        (SELECT idRole
-                            FROM Role r
-                            WHERE r.name = :user_role
-                            LIMIT 1
-                        )
-                        );';
+                        VALUES (:id_user_logged, :id_role);';
                 $query = $db->prepare($sql);
                 $query->bindValue(':id_user_logged', $db->lastInsertId(), PDO::PARAM_STR);
-                $query->bindValue(':user_role', 'user_logged', PDO::PARAM_STR);
+                $query->bindValue(':id_role', $id_role, PDO::PARAM_STR);
                 $query->execute();
 
                 $db->commit();
-                
+            
                 // Zapamietujemy dane rejestrujacego( a potem logujacego):
-                $_SESSION['id_user'] = $id_user;
-                $_SESSION['surname'] = $surname;
-                $_SESSION['name'] = $name;
-                $_SESSION['email'] = $email;
-                $_SESSION['id_role'] = 2; // mozna by tu z selecta wyciagnac
-                $_SESSION['role_name'] = 'user_logged';
-                $_SESSION['is_user_logged'] = true;
-                $_SESSION['registered'] = true;
+                if (!isset($_SESSION['is_admin_logged'])) {
+                    $_SESSION['id_user'] = $id_user;
+                    $_SESSION['surname'] = $surname;
+                    $_SESSION['name'] = $name;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['id_role'] = $id_role;
+                    $_SESSION['role_name'] = $role_name;
+                    $_SESSION['is_user_logged'] = true;
+                    $_SESSION['registered'] = true;
 
-                header('Location: ../user.html');
+                    header('Location: ../user.html');
+                } else {
+                    header('Location: ../admin.html');
+                }
+                
             } else {
                 $_SESSION['error_register'] = true;
                 header('Location: ../index.html');
