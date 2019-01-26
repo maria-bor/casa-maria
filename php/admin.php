@@ -354,4 +354,3 @@
         $result_obj->result = 'OK';
         $result_obj->message = 'Rezerwacja usunięta.';
     }
-

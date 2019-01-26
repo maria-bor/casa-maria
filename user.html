@@ -57,7 +57,9 @@
                 <p>casa-maria</p>
             </div>
             <ul>
-                <li><a href="#" id="profile"><i class="material-icons">home</i>
+                <li><a href="#" id="home"><i class="material-icons">home</i>
+                        <span>Strona główna</span></a></li>
+                <li><a href="#" id="profile"><i class="material-icons">person</i>
                         <span>Profil</span></a></li>
                 <li><a href="#" id="reservation"><i class="material-icons">ballot</i>
                         <span>Twoje rezerwacje</span></a></li>
@@ -77,25 +79,25 @@
     <div class="modal-user-profile">
         <div class="input">
             <label for="userName">Imię</label>
-            <input type="text" id="userName" name="userName" disabled <?= inputValue("name"); ?> >
+            <input type="text" id="userName" name="userName" disabled <?=inputValue("name"); ?> >
             <input type="submit" id="name-change-butt" name="name-change-butt" value="Zmień">
             <p id="errorName"></p>
         </div>
         <div class="input">
             <label for="userSurname">Nazwisko</label>
-            <input type="text" id="userSurname" name="userSurname" disabled <?= inputValue("surname"); ?> >
+            <input type="text" id="userSurname" name="userSurname" disabled <?=inputValue("surname"); ?> >
             <input type="submit" id="surname-change-butt" name="surname-change-butt" value="Zmień">
             <p id="errorSurname"></p>
         </div>
         <div class="input">
             <label for="userEmail">Email</label>
-            <input type="email" id="userEmail" name="userEmail" disabled <?= inputValue("email"); ?> >
+            <input type="email" id="userEmail" name="userEmail" disabled <?=inputValue("email"); ?> >
             <input type="submit" id="email-change-butt" name="email-change-butt" value="Zmień">
             <p id="errorEmail"></p>
         </div>
         <div class="input">
             <label for="userPassword">Hasło</label>
-            <input type="password" id="userPassword" name="userPassword" disabled <?= inputValue("password"); ?> >
+            <input type="password" id="userPassword" name="userPassword" disabled <?=inputValue("password"); ?> >
             <input type="submit" id="password-change-butt" name="password-change-butt" value="Zmień">
             <p id="errorPassword"></p>
         </div>

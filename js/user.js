@@ -24,6 +24,12 @@ function logout() {
     window.location.replace("./php/logout.php");
 }
 
+$(function () {
+    $('#home').on('click', function (params) {
+        window.location.replace("./index.html");
+    })
+});
+
 var card = $('.card');
 var cardProfile = $('.modal-user-profile');
 $(function () {
