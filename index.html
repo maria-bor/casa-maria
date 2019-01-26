@@ -46,8 +46,12 @@
         </li>
         <li><a href="./galeria.html" target="_blank">Galeria</a></li>
         <li><a href="./kontakt.html" target="_blank">Kontakt</a></li>
-        <li><a href="#" id="clickRegister">Zarejestruj się</a></li>
-        <li><a href="#" id="clickLogin">Zaloguj się</a></li>
+        <li><a href="#" id="clickRegister">
+          <?=isset($_SESSION['is_user_logged']) ? 'Konto' : 'Zarejestruj się'?>
+        </a></li>
+        <li><a href="#" id="clickLogin">
+          <?=isset($_SESSION['is_user_logged']) ? 'Wyloguj się' : 'Zaloguj się'?>
+        </a></li>
       </ul>
     </nav>
   </div>
