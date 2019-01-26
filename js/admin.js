@@ -146,19 +146,16 @@ const formAddOffer = new Vue(
         el: '#form-add-offer',
         data: {
             errorName: '',
-            errorPrice: '',
             errorFrom: '',
             errorTo: '',
 
             name: null,
-            price: null,
             from: dateFromMin,
             to: dateToMin
         },
         methods: {
             checkForm: function (e) {
                 this.errorName = '';
-                this.errorPrice = '';
                 this.errorFrom = '';
                 this.errorTo = '';
 
@@ -166,12 +163,6 @@ const formAddOffer = new Vue(
                     this.errorName = "Wprowadź nazwę oferty.";
                 } else if (!this.validName(this.name)) {
                     this.errorName = "Niepoprawny format.";
-                }
-
-                if (!this.price) {
-                    this.errorPrice = "Wprowadź cenę.";
-                } else if (!this.validPrice(this.price)) {
-                    this.errorPrice = "Niepoprawny format.";
                 }
 
                 if (!this.from) {
@@ -184,8 +175,7 @@ const formAddOffer = new Vue(
                     this.errorTo = "Zła data.";
                 }
 
-                if (!this.errorName.length && !this.errorPrice.length
-                    && !this.errorFrom.length && !this.errorTo.length) {
+                if (!this.errorName.length && !this.errorFrom.length && !this.errorTo.length) {
                     requestAddNewOffer(this.name, this.price, this.from, this.to);
                     return true;
                 }
@@ -196,15 +186,19 @@ const formAddOffer = new Vue(
                 var nameOfferFormat = /^[a-zA-Z]{3,20}?$/;
                 return nameOfferFormat.test(nameOffer);
             },
-            validPrice: function (price) {
-                return /^[1-9]\d*$/.test(price);
-            },
             validTo: function (to) {
                 return to > this.from;
             }
         }
     });
 
+/*
+function validPrice(price) {
+    if (!/^[1-9]\d*$/.test(price)) {
+        document.getElementById(errorPrive).innerHTML = "Zły format.";
+    }
+}
+*/
 const formRegisterAdmin = new Vue(
     {
         el: '#form-add-admin',
