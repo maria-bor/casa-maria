@@ -5,6 +5,7 @@ import {
 import {
     requestAllRoomTypes,
     requestAllOffers,
+    requestAllRoomsNumbers,
     requestAllRooms
 }
     from './adminServerCalls.js'
@@ -38,6 +39,7 @@ function setupTab2ClickHandler() {
     $("#tab-2").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-2", 30);
         requestAllRoomTypes();
+        requestAllRooms();
     });
 }
 
@@ -45,6 +47,6 @@ function setupTab4ClickHandler() {
     $("#tab-4").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
         requestAllOffers();
-        requestAllRooms();
+        requestAllRoomsNumbers();
     });
 }

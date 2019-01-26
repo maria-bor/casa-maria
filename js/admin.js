@@ -15,8 +15,9 @@ import {
     requestAddNewRoom,
     requestAddNewOffer,
     requestAllOffers,
-    requestAllRooms,
-    requestAddRoomToOffer
+    requestAllRoomsNumbers,
+    requestAddRoomToOffer,
+    requestAllRooms
 }
     from './modules/adminServerCalls.js'
 
@@ -30,9 +31,10 @@ window.onload = function () {
     var tab = loadTab();
     if (tab === "#tab-2") {
         requestAllRoomTypes();
+        requestAllRooms();
     } else if (tab === "#tab-4") {
         requestAllOffers();
-        requestAllRooms();
+        requestAllRoomsNumbers();
     }
 }
 
