@@ -103,7 +103,7 @@ export function fillOffersTable(values) {
         // Insert a cell in the row at index 0 and // Append a text node to the cell
         newRow.insertCell(0).appendChild(document.createTextNode(idx));
         newRow.insertCell(1).appendChild(document.createTextNode(v.name));
-        newRow.insertCell(2).appendChild(document.createTextNode(v.price));
+        newRow.insertCell(2).appendChild(document.createTextNode(''));
         newRow.insertCell(3).appendChild(document.createTextNode(''));
         newRow.insertCell(4).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(5).appendChild(document.createTextNode(v.date_to));
@@ -225,19 +225,27 @@ function fillOffersCombobox(values) {
     }
 }
 
-export function requestAddRoomToOffer(nrOffer, nrRoom) {
-    let idOffer = allOffers[nrOffer].idOffer;
+export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
+    let idOffer = allOffers[nrOffer-1].idOffer;
     var data = {
         idOffer: idOffer,
-        nrRoom: nrRoom
+        nrRoom: nrRoom,
+        price: price
     };
     function callback(response) {
-        $('#addOfferInfo').text(response.message);
+        $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
-            fillRoomInOffers(idOffer, nrRoom);
+            fillRoomInOffers(nrOffer, nrRoom, price);
         }
     }
     requestServer(url, data, callback);
+}
+
+function fillRoomInOffers(nrOffer, nrRoom, price) {
+    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
+    var row = tableRef.rows[nrOffer-1];
+    row.cells[2].innerHTML = price;
+    row.cells[3].innerHTML = nrRoom;
 }
 
 export function deleteAdminBooking(nrRoom, dateFrom, dateTo) {

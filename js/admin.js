@@ -324,12 +324,14 @@ $('#password-change-butt').on('click', function () {
 });
 
 $('#add-room-offer').on('click', function () {
-    var selectOffer = document.querySelector('offers');
+    var selectOffer = document.querySelector('#offers');
     var nrOffer = selectOffer.options[selectOffer.selectedIndex].value;
-    var selectRoom = document.querySelector('rooms');
+    // var nrOffer = selectOffer.selectedIndex;
+    var selectRoom = document.querySelector('#rooms');
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
-    if (/^[1-9]\d*$/.test(document.getElementById('price'))) {
-        requestAddRoomToOffer(nrOffer, nrRoom);
+    var price = document.getElementById('price').value;
+    if (/^\d*$/.test(price)) {
+        requestAddRoomToOffer(nrOffer, nrRoom, price);
     }
     else {
         document.getElementById('errorPrice').innerText = "Wprowadzono zły format ceny.";

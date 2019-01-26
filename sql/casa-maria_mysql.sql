@@ -61,7 +61,7 @@ CREATE TABLE Room (
 CREATE TABLE Room_Offer (
                 idOffer INT NOT NULL,
                 idRoom INT NOT NULL,
-                price DOUBLE PRECISION NOT NULL,
+                price INT NOT NULL,
                 PRIMARY KEY (idOffer, idRoom)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE Booking (
                 idRoom INT NOT NULL,
                 date_from DATE NOT NULL,
                 date_to DATE NOT NULL,
-                price DOUBLE PRECISION NOT NULL,
+                price INT NOT NULL,
                 guests TINYINT NOT NULL,
                 PRIMARY KEY (idUser, idRoom)
 );

@@ -31,7 +31,6 @@ export function setupTabClickHandlers() {
 function setupTabClickHandler(tabName) {
     $(tabName).on('click', function () {
         setCookie("nameOfLastTabClicked", tabName, 30);
-        requestAllRoomTypes();
     });
 }
 
