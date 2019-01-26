@@ -28,8 +28,12 @@
     } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
         getAllBooking($result_obj);
     } else if(count($_POST) == 3 && isset($_POST['nrRoom']) &&
-        isset($_POST['dateFrom']) && isset($_POST['dateTo'])) {
+        isset($_POST['dateFrom']) && isset($_POST['dateTo'])) { // usuniecie rezerwacji
         deleteSelectedAdminBooking($result_obj);
+    } else if(count($_POST) == 1 && isset($_POST['admins'])) { // pobranie wszystkich adminow
+        getAllAdmins($result_obj);
+    } else if(count($_POST) == 1 && isset($_POST['email'])) { // usuniecie rezerwacji
+        deleteSelectedAdmin($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -253,6 +257,31 @@
         }
     }
 
+    function getAllAdmins($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT u.name, u.surname, u.email
+                FROM user u
+                INNER JOIN userlogged l
+                ON u.idUser = l.idUser
+                INNER JOIN userrole ur
+                ON ur.idUserLogged = l.idUserLogged
+                INNER JOIN role r
+                ON r.idRole = ur.idRole
+                WHERE r.name = "admin";';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' adminów.';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych adminów.';
+        }
+    }
+
     function getAllOffers($result_obj) {
         require_once "db.php";
         $sql = 'SELECT *
@@ -338,9 +367,9 @@
 
     function deleteSelectedAdminBooking($result_obj) {
         require_once "db.php";
-        $nr_room= $_POST['nrRoom'];
-        $date_from= $_POST['dateFrom'];
-        $date_to= $_POST['dateTo'];
+        $nr_room = $_POST['nrRoom'];
+        $date_from = $_POST['dateFrom'];
+        $date_to = $_POST['dateTo'];
         $sql = 'DELETE FROM booking
                 WHERE idRoom = (SELECT idRoom FROM room WHERE nrRoom = :nr_room)
                 AND date_from = :date_from
@@ -353,4 +382,28 @@
 
         $result_obj->result = 'OK';
         $result_obj->message = 'Rezerwacja usunięta.';
+    }
+
+    function deleteSelectedAdmin($result_obj) {
+        require_once "db.php";
+        $email = $_POST['email'];
+
+        $db->beginTransaction();
+
+        $sql = 'DELETE ur, ul, u
+                FROM userrole ur
+                INNER JOIN userlogged ul
+                ON ur.idUserLogged = ul.idUserLogged
+                INNER JOIN user u
+                ON u.idUser = ul.idUser
+                WHERE u.email = :email AND ur.idRole = 1;';
+
+        $query = $db->prepare($sql);
+        $query->bindValue(':email', $email, PDO::PARAM_STR);
+        $query->execute();
+
+        $db->commit();
+
+        $result_obj->result = 'OK';
+        $result_obj->message = 'Admin usunięty.';
     }

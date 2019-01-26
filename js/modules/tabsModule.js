@@ -6,7 +6,9 @@ import {
     requestAllRoomTypes,
     requestAllOffers,
     requestAllRoomsNumbers,
-    requestAllRooms
+    requestAllRooms,
+    requestAllBooking,
+    requestAllAdmins
 }
     from './adminServerCalls.js'
 
@@ -23,9 +25,9 @@ export function loadTab() {
 export function setupTabClickHandlers() {
     setupTabClickHandler("#tab-1");
     setupTab2ClickHandler();
-    setupTabClickHandler("#tab-3");
+    setupTab3ClickHandler();
     setupTab4ClickHandler();
-    setupTabClickHandler("#tab-5");
+    setupTab5ClickHandler();
 }
 
 function setupTabClickHandler(tabName) {
@@ -42,10 +44,24 @@ function setupTab2ClickHandler() {
     });
 }
 
+function setupTab3ClickHandler() {
+    $("#tab-3").on('click', function () {
+        setCookie("nameOfLastTabClicked", "#tab-3", 30);
+        requestAllBooking()
+    });
+}
+
 function setupTab4ClickHandler() {
     $("#tab-4").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
         requestAllOffers();
         requestAllRoomsNumbers();
+    });
+}
+
+function setupTab5ClickHandler() {
+    $("#tab-5").on('click', function () {
+        setCookie("nameOfLastTabClicked", "#tab-5", 30);
+        requestAllAdmins();
     });
 }

@@ -268,3 +268,62 @@ function deleteBooking(nrBooking) {
     var row = tableRef.rows[nrBooking-1];
     tableRef.deleteRow(row);
 }
+
+export function deleteAdmins(nr, email) {
+    var data = {
+        email: email
+    };
+    function callback(response) {
+        $('#deleteAdminsInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteAdmin(nr);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteAdmin(nr) {
+    var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
+    var row = tableRef.rows[nr-1];
+    tableRef.deleteRow(row);
+}
+
+var allAdmins = null;
+export function requestAllAdmins() {
+    var data = {
+        admins: 'all'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            allAdmins = response.value;
+            fillAdminsTable(allAdmins);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+export function fillAdminsTable(values) {
+    // table
+    var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
+    tableRef.innerHTML = '';
+    let idx = 1;
+    // combobox
+    var select = document.getElementById("nrAdmin");
+    select.innerHTML = '';
+
+    for (var v of values) {
+        // Insert a row in the table at row index 0
+        var newRow = tableRef.insertRow(tableRef.rows.length)
+        // Insert a cell in the row at index 0 and // Append a text node to the cell
+        newRow.insertCell(0).appendChild(document.createTextNode(idx)); // nr
+        newRow.insertCell(1).appendChild(document.createTextNode(v.name)); // imię
+        newRow.insertCell(2).appendChild(document.createTextNode(v.surname)); // nazwisko
+        newRow.insertCell(3).appendChild(document.createTextNode(v.email)); // Email
+
+        var option = document.createElement('option')
+        option.innerHTML = idx++;
+        select.appendChild(option);
+    }
+}
