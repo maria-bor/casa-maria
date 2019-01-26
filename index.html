@@ -4,11 +4,6 @@
   require_once './php/helpers/checkFormError.php';
   require_once './php/helpers/inputValue.php';
 
-  if ((isset($_SESSION['is_user_logged'])) && ($_SESSION['is_user_logged'] == true))
-	{
-		header('Location: user.html');
-		exit();
-  }
   if ((isset($_SESSION['is_admin_logged'])) && ($_SESSION['is_admin_logged'] == true))
 	{
 		header('Location: admin.html');
