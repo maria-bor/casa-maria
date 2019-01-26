@@ -180,7 +180,7 @@ const formAddOffer = new Vue(
                 }
 
                 if (!this.errorName.length && !this.errorFrom.length && !this.errorTo.length) {
-                    requestAddNewOffer(this.name, this.price, this.from, this.to);
+                    requestAddNewOffer(this.name, this.from, this.to);
                     return true;
                 }
                 e.preventDefault();
