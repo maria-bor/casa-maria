@@ -13,13 +13,15 @@
     } else if(count($_POST) == 4 && isset($_POST['nrRoom']) && isset($_POST['nrFloor']) &&
               isset($_POST['sleeps']) && isset($_POST['nameType'])) {
         addNewRoom($result_obj);
-    } else if(count($_POST) == 4 && isset($_POST['name']) && isset($_POST['price']) &&
+    } else if(count($_POST) == 3 && isset($_POST['name']) &&
         isset($_POST['from']) && isset($_POST['to'])) {
         addNewOffer($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
         getAllOffers($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['room'])) { // pobranie wszystkich ofert
+    } else if (count($_POST) == 1 && isset($_POST['room'])) { // pobranie wszystkich pokoi
         getAllRooms($result_obj);
+    } else if (count($_POST) == 2 && isset($_POST['idOffer']) && isset($_POST['nrRoom'])) { // dodanie pokoju do oferty
+        addRoomToOffer($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -186,19 +188,16 @@
 
     function addNewOffer($result_obj) {
         $name = $_POST['name'];
-        $price = $_POST['price'];
         $from = new DateTime($_POST['from']);
         $to = new DateTime($_POST['to']);
         require_once "db.php";
         $sql = 'SELECT idOffer FROM Offer WHERE
                     name = :name AND
-                    price = :price AND
                     date_from = :date_from AND
                     date_to = :date_to
         ;';
         $query = $db->prepare($sql);
         $query->bindValue(':name', $name, PDO::PARAM_STR);
-        $query->bindValue(':price', $price, PDO::PARAM_INT);
         $query->bindValue(':date_from', $from->format('Y-m-d'), PDO::PARAM_STR);
         $query->bindValue(':date_to', $to->format('Y-m-d'), PDO::PARAM_STR);
         $query->execute();
@@ -208,11 +207,9 @@
         }
         // Wstawienie do tabeli:
         $sql = 'INSERT INTO Offer
-                VALUES (NULL, :name, :price, :date_from, :date_to, :id_user
-                );';
+                VALUES (NULL, :name, :date_from, :date_to, :id_user);';
         $query = $db->prepare($sql);
         $query->bindValue(':name', $name, PDO::PARAM_STR);
-        $query->bindValue(':price', $price, PDO::PARAM_INT);
         $query->bindValue(':date_from', $from->format('Y-m-d'), PDO::PARAM_STR);
         $query->bindValue(':date_to', $to->format('Y-m-d'), PDO::PARAM_STR);
         $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_INT);
@@ -235,7 +232,7 @@
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($query->rowCount() > 0) {
+        if ($query->rowCount() >= 0) {
             $result_obj->result = 'OK';
             $result_obj->message = 'Pobrano '.$query->rowCount().' ofert';
             $result_obj->value = $results;
@@ -254,12 +251,34 @@
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($query->rowCount() > 0) {
+        if ($query->rowCount() >= 0) {
             $result_obj->result = 'OK';
             $result_obj->message = 'Pobrano '.$query->rowCount().' pokoi';
             $result_obj->value = $results;
         }
         else {
             $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
+        }
+    }
+
+    function addRoomToOffer($result_obj) {
+        require_once "db.php";
+        $id_offer = $_POST['idOffer'];
+        $nr_room = $_POST['nrRoom'];
+        // $price = $_POST['price'];
+
+        $sql = 'INSERT INTO room_offer
+                VALUES (:id_offer, :nr_room, :price);';
+        $query = $db->prepare($sql);
+        $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+        $query->bindValue(':price', 100, PDO::PARAM_INT);
+        $query->execute();
+        $id = $db->lastInsertId();
+        if ($id) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pokój został dodany do oferty';
+        } else {
+            $result_obj->message = 'Nie udało się dodać pokoju do oferty, spróbuj jeszcze raz';
         }
     }
