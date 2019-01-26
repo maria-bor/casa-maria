@@ -27,6 +27,9 @@
         getAllRoomsNumbers($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
         getAllBooking($result_obj);
+    } else if(count($_POST) == 3 && isset($_POST['nrRoom']) &&
+        isset($_POST['dateFrom']) && isset($_POST['dateTo'])) {
+        deleteSelectedAdminBooking($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -332,3 +335,23 @@
             $result_obj->message = 'Nie udało się dodać pokoju do oferty, spróbuj jeszcze raz';
         }
     }
+
+    function deleteSelectedAdminBooking($result_obj) {
+        require_once "db.php";
+        $nr_room= $_POST['nrRoom'];
+        $date_from= $_POST['dateFrom'];
+        $date_to= $_POST['dateTo'];
+        $sql = 'DELETE FROM booking
+                WHERE idRoom = (SELECT idRoom FROM room WHERE nrRoom = :nr_room)
+                AND date_from = :date_from
+                AND date_to = :date_to';
+        $query = $db->prepare($sql);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+        $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
+        $query->bindValue(':date_to', $date_to, PDO::PARAM_STR);
+        $query->execute();
+
+        $result_obj->result = 'OK';
+        $result_obj->message = 'Rezerwacja usunięta.';
+    }
+

@@ -350,6 +350,7 @@ $('#delete').on('click', function() {
     var nrRoom = row.cells[1].innerHTML;
     var dateFrom = row.cells[6].innerHTML;
     var dateTo = row.cells[7].innerHTML;
+    console.log(dateFrom)
 
-    deleteAdminBooking(nrRoom, dateFrom, dateTo);
+    deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
 });

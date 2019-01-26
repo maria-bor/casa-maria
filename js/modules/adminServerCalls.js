@@ -248,17 +248,23 @@ function fillRoomInOffers(nrOffer, nrRoom, price) {
     row.cells[3].innerHTML = nrRoom;
 }
 
-export function deleteAdminBooking(nrRoom, dateFrom, dateTo) {
+export function deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo) {
     var data = {
         nrRoom: nrRoom,
         dateFrom: dateFrom,
         dateTo: dateTo
     };
     function callback(response) {
-        $('#addOfferInfo').text(response.message);
+        $('#deleteBookingInfo').text(response.message);
         if (response.result === 'OK') {
-            daleteBooking(nrRoom, dateFrom, dateTo);
+            deleteBooking(nrBooking);
         }
     }
     requestServer(url, data, callback);
+}
+
+function deleteBooking(nrBooking) {
+    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
+    var row = tableRef.rows[nrBooking-1];
+    tableRef.deleteRow(row);
 }
