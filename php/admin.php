@@ -24,6 +24,8 @@
         getAllRoomsNumbers($result_obj);
     } else if (count($_POST) == 2 && isset($_POST['idOffer']) && isset($_POST['nrRoom'])) { // dodanie pokoju do oferty
         addRoomToOffer($result_obj);
+    } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
+        getAllBooking($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -222,6 +224,28 @@
             $result_obj->message = 'Nowa oferta została dodana';
         } else {
             $result_obj->message = 'Nie udało się dodać oferty, spróbuj jeszcze raz';
+        }
+    }
+
+    function getAllBooking($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT r.nrRoom, u.name, u.surname, u.email, b.guests, b.price, b.date_to, b.date_from
+                FROM room r
+                INNER JOIN booking b
+                ON r.idRoom = b.idRoom
+                INNER JOIN user u
+                ON u.idUser = b.idUser;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' rezerwacji';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych rezerwacji.';
         }
     }
 
