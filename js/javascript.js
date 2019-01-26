@@ -29,7 +29,7 @@ document.getElementById('clickLogin').addEventListener('click', function () {
 
                     if (!this.errorLogin.length && !this.errorPassword.length) {
                         return true;
-                    } 
+                    }
                     e.preventDefault();
                 },
                 validPassword: function (passwordLogin) {
@@ -104,14 +104,14 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                         this.errorPasswordConfirm = "Hasła nie zgadzają się.";
                     }
 
-                    if (!this.errorName.length && !this.errorSurname.length 
+                    if (!this.errorName.length && !this.errorSurname.length
                         && !this.errorEmail.length && !this.errorPassword.length
                         && !this.errorPasswordConfirm.length) {
                         return true;
-                    } 
+                    }
                     e.preventDefault();
                 },
-                validNameSurname:function (str) {
+                validNameSurname: function (str) {
                     var nameOrSurname = str.trim();
                     var nameOrSurnameFormat = /^[a-zA-Z]{3,20}?$/;
                     return nameOrSurnameFormat.test(nameOrSurname);
@@ -127,7 +127,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                 validPasswordConfirm: function (passwordConfirm) {
                     var passConfirm = passwordConfirm.trim();
                     return passConfirm === this.passwordRegister;
-                  }
+                }
             }
         });
 });
@@ -136,20 +136,20 @@ document.querySelector('.close-register').addEventListener('click', function () 
 });
 
 /***CHECK LOGIN OR REGISTER ERROR (RESPONSE FROM SERVER)***/
-$(document).ready(function() {
+$(document).ready(function () {
     checkError("Register");
     checkError("Login");
 });
 
 function checkError(error) {
     var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function() {
+    ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText == ("error_"+error.toLowerCase()))
-                document.getElementById("click"+error).click();
+            if (this.responseText == ("error_" + error.toLowerCase()))
+                document.getElementById("click" + error).click();
         }
     }
-    ajax.open("GET", "./php/helpers/checkError"+error+".php", true);
+    ajax.open("GET", "./php/helpers/checkError" + error + ".php", true);
     ajax.send();
 }
 
@@ -160,6 +160,7 @@ var dateFrom = document.getElementById('book-date-from');
 dateFrom.min = dateInputFormatted;
 
 var dateTo = document.getElementById("book-date-to");
+
 dateFrom.addEventListener('change', setDateTo);
 function setDateTo() {
     var from = dateFrom.value;
@@ -167,27 +168,25 @@ function setDateTo() {
 }
 
 /*** POPUP BOOKING ***/
-$(document).ready(function (){
+$(document).ready(function () {
     validateDateInput();
     $('#book-date-from, #book-date-to').change(validateDateInput);
 });
 
-function validateDateInput(){
-    if ($('#book-date-from').val().length > 0   &&
-        $('#book-date-to').val().length > 0) {
+function validateDateInput() {
+    if ($('#book-date-from').val().length > 0 &&
+        $('#book-date-to').val().length > 0 &&
+        $('#book-date-to').val() > $('#book-date-from').val()) {
         $("#clickBooking").prop("disabled", false);
     }
     else {
         $("#clickBooking").prop("disabled", true);
     }
-} 
+}
 document.getElementById('clickBooking').addEventListener('click', function () {
-    // var dateFrom = document.getElementById('book-date-from').value;
-    // var dateTo = document.getElementById('book-date-to').value;
     var selectList = document.getElementById('nrPersons');
     var nrPersons = selectList.options[selectList.selectedIndex].text;
-    console.log(nrPersons);
-    
+
     document.querySelector('.bg-modal-booking').style.display = 'flex';
     document.getElementById('book-from').value = dateFrom.value;
     document.getElementById('book-to').value = dateTo.value;
@@ -208,7 +207,7 @@ document.getElementById('bookButt').addEventListener('click', function () {
                 errorName: '',
                 errorSurname: '',
                 errorEmail: '',
-                
+
                 nameReserve: null,
                 surnameReserve: null,
                 emailReserve: null
@@ -237,14 +236,14 @@ document.getElementById('bookButt').addEventListener('click', function () {
                         this.errorEmail = "Niepoprawny format email.";
                     }
 
-                    if (!this.errorName.length && 
-                        !this.errorSurname.length && 
+                    if (!this.errorName.length &&
+                        !this.errorSurname.length &&
                         !this.errorEmail.length) {
                         return true;
-                    } 
+                    }
                     e.preventDefault();
                 },
-                validNameSurname:function (str) {
+                validNameSurname: function (str) {
                     var nameOrSurname = str.trim();
                     var nameOrSurnameFormat = /^[a-zA-Z]{3,20}?$/;
                     return nameOrSurnameFormat.test(nameOrSurname);
