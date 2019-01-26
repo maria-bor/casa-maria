@@ -139,8 +139,11 @@ let dateInputFormatted = tmp.toISOString().split('T')[0]; // 0, as split produce
 var dateFromMin = document.getElementById('from');
 dateFromMin.min = dateInputFormatted;
 
-var dateToMin = document.getElementById('to');
-dateToMin.min = dateInputFormatted;
+dateFromMin.addEventListener('change', setDateTo);
+function setDateTo() {
+    var from = dateFromMin.value;
+    dateToMin.min = from;
+}
 
 const formAddOffer = new Vue(
     {
@@ -151,8 +154,8 @@ const formAddOffer = new Vue(
             errorTo: '',
 
             name: null,
-            from: dateFromMin,
-            to: dateToMin
+            from: null,
+            to: null
         },
         methods: {
             checkForm: function (e) {
@@ -173,7 +176,7 @@ const formAddOffer = new Vue(
                 if (!this.to) {
                     this.errorTo = "Wprowadź datę końca oferty.";
                 } else if (!this.validTo(this.to)) {
-                    this.errorTo = "Zła data.";
+                    this.errorTo = "Data wyjazdu powinna być większa od daty przyjazdu.";
                 }
 
                 if (!this.errorName.length && !this.errorFrom.length && !this.errorTo.length) {
@@ -193,13 +196,6 @@ const formAddOffer = new Vue(
         }
     });
 
-/*
-function validPrice(price) {
-    if (!/^[1-9]\d*$/.test(price)) {
-        document.getElementById(errorPrive).innerHTML = "Zły format.";
-    }
-}
-*/
 const formRegisterAdmin = new Vue(
     {
         el: '#form-add-admin',
@@ -326,5 +322,10 @@ $('#add-room-offer').on('click', function () {
     var nrOffer = selectOffer.options[selectOffer.selectedIndex].value;
     var selectRoom = document.querySelector('rooms');
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
-    requestAddRoomToOffer(nrOffer, nrRoom);
+    if (/^[1-9]\d*$/.test(document.getElementById('price'))) {
+        requestAddRoomToOffer(nrOffer, nrRoom);
+    }
+    else {
+        document.getElementById('errorPrice').innerText = "Wprowadzono zły format ceny.";
+    }
 });

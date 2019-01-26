@@ -209,7 +209,7 @@
                         </p>
                         <div class="form-input">
                             <label for="from">Od</label>
-                            <input id="from" name="index" type="date" value="" min="" v-model="from" required>
+                            <input id="from" name="index" type="date" min="" v-model="from" required>
                         </div>
                         <p v-if="errorFrom.length">
                             <ul>
@@ -263,7 +263,7 @@
                     </div>
                     <div class="form-input offer-room">
                         <label for="price">Cena:</label>
-                        <input id="price" name="price" type="number" min="0" placeholder="Cena" required>
+                        <input id="price" name="price" type="text" min="0" placeholder="Cena" required>
                     </div>
                     <p id="errorPrice"></p>
                     <div class="form-input butt">
