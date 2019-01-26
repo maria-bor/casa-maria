@@ -334,3 +334,19 @@ $('#add-room-offer').on('click', function () {
         document.getElementById('errorPrice').innerText = "Wprowadzono zły format ceny.";
     }
 });
+
+$('#delete').on('click', function() {
+    var selectBooking = document.querySelector('#booking');
+    var nrBooking = selectBooking.options[selectBooking.selectedIndex].value;
+
+    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
+    
+    var id = nrBooking - 1;
+    var row = tableRef.rows[id];
+
+    var nrRoom = row.cells[1].innerHTML;
+    var dateFrom = row.cells[6].innerHTML;
+    var dateTo = row.cells[7].innerHTML;
+
+    deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
+});
