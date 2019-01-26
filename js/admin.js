@@ -15,8 +15,10 @@ import {
     requestAddNewRoom,
     requestAddNewOffer,
     requestAllOffers,
+    requestAllRoomsNumbers,
+    requestAddRoomToOffer,
     requestAllRooms,
-    requestAddRoomToOffer
+    requestAllBooking
 }
     from './modules/adminServerCalls.js'
 
@@ -30,9 +32,12 @@ window.onload = function () {
     var tab = loadTab();
     if (tab === "#tab-2") {
         requestAllRoomTypes();
+        requestAllRooms();
+    } else if (tab === "#tab-3") {
+        requestAllBooking();
     } else if (tab === "#tab-4") {
         requestAllOffers();
-        requestAllRooms();
+        requestAllRoomsNumbers();
     }
 }
 
@@ -330,4 +335,20 @@ $('#add-room-offer').on('click', function () {
     else {
         document.getElementById('errorPrice').innerText = "Wprowadzono zły format ceny.";
     }
+});
+
+$('#delete').on('click', function() {
+    var selectBooking = document.querySelector('#booking');
+    var nrBooking = selectBooking.options[selectBooking.selectedIndex].value;
+
+    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
+    
+    var id = nrBooking - 1;
+    var row = tableRef.rows[id];
+
+    var nrRoom = row.cells[1].innerHTML;
+    var dateFrom = row.cells[6].innerHTML;
+    var dateTo = row.cells[7].innerHTML;
+
+    deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
 });

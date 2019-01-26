@@ -18,11 +18,15 @@
         addNewOffer($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
         getAllOffers($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['room'])) { // pobranie wszystkich pokoi
+    } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'all') { // pobranie wszystkich pokoi
         getAllRooms($result_obj);
     } else if (count($_POST) == 3 && isset($_POST['idOffer']) &&
                isset($_POST['nrRoom']) && isset($_POST['price'])) { // dodanie pokoju do oferty
         addRoomToOffer($result_obj);
+    } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'nr') { // pobranie wszystkich numerow pokoi
+        getAllRoomsNumbers($result_obj);
+    } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
+        getAllBooking($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -224,6 +228,28 @@
         }
     }
 
+    function getAllBooking($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT r.nrRoom, u.name, u.surname, u.email, b.guests, b.price, b.date_to, b.date_from
+                FROM room r
+                INNER JOIN booking b
+                ON r.idRoom = b.idRoom
+                INNER JOIN user u
+                ON u.idUser = b.idUser;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' rezerwacji';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych rezerwacji.';
+        }
+    }
+
     function getAllOffers($result_obj) {
         require_once "db.php";
         $sql = 'SELECT *
@@ -244,6 +270,26 @@
     }
 
     function getAllRooms($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT r.nrRoom, r.floor, r.sleeps, t.name as name
+                FROM room r
+                INNER JOIN type t 
+                ON r.idType = t.idType;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' pokoi';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych pokoi.';
+        }
+    }
+
+    function getAllRoomsNumbers($result_obj) {
         require_once "db.php";
         $sql = 'SELECT *
                 FROM room
