@@ -247,3 +247,18 @@ function fillRoomInOffers(nrOffer, nrRoom, price) {
     row.cells[2].innerHTML = price;
     row.cells[3].innerHTML = nrRoom;
 }
+
+export function deleteAdminBooking(nrRoom, dateFrom, dateTo) {
+    var data = {
+        nrRoom: nrRoom,
+        dateFrom: dateFrom,
+        dateTo: dateTo
+    };
+    function callback(response) {
+        $('#addOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            daleteBooking(nrRoom, dateFrom, dateTo);
+        }
+    }
+    requestServer(url, data, callback);
+}
