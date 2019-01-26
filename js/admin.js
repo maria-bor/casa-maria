@@ -19,7 +19,9 @@ import {
     requestAddRoomToOffer,
     requestAllRooms,
     requestAllBooking,
-    deleteAdminBooking
+    deleteAdminBooking,
+    requestAllAdmins,
+    deleteAdmins
 }
     from './modules/adminServerCalls.js'
 
@@ -39,6 +41,8 @@ window.onload = function () {
     } else if (tab === "#tab-4") {
         requestAllOffers();
         requestAllRoomsNumbers();
+    }else if (tab === "#tab-5") {
+        requestAllAdmins();
     }
 }
 
@@ -353,4 +357,19 @@ $('#delete').on('click', function() {
     console.log(dateFrom)
 
     deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
+});
+
+$('#deleteAdmin').on('click', function() {
+    var selectAdmin = document.querySelector('#nrAdmin');
+    var nrAdmin = selectAdmin.options[selectAdmin.selectedIndex].value;
+
+    var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
+    
+    var id = nrAdmin - 1;
+    var row = tableRef.rows[id];
+
+    var nr = row.cells[0].innerHTML;
+    var email = row.cells[3].innerHTML;
+
+    deleteAdmins(nr, email);
 });
