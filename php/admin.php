@@ -20,7 +20,8 @@
         getAllOffers($result_obj);
     } else if (count($_POST) == 1 && isset($_POST['room'])) { // pobranie wszystkich pokoi
         getAllRooms($result_obj);
-    } else if (count($_POST) == 2 && isset($_POST['idOffer']) && isset($_POST['nrRoom'])) { // dodanie pokoju do oferty
+    } else if (count($_POST) == 3 && isset($_POST['idOffer']) &&
+               isset($_POST['nrRoom']) && isset($_POST['price'])) { // dodanie pokoju do oferty
         addRoomToOffer($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
@@ -265,20 +266,23 @@
         require_once "db.php";
         $id_offer = $_POST['idOffer'];
         $nr_room = $_POST['nrRoom'];
-        // $price = $_POST['price'];
-
-        $sql = 'INSERT INTO room_offer
-                VALUES (:id_offer, :nr_room, :price);';
-        $query = $db->prepare($sql);
-        $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
-        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
-        $query->bindValue(':price', 100, PDO::PARAM_INT);
-        $query->execute();
-        $id = $db->lastInsertId();
-        if ($id) {
+        $price = $_POST['price'];
+        
+        try {
+            $sql = 'INSERT INTO room_offer VALUES (
+                        :id_offer, 
+                        (SELECT idRoom FROM room WHERE nrRoom = :nr_room),
+                        :price);';
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
+            $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+            $query->bindValue(':price', $price, PDO::PARAM_INT);
+            $query->execute();
+        
             $result_obj->result = 'OK';
             $result_obj->message = 'Pokój został dodany do oferty';
-        } else {
+        }
+        catch (PDOException $error) {
             $result_obj->message = 'Nie udało się dodać pokoju do oferty, spróbuj jeszcze raz';
         }
     }
