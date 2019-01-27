@@ -273,7 +273,7 @@ function fillRoomInOffers(nrOffer, nrRoom, price) {
 /*** END TAB-4 ***/
 
 /*** TAB-5 ***/
-export function deleteAdmins(nr, email) {
+export function deleteAdmin(nr, email) {
     var data = {
         email: email
     };
