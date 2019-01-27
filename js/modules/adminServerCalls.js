@@ -169,7 +169,7 @@ function deleteBooking(nrBooking) {
 
     // Aktualizacja liczb porządkowych w tabeli i comboboxie:
     var options = select.getElementsByTagName('option');
-    for (let i = nr - 1; i < tableRef.rows.length; ++i) {
+    for (let i = nrBooking - 1; i < tableRef.rows.length; ++i) {
         tableRef.rows[i].cells[0].innerHTML = i + 1;
         options[i].innerHTML = i + 1;
     }
