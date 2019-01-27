@@ -48,8 +48,14 @@
         $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
         $query->bindValue(':date_to', $date_to, PDO::PARAM_STR);
         $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $result_obj->result = 'OK';
-        $result_obj->message = 'test';
-        // $result_obj->value = $results;
+        if ($query->rowCount() > 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Dostępnych ofert:'.$query->rowCount();
+            $result_obj->value = $results;
+        } else {
+            $result_obj->message = 'Brak dostępnych ofert w tym terminie od '.
+            $date_from.' do '.$date_to;
+        }
     }

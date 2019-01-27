@@ -7,15 +7,20 @@ import { date_diff_indays }
 var url = "./php/booking.php";
 
 export function requestAvailability(dateFrom, dateTo, nrPersons) {
+    console.log('requestAvailability()')
     var data = {
-        dateFrom: 'dateFrom',
-        dateTo: 'dateTo',
-        nrPersons: 'nrPersons'
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        nrPersons: nrPersons
     };
     function callback(response) {
+        console.log(response.message);
         if (response.result === 'OK') {
+            console.log(dateFrom+' '+dateTo+' ' + nrPersons)
             fillAvailability(response.value, dateFrom, dateTo, nrPersons);
         } else {
+            alert(response.message);
+            console.log('showUnavailable');
             showUnavailable();
         }
     }
@@ -23,41 +28,44 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
 }
 
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
+    console.log('value:' + values.length);
     document.querySelector('.bg-modal-booking').style.display = 'flex';
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
-    document.getElementById('numbers-person-room').value = nrPersons;
+    // document.getElementById('numbers-person-room').value = nrPersons;
 
-    var root = document.getElementById("modal-content-booking");
-    var fieldset = document.createElement("FIELDSET");
-    var ul = document.createElement("UL");
-    var li = document.createElement("LI");
-    ul.setAttribute('class', 'input-booking');
-
-    var inputType = document.createElement("INPUT");
-    inputType.id = "type-room";
-    inputType.name = "type-room";
-    inputType.type = "text";
-
-    var labelType = document.createElement("LABEL");
-    labelType.htmlFor = inputType.id;
-    labelType.innerText = "Typ pokoju:";
-
-    var inputPrice = document.createElement("INPUT");
-    inputPrice.id = "price-room";
-    inputPrice.name = "price-room";
-    inputPrice.type = "text";
-
-    var labelPrice = document.createElement("LABEL");
-    labelPrice.htmlFor = inputPrice.id;
-    labelPrice.innerText = "Cena:";
-
-    var button = document.createElement("INPUT");
-    button.id = "bookButt";
-    button.value = "Zarezerwuj";
-    button.type = "submit"; // CZY JEDNAK TYPE=BUTTON?????
+    var root = document.querySelector(".modal-content-booking");
     // TODO w for(v) po values trzeba będzie robić fieldsety v.type, v.price ilość osob wywalić
     for (var v of values) {
+        console.log('v');
+        var fieldset = document.createElement("FIELDSET");
+        var ul = document.createElement("UL");
+        var li = document.createElement("LI");
+        ul.setAttribute('class', 'input-booking');
+
+        var inputType = document.createElement("INPUT");
+        inputType.id = "type-room";
+        inputType.name = "type-room";
+        inputType.type = "text";
+
+        var labelType = document.createElement("LABEL");
+        labelType.htmlFor = inputType.id;
+        labelType.innerText = "Typ pokoju:";
+
+        var inputPrice = document.createElement("INPUT");
+        inputPrice.id = "price-room";
+        inputPrice.name = "price-room";
+        inputPrice.type = "text";
+
+        var labelPrice = document.createElement("LABEL");
+        labelPrice.htmlFor = inputPrice.id;
+        labelPrice.innerText = "Cena:";
+
+        var button = document.createElement("INPUT");
+        button.id = "bookButt";
+        button.value = "Zarezerwuj";
+        button.type = "submit"; // CZY JEDNAK TYPE=BUTTON?????
+
         root.appendChild(fieldset);
         fieldset.appendChild(ul);
         ul.appendChild(li);
