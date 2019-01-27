@@ -28,17 +28,16 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
 }
 
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
-    console.log('value:' + values.length);
     document.querySelector('.bg-modal-booking').style.display = 'flex';
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
     // document.getElementById('numbers-person-room').value = nrPersons;
 
-    var root = document.querySelector(".modal-content-booking");
+    var root = document.querySelector(".inner-modal-content-booking");
+    root.innerHTML = "";
     // TODO w for(v) po values trzeba będzie robić fieldsety v.type, v.price ilość osob wywalić
     var idx = 1;
     for (var v of values) {
-        console.log('v');
         var fieldset = document.createElement("FIELDSET");
         var ul = document.createElement("UL");
         var li = document.createElement("LI");
@@ -48,6 +47,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         inputType.id = "type-room"+idx;
         inputType.name = "type-room";
         inputType.type = "text";
+        inputType.disabled = true;
 
         var labelType = document.createElement("LABEL");
         labelType.htmlFor = inputType.id;
@@ -57,6 +57,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         inputPrice.id = "price-room"+idx;
         inputPrice.name = "price-room";
         inputPrice.type = "text";
+        inputPrice.disabled = true;
 
         var labelPrice = document.createElement("LABEL");
         labelPrice.htmlFor = inputPrice.id;
@@ -64,6 +65,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
         var button = document.createElement("INPUT");
         button.id = "bookButt"+idx;
+        button.className = "bookButt";
         button.value = "Zarezerwuj";
         button.type = "submit"; // CZY JEDNAK TYPE=BUTTON?????
 
@@ -76,7 +78,8 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         li.appendChild(inputType);
 
         li.appendChild(labelPrice);
-        inputPrice.value = v.price;
+        var pricePerDay = v.price;
+        inputPrice.value = date_diff_indays(dateFrom, dateTo)*pricePerDay;
         li.appendChild(inputPrice);
 
         fieldset.appendChild(button);
