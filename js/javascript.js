@@ -1,3 +1,6 @@
+import { requestAvailability }
+from "./modules/bookingServerCalls.js";
+
 // Putting the logout function as a property on the window object
 window.logout = logout;
 function logout() {
@@ -205,10 +208,7 @@ document.getElementById('clickBooking').addEventListener('click', function () {
     var selectList = document.getElementById('nrPersons');
     var nrPersons = selectList.options[selectList.selectedIndex].text;
 
-    document.querySelector('.bg-modal-booking').style.display = 'flex';
-    document.getElementById('book-from').value = dateFrom.value;
-    document.getElementById('book-to').value = dateTo.value;
-    document.getElementById('numbers-person-room').value = nrPersons;
+    requestAvailability(dateFrom.value, dateTo.value, nrPersons);
 });
 document.querySelector('.close-booking').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
