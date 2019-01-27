@@ -10,18 +10,22 @@ import {
 }
     from './modules/tabsModule.js'
 import {
+    /*** TAB-2 ***/
     requestAddNewRoomType,
     requestAllRoomTypes,
     requestAddNewRoom,
-    requestAddNewOffer,
-    requestAllOffers,
-    requestAllRoomsNumbers,
-    requestAddRoomToOffer,
-    requestAllRooms,
+    /*** TAB-3 ***/
     requestAllBooking,
     deleteAdminBooking,
+    /*** TAB-4 ***/
+    requestAddNewOffer,
+    requestAllOffers,
+    requestAllRooms,
+    requestAllRoomsNumbers,
+    requestAddRoomToOffer,
+    /*** TAB-5 ***/
     requestAllAdmins,
-    deleteAdmins
+    deleteAdmins,
 }
     from './modules/adminServerCalls.js'
 
@@ -330,7 +334,6 @@ $('#password-change-butt').on('click', function () {
 $('#add-room-offer').on('click', function () {
     var selectOffer = document.querySelector('#offers');
     var nrOffer = selectOffer.options[selectOffer.selectedIndex].value;
-    // var nrOffer = selectOffer.selectedIndex;
     var selectRoom = document.querySelector('#rooms');
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
     var price = document.getElementById('price').value;
@@ -354,7 +357,6 @@ $('#delete').on('click', function() {
     var nrRoom = row.cells[1].innerHTML;
     var dateFrom = row.cells[6].innerHTML;
     var dateTo = row.cells[7].innerHTML;
-    console.log(dateFrom)
 
     deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
 });
