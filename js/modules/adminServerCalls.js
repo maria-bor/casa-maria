@@ -3,6 +3,7 @@ import { requestServer }
 
 var url = "./php/admin.php";
 
+/***  TAB-2 ***/
 export function requestAddNewRoomType(nameType) {
     var data = {
         nameType: nameType
@@ -57,6 +58,116 @@ export function requestAddNewRoom(nrRoom, nrFloor, sleeps, type) {
     requestServer(url, data, callback);
 }
 
+var allRooms = null;
+export function requestAllRooms() {
+    var data = {
+        room: 'all'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            allRooms = response.value;
+            fillRoomsTable(allRooms);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+export function fillRoomsTable(values) {
+    var tableRef = document.getElementById("tableRoom").getElementsByTagName('tbody')[0];
+    tableRef.innerHTML = '';
+
+    for (var v of values) {
+        // Insert a row in the table at row index 0
+        var newRow = tableRef.insertRow(tableRef.rows.length)
+        // Insert a cell in the row at index 0 and // Append a text node to the cell
+        newRow.insertCell(0).appendChild(document.createTextNode(v.nrRoom));
+        newRow.insertCell(1).appendChild(document.createTextNode(v.floor));
+        newRow.insertCell(2).appendChild(document.createTextNode(v.sleeps));
+        newRow.insertCell(3).appendChild(document.createTextNode(v.name));
+    }
+}
+/*** END TAB-2 ***/
+
+/*** TAB-3 ***/
+var allBooking = null;
+export function requestAllBooking() {
+    var data = {
+        booking: 'all'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            allBooking = response.value;
+            fillBookingTable(allBooking);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+export function fillBookingTable(values) {
+    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
+    tableRef.innerHTML = '';
+    let idx = 1;
+
+    var select = document.getElementById("booking");
+    select.innerHTML = '';
+
+    for (var v of values) {
+        // Insert a row in the table at row index 0
+        var newRow = tableRef.insertRow(tableRef.rows.length)
+        // Insert a cell in the row at index 0 and // Append a text node to the cell
+        newRow.insertCell(0).appendChild(document.createTextNode(idx));
+        newRow.insertCell(1).appendChild(document.createTextNode(v.nrRoom));
+        newRow.insertCell(2).appendChild(document.createTextNode(v.name));
+        newRow.insertCell(3).appendChild(document.createTextNode(v.surname));
+        newRow.insertCell(4).appendChild(document.createTextNode(v.email));
+        newRow.insertCell(5).appendChild(document.createTextNode(v.guests));
+        newRow.insertCell(6).appendChild(document.createTextNode(v.date_from));
+        newRow.insertCell(7).appendChild(document.createTextNode(v.date_to));
+
+        var payment = date_diff_indays(v.date_from, v.date_to);
+        newRow.insertCell(8).appendChild(document.createTextNode(payment * v.price));
+
+        var option = document.createElement('option')
+        option.innerHTML = idx++;
+        select.appendChild(option);
+    }
+}
+
+var date_diff_indays = function (from, to) {
+    var dateFrom = new Date(from);
+    var dateTo = new Date(to);
+    return Math.floor((
+        Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) -
+        Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate())) / (1000 * 60 * 60 * 24));
+}
+
+export function deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo) {
+    var data = {
+        nrRoom: nrRoom,
+        dateFrom: dateFrom,
+        dateTo: dateTo
+    };
+    function callback(response) {
+        $('#deleteBookingInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteBooking(nrBooking);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteBooking(nrBooking) {
+    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
+    var row = tableRef.rows[nrBooking - 1];
+    tableRef.deleteRow(row);
+}
+/*** END TAB-3 ***/
+
+/*** TAB-4 ***/
 export function requestAddNewOffer(name, from, to) {
     var data = {
         name: name,
@@ -89,11 +200,10 @@ export function requestAllOffers() {
 }
 
 export function fillOffersTable(values) {
-    // table
     var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
     tableRef.innerHTML = '';
     let idx = 1;
-    // combobox
+
     var select = document.getElementById("offers");
     select.innerHTML = '';
 
@@ -111,93 +221,6 @@ export function fillOffersTable(values) {
         var option = document.createElement('option')
         option.innerHTML = idx++;
         select.appendChild(option);
-    }
-}
-
-var allBooking = null;
-export function requestAllBooking() {
-    var data = {
-        booking: 'all'
-    };
-    function callback(response) {
-        if (response.result === 'OK') {
-            allBooking = response.value;
-            fillBookingTable(allBooking);
-        } else {
-            alert(response.message);
-        }
-    }
-    requestServer(url, data, callback);
-}
-
-export function fillBookingTable(values) {
-    // table
-    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
-    tableRef.innerHTML = '';
-    let idx = 1;
-    // combobox
-    var select = document.getElementById("booking");
-    select.innerHTML = '';
-
-    for (var v of values) {
-        // Insert a row in the table at row index 0
-        var newRow = tableRef.insertRow(tableRef.rows.length)
-        // Insert a cell in the row at index 0 and // Append a text node to the cell
-        newRow.insertCell(0).appendChild(document.createTextNode(idx)); // nr
-        newRow.insertCell(1).appendChild(document.createTextNode(v.nrRoom)); // nr pokoju
-        newRow.insertCell(2).appendChild(document.createTextNode(v.name)); // imię
-        newRow.insertCell(3).appendChild(document.createTextNode(v.surname)); // nazwisko
-        newRow.insertCell(4).appendChild(document.createTextNode(v.email)); // Email
-        newRow.insertCell(5).appendChild(document.createTextNode(v.guests)); // Ilość osób
-        newRow.insertCell(6).appendChild(document.createTextNode(v.date_from)); // Od
-        newRow.insertCell(7).appendChild(document.createTextNode(v.date_to)); // Do
-
-        var payment = date_diff_indays(v.date_from, v.date_to);
-        newRow.insertCell(8).appendChild(document.createTextNode(payment*v.price)); // Cena
-
-        var option = document.createElement('option')
-        option.innerHTML = idx++;
-        select.appendChild(option);
-    }
-}
-
-var date_diff_indays = function (from, to) {
-    var dateFrom = new Date(from);
-    var dateTo = new Date(to);
-    return Math.floor((
-        Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - 
-        Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate())) / (1000 * 60 * 60 * 24));
-}
-
-var allRooms = null;
-export function requestAllRooms() {
-    var data = {
-        room: 'all'
-    };
-    function callback(response) {
-        if (response.result === 'OK') {
-            allRooms = response.value;
-            fillRoomsTable(allRooms);
-        } else {
-            alert(response.message);
-        }
-    }
-    requestServer(url, data, callback);
-}
-
-export function fillRoomsTable(values) {
-    // table
-    var tableRef = document.getElementById("tableRoom").getElementsByTagName('tbody')[0];
-    tableRef.innerHTML = '';
-
-    for (var v of values) {
-        // Insert a row in the table at row index 0
-        var newRow = tableRef.insertRow(tableRef.rows.length)
-        // Insert a cell in the row at index 0 and // Append a text node to the cell
-        newRow.insertCell(0).appendChild(document.createTextNode(v.nrRoom));
-        newRow.insertCell(1).appendChild(document.createTextNode(v.floor));
-        newRow.insertCell(2).appendChild(document.createTextNode(v.sleeps));
-        newRow.insertCell(3).appendChild(document.createTextNode(v.name));
     }
 }
 
@@ -226,7 +249,7 @@ function fillOffersCombobox(values) {
 }
 
 export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
-    let idOffer = allOffers[nrOffer-1].idOffer;
+    let idOffer = allOffers[nrOffer - 1].idOffer;
     var data = {
         idOffer: idOffer,
         nrRoom: nrRoom,
@@ -243,33 +266,14 @@ export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
 
 function fillRoomInOffers(nrOffer, nrRoom, price) {
     var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nrOffer-1];
+    var row = tableRef.rows[nrOffer - 1];
     row.cells[2].innerHTML = price;
     row.cells[3].innerHTML = nrRoom;
 }
+/*** END TAB-4 ***/
 
-export function deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo) {
-    var data = {
-        nrRoom: nrRoom,
-        dateFrom: dateFrom,
-        dateTo: dateTo
-    };
-    function callback(response) {
-        $('#deleteBookingInfo').text(response.message);
-        if (response.result === 'OK') {
-            deleteBooking(nrBooking);
-        }
-    }
-    requestServer(url, data, callback);
-}
-
-function deleteBooking(nrBooking) {
-    var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nrBooking-1];
-    tableRef.deleteRow(row);
-}
-
-export function deleteAdmin(nr, email) {
+/*** TAB-5 ***/
+export function deleteAdmins(nr, email) {
     var data = {
         email: email
     };
@@ -314,11 +318,10 @@ export function requestAllAdmins() {
 }
 
 export function fillAdminsTable(values) {
-    // table
     var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
     tableRef.innerHTML = '';
     let idx = 1;
-    // combobox
+
     var select = document.getElementById("nrAdmin");
     select.innerHTML = '';
 
@@ -326,13 +329,14 @@ export function fillAdminsTable(values) {
         // Insert a row in the table at row index 0
         var newRow = tableRef.insertRow(tableRef.rows.length)
         // Insert a cell in the row at index 0 and // Append a text node to the cell
-        newRow.insertCell(0).appendChild(document.createTextNode(idx)); // nr
-        newRow.insertCell(1).appendChild(document.createTextNode(v.name)); // imię
-        newRow.insertCell(2).appendChild(document.createTextNode(v.surname)); // nazwisko
-        newRow.insertCell(3).appendChild(document.createTextNode(v.email)); // Email
+        newRow.insertCell(0).appendChild(document.createTextNode(idx));
+        newRow.insertCell(1).appendChild(document.createTextNode(v.name));
+        newRow.insertCell(2).appendChild(document.createTextNode(v.surname));
+        newRow.insertCell(3).appendChild(document.createTextNode(v.email));
 
         var option = document.createElement('option')
         option.innerHTML = idx++;
         select.appendChild(option);
     }
 }
+/*** END TAB-5 ***/
