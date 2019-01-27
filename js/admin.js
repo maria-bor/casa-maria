@@ -180,7 +180,7 @@ const formAddOffer = new Vue(
 
                 if (!this.name) {
                     this.errorName = "Wprowadź nazwę oferty.";
-                } else if (!this.validName(this.name)) {
+                } else if (this.name.trim() == '') {
                     this.errorName = "Niepoprawny format.";
                 }
 
@@ -193,17 +193,13 @@ const formAddOffer = new Vue(
                 } else if (!this.validTo(this.to)) {
                     this.errorTo = "Data wyjazdu powinna być większa od daty przyjazdu.";
                 }
+                document.getElementById('addOfferInfo').innerText = '';
 
                 if (!this.errorName.length && !this.errorFrom.length && !this.errorTo.length) {
                     requestAddNewOffer(this.name, this.from, this.to);
                     return true;
                 }
                 e.preventDefault();
-            },
-            validName: function (str) {
-                var nameOffer = str.trim();
-                var nameOfferFormat = /^[a-zA-Z]{3,20}?$/;
-                return nameOfferFormat.test(nameOffer);
             },
             validTo: function (to) {
                 return to > this.from;
@@ -282,12 +278,10 @@ const formRegisterAdmin = new Vue(
                 return mailFormat.test(email);
             },
             validPassword: function (passwordNewAdmin) {
-                var pass = passwordNewAdmin.trim();
-                return (pass.length >= 8) && (pass.length <= 20);
+                return (passwordNewAdmin.length >= 8) && (passwordNewAdmin.length <= 20);
             },
             validPasswordConfirm: function (passwordConfirmNewAdmin) {
-                var passConfirm = passwordConfirmNewAdmin.trim();
-                return passConfirm === this.passwordNewAdmin;
+                return passwordConfirmNewAdmin === this.passwordNewAdmin;
             }
         }
     });
