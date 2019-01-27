@@ -261,6 +261,7 @@
 
     function getAllAdmins($result_obj) {
         require_once "db.php";
+        $email = $_SESSION['email'];
         $sql = 'SELECT u.name, u.surname, u.email
                 FROM user u
                 INNER JOIN userlogged l
@@ -269,8 +270,10 @@
                 ON ur.idUserLogged = l.idUserLogged
                 INNER JOIN role r
                 ON r.idRole = ur.idRole
-                WHERE r.name = "admin";';
+                WHERE r.name = "admin"
+                AND u.email != :email;';
         $query = $db->prepare($sql);
+        $query->bindValue(':email', $email, PDO::PARAM_STR);        
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
