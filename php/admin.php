@@ -284,8 +284,12 @@
 
     function getAllOffers($result_obj) {
         require_once "db.php";
-        $sql = 'SELECT *
-                FROM offer
+        $sql = 'SELECT o.idOffer, o.name, ro.price, r.nrRoom, o.date_from, o.date_to
+                FROM offer o
+                LEFT JOIN room_offer ro
+                ON ro.idOffer = o.idOffer
+                LEFT JOIN room r
+                ON r.idRoom = ro.idRoom
                 ORDER BY name;';
         $query = $db->prepare($sql);
         $query->execute();

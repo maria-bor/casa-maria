@@ -194,6 +194,7 @@ export function requestAddNewOffer(name, from, to) {
 
 var allOffers = null;
 export function requestAllOffers() {
+    console.log('asasaasa')
     var data = {
         offer: 'all'
     };
@@ -222,8 +223,16 @@ export function fillOffersTable(values) {
         // Insert a cell in the row at index 0 and // Append a text node to the cell
         newRow.insertCell(0).appendChild(document.createTextNode(idx));
         newRow.insertCell(1).appendChild(document.createTextNode(v.name));
-        newRow.insertCell(2).appendChild(document.createTextNode(''));
-        newRow.insertCell(3).appendChild(document.createTextNode(''));
+        if (v.price != undefined) {
+            newRow.insertCell(2).appendChild(document.createTextNode(v.price));
+        } else {
+            newRow.insertCell(2).appendChild(document.createTextNode(''));
+        }
+        if (v.nrRoom != undefined) {
+            newRow.insertCell(3).appendChild(document.createTextNode(v.nrRoom));
+        } else {
+            newRow.insertCell(3).appendChild(document.createTextNode(''));
+        }
         newRow.insertCell(4).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(5).appendChild(document.createTextNode(v.date_to));
 
@@ -259,11 +268,14 @@ function fillOffersCombobox(values) {
 
 export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
     let idOffer = allOffers[nrOffer - 1].idOffer;
+    console.log(idOffer);
     var data = {
         idOffer: idOffer,
         nrRoom: nrRoom,
         price: price
     };
+    console.log(idOffer);
+
     function callback(response) {
         $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
