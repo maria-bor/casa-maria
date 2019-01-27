@@ -5,7 +5,7 @@
 
     require_once "db.php";
 
-    // Mozna tu przyjsc tylko z formularza logowania:
+    // Mozna tu przyjść tylko z formularza logowania:
     if (isset($_POST['emailLogin']) && isset($_POST['passwordLogin'])) {
         $login = $_POST['emailLogin'];
         $password = $_POST['passwordLogin'];
@@ -27,7 +27,8 @@
                 ON ul.idUserLogged = ur.idUserLogged
                 JOIN role r
                 ON ur.idRole = r.idRole
-                WHERE u.email = :emailLogin';
+                WHERE u.email = :emailLogin
+                AND ul.isDeleted = 0;';
         $query = $db->prepare($sql);
 		$query->bindValue(':emailLogin', $login, PDO::PARAM_STR);
         $query->execute();
