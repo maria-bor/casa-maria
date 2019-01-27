@@ -21,7 +21,7 @@ import {
     requestAllBooking,
     deleteAdminBooking,
     requestAllAdmins,
-    deleteAdmins
+    deleteAdmin
 }
     from './modules/adminServerCalls.js'
 
@@ -370,6 +370,5 @@ $('#deleteAdmin').on('click', function() {
 
     var nr = row.cells[0].innerHTML;
     var email = row.cells[3].innerHTML;
-
-    deleteAdmins(nr, email);
+    deleteAdmin(nr, email);
 });

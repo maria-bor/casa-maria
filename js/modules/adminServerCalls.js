@@ -269,23 +269,32 @@ function deleteBooking(nrBooking) {
     tableRef.deleteRow(row);
 }
 
-export function deleteAdmins(nr, email) {
+export function deleteAdmin(nr, email) {
     var data = {
         email: email
     };
     function callback(response) {
         $('#deleteAdminsInfo').text(response.message);
         if (response.result === 'OK') {
-            deleteAdmin(nr);
+            deleteAdminFromTable(nr);
         }
     }
     requestServer(url, data, callback);
 }
 
-function deleteAdmin(nr) {
+function deleteAdminFromTable(nr) {
     var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nr-1];
-    tableRef.deleteRow(row);
+    tableRef.deleteRow(nr-1);
+
+    var select = document.getElementById("nrAdmin");
+    select.remove(nr-1);
+
+    // Aktualizacja liczb porządkowych w tabeli i comboboxie:
+    var options = select.getElementsByTagName('option');
+    for(let i = nr-1; i<tableRef.rows.length; ++i) {
+        tableRef.rows[i].cells[0].innerHTML = i+1;
+        options[i].innerHTML = i+1;
+    }
 }
 
 var allAdmins = null;
