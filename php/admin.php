@@ -34,6 +34,8 @@
         getAllAdmins($result_obj);
     } else if(count($_POST) == 1 && isset($_POST['email'])) { // usuniecie rezerwacji
         deleteSelectedAdmin($result_obj);
+    } else if(count($_POST) == 1 && isset($_POST['nrRoomForDelete'])) { // usuniecie pokoju
+        deleteSelectedRoom($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
     }
@@ -381,6 +383,7 @@
             $query->bindValue(':date_from1', $date_from, PDO::PARAM_STR);
             $query->bindValue(':date_to1', $date_to, PDO::PARAM_STR);
             $query->execute();
+            
             $result = $query->fetch();
             if($result['nrOffers'] > 0) {
                 $result_obj->message = "Nie można dodać pokoju do innej oferty w tych samych datach.";
@@ -424,26 +427,22 @@
         $result_obj->message = 'Rezerwacja usunięta.';
     }
 
-    function deleteSelectedAdmin($result_obj) {
+    function deleteSelectedRoom($result_obj) {
         require_once "db.php";
-        $email = $_POST['email'];
+        $nr_room = $_POST['nrRoom'];
 
         $db->beginTransaction();
 
-        $sql = 'DELETE ur, ul, u
-                FROM userrole ur
-                INNER JOIN userlogged ul
-                ON ur.idUserLogged = ul.idUserLogged
-                INNER JOIN user u
-                ON u.idUser = ul.idUser
-                WHERE u.email = :email AND ur.idRole = 1;';
+        $sql = 'DELETE room
+                FROM room
+                WHERE nrRoom = :nr_room';
 
         $query = $db->prepare($sql);
-        $query->bindValue(':email', $email, PDO::PARAM_STR);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
         $query->execute();
 
         $db->commit();
 
         $result_obj->result = 'OK';
-        $result_obj->message = 'Admin usunięty.';
+        $result_obj->message = 'Pokój usunięty.';
     }

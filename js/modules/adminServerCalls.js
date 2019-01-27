@@ -78,6 +78,9 @@ export function fillRoomsTable(values) {
     var tableRef = document.getElementById("tableRoom").getElementsByTagName('tbody')[0];
     tableRef.innerHTML = '';
 
+    var select = document.getElementById("selectedRoom");
+    select.innerHTML = '';
+
     for (var v of values) {
         // Insert a row in the table at row index 0
         var newRow = tableRef.insertRow(tableRef.rows.length)
@@ -86,8 +89,34 @@ export function fillRoomsTable(values) {
         newRow.insertCell(1).appendChild(document.createTextNode(v.floor));
         newRow.insertCell(2).appendChild(document.createTextNode(v.sleeps));
         newRow.insertCell(3).appendChild(document.createTextNode(v.name));
+
+        var option = document.createElement('option')
+        option.innerHTML = v.nrRoom;
+        select.appendChild(option);
     }
 }
+
+export function deleteRoom(nrRoom, id) {
+    var data = {
+        nrRoomForDelete: nrRoom
+    };
+    function callback(response) {
+        $('#deleteRoomInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteRoomFromTable(id);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteRoomFromTable(id) {
+    var tableRef = document.getElementById("tableRoom").getElementsByTagName('tbody')[0];
+    tableRef.deleteRow(id);
+
+    var select = document.getElementById("selectedRoom");
+    select.remove(id);
+}
+
 /*** END TAB-2 ***/
 
 /*** TAB-3 ***/

@@ -14,6 +14,7 @@ import {
     requestAddNewRoomType,
     requestAllRoomTypes,
     requestAddNewRoom,
+    deleteRoom,
     /*** TAB-3 ***/
     requestAllBooking,
     deleteBookingInAdmin,
@@ -373,4 +374,11 @@ $('#deleteAdmin').on('click', function() {
     var nr = row.cells[0].innerHTML;
     var email = row.cells[3].innerHTML;
     deleteAdmin(nr, email);
+});
+
+$('#deleteRoom').on('click', function() {
+    var selectRoom = document.querySelector('#selectedRoom');
+    var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
+    var id = selectRoom.selectedIndex;
+    deleteRoom(nrRoom, id);
 });
