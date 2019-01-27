@@ -271,7 +271,8 @@
                 INNER JOIN role r
                 ON r.idRole = ur.idRole
                 WHERE r.name = "admin"
-                AND u.email != :email;';
+                AND u.email != :email
+                AND l.isDeleted = 0;';
         $query = $db->prepare($sql);
         $query->bindValue(':email', $email, PDO::PARAM_STR);        
         $query->execute();
