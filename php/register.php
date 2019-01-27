@@ -95,12 +95,11 @@
                 $id_user = $db->lastInsertId();
 
                 // Wstawienie do tabeli UserLogged:
-                $sql = 'INSERT INTO UserLogged
+                $sql = 'INSERT INTO UserLogged (idUserLogged, password, idUser)
                         VALUES (
                             NULL,
                             :password_hash,
-                            :id_user
-                        );';
+                            :id_user);';
                 $query = $db->prepare($sql);
                 $query->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
                 $query->bindValue(':id_user', $id_user, PDO::PARAM_STR);

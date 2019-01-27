@@ -1,3 +1,8 @@
+USE `casa-maria`;
+DROP DATABASE `casa-maria`;
+CREATE DATABASE `casa-maria` /*!40100 COLLATE 'utf8_polish_ci' */;
+USE `casa-maria`;
+
 CREATE TABLE Role (
                 idRole INT AUTO_INCREMENT NOT NULL,
                 name VARCHAR(50) NOT NULL,
@@ -18,6 +23,7 @@ CREATE TABLE UserLogged (
                 idUserLogged INT AUTO_INCREMENT NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 idUser INT NOT NULL,
+                isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idUserLogged)
 );
 
@@ -28,6 +34,7 @@ CREATE TABLE Offer (
                 date_from DATE NOT NULL,
                 date_to DATE NOT NULL,
                 idUserLogged INT NOT NULL,
+                isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idOffer)
 );
 
@@ -54,6 +61,7 @@ CREATE TABLE Room (
                 sleeps TINYINT NOT NULL,
                 idType INT NOT NULL,
                 idUserLogged INT NOT NULL,
+                isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idRoom)
 );
 
@@ -62,6 +70,7 @@ CREATE TABLE Room_Offer (
                 idOffer INT NOT NULL,
                 idRoom INT NOT NULL,
                 price INT NOT NULL,
+                isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idOffer, idRoom)
 );
 
@@ -73,6 +82,7 @@ CREATE TABLE Booking (
                 date_to DATE NOT NULL,
                 price INT NOT NULL,
                 guests TINYINT NOT NULL,
+                isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idUser, idRoom)
 );
 
@@ -145,4 +155,5 @@ ON UPDATE NO ACTION;
 
 INSERT INTO `role` (`idRole`, `name`) VALUES
 	(1, 'admin'),
-	(2, 'user_logged');
+	(2, 'user_logged'),
+    (3, 'user_unlogged');
