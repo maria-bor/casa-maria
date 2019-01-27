@@ -50,7 +50,10 @@
             // Sprawdzamy czy nie ma juz konta dla podanego emaila (rola nie wazna):
             $sql = 'SELECT u.idUser id_user
                     FROM User u
-                    WHERE u.email = :emailLogin;';
+                    INNER JOIN userlogged ul
+                    ON ul.idUser = u.idUser
+                    WHERE u.email = :emailLogin
+                    AND ul.isDeleted = 0;';
             $query = $db->prepare($sql);
             $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
             $query->execute();
