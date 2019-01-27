@@ -223,7 +223,6 @@ export function requestAddNewOffer(name, from, to) {
 
 var allOffers = null;
 export function requestAllOffers() {
-    console.log('asasaasa')
     var data = {
         offer: 'all'
     };
@@ -297,13 +296,11 @@ function fillOffersCombobox(values) {
 
 export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
     let idOffer = allOffers[nrOffer - 1].idOffer;
-    console.log(idOffer);
     var data = {
         idOffer: idOffer,
         nrRoom: nrRoom,
         price: price
     };
-    console.log(idOffer);
 
     function callback(response) {
         $('#errorPrice').text(response.message);
