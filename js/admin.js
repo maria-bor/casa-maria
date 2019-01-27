@@ -278,12 +278,10 @@ const formRegisterAdmin = new Vue(
                 return mailFormat.test(email);
             },
             validPassword: function (passwordNewAdmin) {
-                var pass = passwordNewAdmin.trim();
-                return (pass.length >= 8) && (pass.length <= 20);
+                return (passwordNewAdmin.length >= 8) && (passwordNewAdmin.length <= 20);
             },
             validPasswordConfirm: function (passwordConfirmNewAdmin) {
-                var passConfirm = passwordConfirmNewAdmin.trim();
-                return passConfirm === this.passwordNewAdmin;
+                return passwordConfirmNewAdmin === this.passwordNewAdmin;
             }
         }
     });
