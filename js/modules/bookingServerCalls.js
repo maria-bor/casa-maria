@@ -36,6 +36,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
     var root = document.querySelector(".modal-content-booking");
     // TODO w for(v) po values trzeba będzie robić fieldsety v.type, v.price ilość osob wywalić
+    var idx = 1;
     for (var v of values) {
         console.log('v');
         var fieldset = document.createElement("FIELDSET");
@@ -44,7 +45,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         ul.setAttribute('class', 'input-booking');
 
         var inputType = document.createElement("INPUT");
-        inputType.id = "type-room";
+        inputType.id = "type-room"+idx;
         inputType.name = "type-room";
         inputType.type = "text";
 
@@ -53,7 +54,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         labelType.innerText = "Typ pokoju:";
 
         var inputPrice = document.createElement("INPUT");
-        inputPrice.id = "price-room";
+        inputPrice.id = "price-room"+idx;
         inputPrice.name = "price-room";
         inputPrice.type = "text";
 
@@ -62,7 +63,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         labelPrice.innerText = "Cena:";
 
         var button = document.createElement("INPUT");
-        button.id = "bookButt";
+        button.id = "bookButt"+idx;
         button.value = "Zarezerwuj";
         button.type = "submit"; // CZY JEDNAK TYPE=BUTTON?????
 
@@ -79,6 +80,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         li.appendChild(inputPrice);
 
         fieldset.appendChild(button);
+        idx++;
     }
 }
 
