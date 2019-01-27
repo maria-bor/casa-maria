@@ -166,7 +166,7 @@ export function fillBookingTable(values) {
     }
 }
 
-var date_diff_indays = function (from, to) {
+export var date_diff_indays = function (from, to) {
     var dateFrom = new Date(from);
     var dateTo = new Date(to);
     return Math.floor((

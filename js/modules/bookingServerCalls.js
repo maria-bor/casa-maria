@@ -1,6 +1,9 @@
 import { requestServer }
     from './requestServer.js'
 
+import { date_diff_indays }
+    from './adminServerCalls.js'
+
 var url = "./php/booking.php";
 
 export function requestAvailability(dateFrom, dateTo, nrPersons) {
