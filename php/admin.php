@@ -301,6 +301,7 @@
                 ON ro.idOffer = o.idOffer
                 LEFT JOIN room r
                 ON r.idRoom = ro.idRoom
+                WHERE o.isDeleted = 0
                 ORDER BY name;';
         $query = $db->prepare($sql);
         $query->execute();
@@ -339,8 +340,9 @@
 
     function getAllRoomsNumbers($result_obj) {
         require_once "db.php";
-        $sql = 'SELECT *
-                FROM room
+        $sql = 'SELECT nrRoom
+                FROM room r
+                WHERE r.isDeleted = 0
                 ORDER BY nrRoom;';
         $query = $db->prepare($sql);
         $query->execute();
