@@ -5,6 +5,7 @@
 
     require_once "helpers/requestResult.php";
 
+    try {
     // Mozna tu przyjść tylko z konkretnych formularzy:
     if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
         addNewRoomType($result_obj);
@@ -38,6 +39,9 @@
         deleteSelectedRoom($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
+    }
+    } catch (PDOException $error) {
+        $result_obj->message = 'Niepowodzenie, błąd:'.$error->getMessage();
     }
 
     echo json_encode($result_obj);
@@ -168,7 +172,8 @@
                     nrRoom = :nr_room AND
                     floor = :nr_floor AND
                     sleeps = :sleeps AND
-                    idType = :id_type
+                    idType = :id_type AND
+                    isDeleted = 0
                 ;';
         $query = $db->prepare($sql);
         $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
@@ -316,7 +321,8 @@
         $sql = 'SELECT r.nrRoom, r.floor, r.sleeps, t.name as name
                 FROM room r
                 INNER JOIN type t 
-                ON r.idType = t.idType;';
+                ON r.idType = t.idType
+                WHERE r.isDeleted = 0;';
         $query = $db->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -364,7 +370,6 @@
             $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
             $query->execute();
             $result = $query->fetch();
-            // $result = $query->fetchAll(PDO::FETCH_ASSOC);
             if ($query->rowCount() == 0) {
                 $result_obj->message = "Nieznana oferta.";
                 return;
@@ -458,19 +463,14 @@
 
     function deleteSelectedRoom($result_obj) {
         require_once "db.php";
-        $nr_room = $_POST['nrRoom'];
+        $nr_room = $_POST['nrRoomForDelete'];
 
-        $db->beginTransaction();
-
-        $sql = 'DELETE room
-                FROM room
+        $sql = 'UPDATE room
+                SET isDeleted = 1
                 WHERE nrRoom = :nr_room';
-
         $query = $db->prepare($sql);
         $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
         $query->execute();
-
-        $db->commit();
 
         $result_obj->result = 'OK';
         $result_obj->message = 'Pokój usunięty.';
