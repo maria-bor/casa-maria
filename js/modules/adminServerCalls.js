@@ -145,7 +145,7 @@ var date_diff_indays = function (from, to) {
         Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate())) / (1000 * 60 * 60 * 24));
 }
 
-export function deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo) {
+export function deleteBookingInAdmin(nrBooking, nrRoom, dateFrom, dateTo) {
     var data = {
         nrRoom: nrRoom,
         dateFrom: dateFrom,
@@ -162,8 +162,17 @@ export function deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo) {
 
 function deleteBooking(nrBooking) {
     var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nrBooking - 1];
-    tableRef.deleteRow(row);
+    tableRef.deleteRow(nrBooking - 1);
+
+    var select = document.getElementById("booking");
+    select.remove(nrBooking - 1);
+
+    // Aktualizacja liczb porządkowych w tabeli i comboboxie:
+    var options = select.getElementsByTagName('option');
+    for (let i = nr - 1; i < tableRef.rows.length; ++i) {
+        tableRef.rows[i].cells[0].innerHTML = i + 1;
+        options[i].innerHTML = i + 1;
+    }
 }
 /*** END TAB-3 ***/
 
@@ -288,16 +297,16 @@ export function deleteAdmins(nr, email) {
 
 function deleteAdminFromTable(nr) {
     var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
-    tableRef.deleteRow(nr-1);
+    tableRef.deleteRow(nr - 1);
 
     var select = document.getElementById("nrAdmin");
-    select.remove(nr-1);
+    select.remove(nr - 1);
 
     // Aktualizacja liczb porządkowych w tabeli i comboboxie:
     var options = select.getElementsByTagName('option');
-    for(let i = nr-1; i<tableRef.rows.length; ++i) {
-        tableRef.rows[i].cells[0].innerHTML = i+1;
-        options[i].innerHTML = i+1;
+    for (let i = nr - 1; i < tableRef.rows.length; ++i) {
+        tableRef.rows[i].cells[0].innerHTML = i + 1;
+        options[i].innerHTML = i + 1;
     }
 }
 

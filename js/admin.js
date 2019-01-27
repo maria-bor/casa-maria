@@ -16,7 +16,7 @@ import {
     requestAddNewRoom,
     /*** TAB-3 ***/
     requestAllBooking,
-    deleteAdminBooking,
+    deleteBookingInAdmin,
     /*** TAB-4 ***/
     requestAddNewOffer,
     requestAllOffers,
@@ -358,7 +358,7 @@ $('#delete').on('click', function() {
     var dateFrom = row.cells[6].innerHTML;
     var dateTo = row.cells[7].innerHTML;
 
-    deleteAdminBooking(nrBooking, nrRoom, dateFrom, dateTo);
+    deleteBookingInAdmin(nrBooking, nrRoom, dateFrom, dateTo);
 });
 
 $('#deleteAdmin').on('click', function() {
