@@ -435,24 +435,24 @@
     function deleteSelectedAdmin($result_obj) {
         require_once "db.php";
         $email = $_POST['email'];
-         
-        $db->beginTransaction();
-         
-        $sql = 'DELETE ur, ul, u
-                FROM userrole ur
-                INNER JOIN userlogged ul
-                ON ur.idUserLogged = ul.idUserLogged
+
+        $sql = 'UPDATE userlogged ul
                 INNER JOIN user u
                 ON u.idUser = ul.idUser
-                WHERE u.email = :email AND ur.idRole = 1;';
-    
-            $query = $db->prepare($sql);
+                INNER JOIN userrole ur
+                ON ur.idUserLogged = ul.idUserLogged
+                INNER JOIN role r
+                ON r.idRole = ur.idRole
+                SET isDeleted = 1
+                WHERE u.email = :email
+                AND r.name = :role_name
+                AND ul.isDeleted = 0;';
+        $query = $db->prepare($sql);
         $query->bindValue(':email', $email, PDO::PARAM_STR);
-            $query->execute();
+        $query->bindValue(':role_name', 'admin', PDO::PARAM_STR);
+        $query->execute();
     
-            $db->commit();
-    
-            $result_obj->result = 'OK';
+        $result_obj->result = 'OK';
         $result_obj->message = 'Admin usunięty.';
     }
 
