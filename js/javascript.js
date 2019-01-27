@@ -10,7 +10,6 @@ function logout() {
 /*** POPUP LOGIN ***/
 document.getElementById('clickLogin').addEventListener('click', function () {
     let label = document.getElementById('clickLogin').innerText;
-    console.log(label);
     if (label === 'Zaloguj się') {
         document.querySelector('.bg-modal-login').style.display = 'flex';
         const formLogin = new Vue(
