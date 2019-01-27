@@ -351,6 +351,42 @@
         $price = $_POST['price'];
 
         try {
+            $sql = 'SELECT date_from, date_to
+                    FROM offer
+                    WHERE idOffer = :id_offer;';
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
+            $query->execute();
+            $result = $query->fetch();
+            // $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            if ($query->rowCount() == 0) {
+                $result_obj->message = "Nieznana oferta.";
+                return;
+            }
+            $date_from = $result['date_from'];
+            $date_to = $result['date_to'];
+
+            $sql = 'SELECT count(o.idOffer) as nrOffers
+                    FROM offer o
+                    INNER JOIN room_offer ro
+                    ON o.idOffer = ro.idOffer
+                    INNER JOIN room r
+                    ON r.idRoom = ro.idRoom
+                    WHERE r.nrRoom = :nr_room
+                    AND ((o.date_from BETWEEN :date_from AND :date_to) OR (o.date_to BETWEEN :date_from1 AND :date_to1));';
+            $query = $db->prepare($sql);
+            $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+            $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
+            $query->bindValue(':date_to', $date_to, PDO::PARAM_STR);
+            $query->bindValue(':date_from1', $date_from, PDO::PARAM_STR);
+            $query->bindValue(':date_to1', $date_to, PDO::PARAM_STR);
+            $query->execute();
+            $result = $query->fetch();
+            if($result['nrOffers'] > 0) {
+                $result_obj->message = "Nie można dodać pokoju do innej oferty w tych samych datach.";
+                return;
+            }
+
             $sql = 'INSERT INTO room_offer VALUES (
                         :id_offer,
                         (SELECT idRoom FROM room WHERE nrRoom = :nr_room),
@@ -365,7 +401,7 @@
             $result_obj->message = 'Pokój został dodany do oferty';
         }
         catch (PDOException $error) {
-            $result_obj->message = 'Nie udało się dodać pokoju do oferty, spróbuj jeszcze raz';
+            $result_obj->message = 'Nie udało się dodać pokoju do oferty, spróbuj jeszcze raz'.$error->getMessage();
         }
     }
 
