@@ -181,7 +181,7 @@
             return;
         }
         // Wstawienie do tabeli:
-        $sql = 'INSERT INTO Room
+        $sql = 'INSERT INTO Room(idRoom, nrRoom, floor, sleeps, idType, idUserLogged)
                 VALUES (NULL, :nr_room, :nr_floor, :sleeps, :id_type, :id_user
                 );';
         $query = $db->prepare($sql);
@@ -220,7 +220,7 @@
             return;
         }
         // Wstawienie do tabeli:
-        $sql = 'INSERT INTO Offer
+        $sql = 'INSERT INTO Offer(idOffer, name, date_from, date_to, idUserLogged)
                 VALUES (NULL, :name, :date_from, :date_to, :id_user);';
         $query = $db->prepare($sql);
         $query->bindValue(':name', $name, PDO::PARAM_STR);
@@ -390,7 +390,8 @@
                 return;
             }
 
-            $sql = 'INSERT INTO room_offer VALUES (
+            $sql = 'INSERT INTO room_offer(idOffer, idRoom, price)
+                    VALUES (
                         :id_offer,
                         (SELECT idRoom FROM room WHERE nrRoom = :nr_room),
                         :price);';
