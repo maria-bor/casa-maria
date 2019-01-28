@@ -12,6 +12,12 @@ import {
 }
     from './adminServerCalls.js'
 
+import {
+    requestAllUserBooking
+}
+    from './userServerCall.js';
+
+/*** ZMIANA TABÓW NA PROFILU ADMINA***/
 export function loadTab() {
     var nameOfLastTabClicked = getCookie("nameOfLastTabClicked");
     if (nameOfLastTabClicked === "") {
@@ -63,5 +69,30 @@ function setupTab5ClickHandler() {
     $("#tab-5").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-5", 30);
         requestAllAdmins();
+    });
+}
+
+/*** ZMIANA TABÓW NA PROFILU UŻYTKOWNIKA***/
+export function loadSideMenu() {
+    var nameOfLastClicked = getCookie("nameOfLastClicked");
+    if (nameOfLastClicked === "") {
+        nameOfLastClicked = "#profile";
+        setCookie("nameOfLastClicked", nameOfLastClicked, 30);
+    }
+    $(nameOfLastClicked).click();
+    return nameOfLastClicked;
+}
+
+export function setupSideMenuClickHandler() {
+    setupTabClickHandler("#profile");
+    setupSideMenuDeleteClickHandler();
+}
+
+function setupSideMenuDeleteClickHandler() {
+    console.log('setupSideMenuDeleteClickHandler()')
+    $("#delete").on('click', function () {
+        console.log('#delete.click()')
+        setCookie("nameOfLastClicked", "#delete", 30);
+        requestAllUserBooking();
     });
 }

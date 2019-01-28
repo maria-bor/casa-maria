@@ -38,17 +38,17 @@ function logout() {
 
 window.onload = function () {
     var tab = loadTab();
-    if (tab === "#tab-2") {
-        requestAllRoomTypes();
-        requestAllRooms();
-    } else if (tab === "#tab-3") {
-        requestAllBooking();
-    } else if (tab === "#tab-4") {
-        requestAllOffers();
-        requestAllRoomsNumbers();
-    }else if (tab === "#tab-5") {
-        requestAllAdmins();
-    }
+    // if (tab === "#tab-2") {
+    //     requestAllRoomTypes();
+    //     requestAllRooms();
+    // } else if (tab === "#tab-3") {
+    //     requestAllBooking();
+    // } else if (tab === "#tab-4") {
+    //     requestAllOffers();
+    //     requestAllRoomsNumbers();
+    // }else if (tab === "#tab-5") {
+    //     requestAllAdmins();
+    // }
 }
 
 $(setupTabClickHandlers());

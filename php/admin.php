@@ -471,7 +471,7 @@
                 SET isDeleted = 1
                 WHERE nrRoom = :nr_room';
         $query = $db->prepare($sql);
-        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+        $query->bindValue(':nr_room', $nr_rcoom, PDO::PARAM_INT);
         $query->execute();
 
         $result_obj->result = 'OK';

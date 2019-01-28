@@ -67,7 +67,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         button.id = "bookButt"+idx;
         button.className = "bookButt";
         button.value = "Zarezerwuj";
-        button.type = "submit"; // CZY JEDNAK TYPE=BUTTON?????
+        button.type = "button";
 
         root.appendChild(fieldset);
         fieldset.appendChild(ul);
