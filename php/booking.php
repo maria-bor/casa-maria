@@ -120,6 +120,7 @@
         //         AND ro.isDeleted = 0
         //         AND r.isDeleted = 0));';
 
+        // $sql = 'SELECT DISTINCT ro.price, t.name as type
         $sql = 'SELECT r.idRoom, o.date_from, o.date_to, ro.price, t.name as type
                 FROM room_offer ro
                 INNER JOIN room r
