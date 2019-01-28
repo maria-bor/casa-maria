@@ -28,7 +28,8 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
 }
 
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
-    document.querySelector('.bg-modal-booking').style.display = 'flex';
+    document.querySelector('.bg-modal-booking').style.display = 'flex'; 
+    document.querySelector('.bg-modal-booking').scrollTop;
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
     // document.getElementById('numbers-person-room').value = nrPersons;

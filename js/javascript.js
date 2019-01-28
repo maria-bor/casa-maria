@@ -214,6 +214,11 @@ document.querySelector('.close-booking').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
 });
 
+// function scrolling() {
+//     var div = document.querySelector('bg-modal-booking');
+//     div.scrollTop;
+// }
+
 /*** POPUP RESERVE***/
 // document.getElementById('bookButt').addEventListener('click', function () {
 //     document.querySelector('.bg-modal-booking').style.display = 'none';
