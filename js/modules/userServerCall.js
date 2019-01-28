@@ -47,7 +47,6 @@ export function fillBookingTable(values) {
         var newRow = tableRef.insertRow(tableRef.rows.length)
         // Insert a cell in the row at index 0 and // Append a text node to the cell
         newRow.insertCell(0).appendChild(document.createTextNode(idx));
-        console.log("IDX: " + idx)
         newRow.insertCell(1).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(2).appendChild(document.createTextNode(v.date_to));
         newRow.insertCell(3).appendChild(buttonDelete);

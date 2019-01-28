@@ -89,9 +89,7 @@ export function setupSideMenuClickHandler() {
 }
 
 function setupSideMenuDeleteClickHandler() {
-    console.log('setupSideMenuDeleteClickHandler()')
     $("#delete").on('click', function () {
-        console.log('#delete.click()')
         setCookie("nameOfLastClicked", "#delete", 30);
         requestAllUserBooking();
     });

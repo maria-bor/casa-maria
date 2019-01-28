@@ -70,20 +70,21 @@ $(function () {
     })
 });
 
-var cardReservation = $('.modal-user-reservation');
-var cardReservationInfo = $('.reserve-info');
-$(function () {
-    $('#reservation').on('click', function (params) {
-        card.empty();
-        cardReservation.css({
-            'display': 'flex',
-            'flex-direction': 'column'
-        });
-        cardReservationInfo.css({ 'padding': '20px' });
-        cardReservation.append(cardReservationInfo);
-        card.append(cardReservation);
-    })
-});
+//TODO NA INŻ
+// var cardReservation = $('.modal-user-reservation');
+// var cardReservationInfo = $('.reserve-info');
+// $(function () {
+//     $('#reservation').on('click', function (params) {
+//         card.empty();
+//         cardReservation.css({
+//             'display': 'flex',
+//             'flex-direction': 'column'
+//         });
+//         cardReservationInfo.css({ 'padding': '20px' });
+//         cardReservation.append(cardReservationInfo);
+//         card.append(cardReservation);
+//     })
+// });
 
 var cardReservationDelete = $('.modal-user-reservation-delete');
 $(function () {
