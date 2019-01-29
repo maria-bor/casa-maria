@@ -1,5 +1,5 @@
 import { requestAvailability }
-from "./modules/bookingServerCalls.js";
+    from "./modules/bookingServerCalls.js";
 
 // Putting the logout function as a property on the window object
 window.logout = logout;
@@ -203,7 +203,6 @@ function validateDateInput() {
     }
 }
 document.getElementById('clickBooking').addEventListener('click', function () {
-    console.log('clickBooking');
     var selectList = document.getElementById('nrPersons');
     var nrPersons = selectList.options[selectList.selectedIndex].text;
 

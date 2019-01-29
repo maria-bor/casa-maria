@@ -7,16 +7,13 @@ import { date_diff_indays }
 var url = "./php/booking.php";
 
 export function requestAvailability(dateFrom, dateTo, nrPersons) {
-    console.log('requestAvailability()')
     var data = {
         dateFrom: dateFrom,
         dateTo: dateTo,
         nrPersons: nrPersons
     };
     function callback(response) {
-        console.log(response.message);
         if (response.result === 'OK') {
-            console.log(dateFrom+' '+dateTo+' ' + nrPersons)
             fillAvailability(response.value, dateFrom, dateTo, nrPersons);
         } else {
             alert(response.message);
@@ -32,11 +29,9 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
     document.querySelector('body').style.overflow = 'hidden';
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
-    // document.getElementById('numbers-person-room').value = nrPersons;
 
     var root = document.querySelector(".inner-modal-content-booking");
     root.innerHTML = "";
-    // TODO w for(v) po values trzeba będzie robić fieldsety v.type, v.price ilość osob wywalić
     var idx = 1;
     for (var v of values) {
         var fieldset = document.createElement("FIELDSET");
