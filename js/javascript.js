@@ -64,7 +64,6 @@ document.querySelector('.close-login').addEventListener('click', function () {
 /*** POPUP REGISTER ***/
 document.getElementById('clickRegister').addEventListener('click', function () {
     let label = document.getElementById('clickRegister').innerText;
-    console.log(label);
     if (label === 'Zarejestruj się') {
         document.querySelector('.bg-modal-register').style.display = 'flex';
         const formRegister = new Vue(
@@ -212,12 +211,9 @@ document.getElementById('clickBooking').addEventListener('click', function () {
 });
 document.querySelector('.close-booking').addEventListener('click', function () {
     document.querySelector('.bg-modal-booking').style.display = 'none';
-});
+    document.querySelector('body').style.overflow = 'auto';
 
-// function scrolling() {
-//     var div = document.querySelector('bg-modal-booking');
-//     div.scrollTop;
-// }
+});
 
 /*** POPUP RESERVE***/
 // document.getElementById('bookButt').addEventListener('click', function () {
