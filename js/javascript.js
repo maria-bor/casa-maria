@@ -8,7 +8,9 @@ function logout() {
 }
 
 /*** POPUP LOGIN ***/
-document.getElementById('clickLogin').addEventListener('click', function () {
+document.getElementById('clickLogin').addEventListener('click', loginButtonCallback);
+function loginButtonCallback() {
+    // Sprawdzamy co jest na buttonie napisane
     let label = document.getElementById('clickLogin').innerText;
     if (label === 'Zaloguj się') {
         document.querySelector('.bg-modal-login').style.display = 'flex';
@@ -18,8 +20,8 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                 data: {
                     errorLogin: '',
                     errorPassword: '',
-                    emailLogin: null,
-                    passwordLogin: null
+                    emailLogin: document.getElementById('emailLogin').value,
+                    passwordLogin: document.getElementById('passwordLogin').value
                 },
                 methods: {
                     checkForm: function (e) {
@@ -56,9 +58,10 @@ document.getElementById('clickLogin').addEventListener('click', function () {
     } else if (label === 'Wyloguj się') {
         logout();
     }
-});
+}
 document.querySelector('.close-login').addEventListener('click', function () {
     document.querySelector('.bg-modal-login').style.display = 'none';
+    logout();
 });
 
 /*** POPUP REGISTER ***/
@@ -76,11 +79,11 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                     errorPassword: '',
                     errorPasswordConfirm: '',
 
-                    nameRegister: null,
-                    surnameRegister: null,
-                    email: null,
-                    passwordRegister: null,
-                    passwordConfirm: null
+                    nameRegister: document.getElementById('nameRegister').value,
+                    surnameRegister: document.getElementById('surnameRegister').value,
+                    email: document.getElementById('email').value,
+                    passwordRegister: document.getElementById('passwordRegister').value,
+                    passwordConfirm: document.getElementById('passwordConfirm').value
                 },
                 methods: {
                     checkForm: function (e) {
@@ -152,6 +155,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
+    logout();
 });
 
 /***CHECK LOGIN OR REGISTER ERROR (RESPONSE FROM SERVER)***/
@@ -277,6 +281,7 @@ document.querySelector('.close-booking').addEventListener('click', function () {
 //             }
 //         });
 // });
-// document.querySelector('.close-reserve').addEventListener('click', function () {
-//     document.querySelector('.bg-modal-reserve').style.display = 'none';
-// });
+
+document.querySelector('.close-reserve').addEventListener('click', function () {
+    document.querySelector('.bg-modal-reserve').style.display = 'none';
+});

@@ -24,6 +24,8 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
     requestServer(url, data, callback);
 }
 
+var choosenType = null;
+
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
     document.querySelector('.bg-modal-booking').style.display = 'flex'; 
     document.querySelector('body').style.overflow = 'hidden';
@@ -66,6 +68,13 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         button.className = "bookButt";
         button.value = "Zarezerwuj";
         button.type = "button";
+        button.setAttribute('input-type-id', inputType.id);
+
+        button.addEventListener('click', function() {
+            choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
+            console.log("type"+choosenType);
+            showReservationPopup();
+        });
 
         root.appendChild(fieldset);
         fieldset.appendChild(ul);
@@ -88,4 +97,93 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
 function showUnavailable() {
 
+}
+
+function showReservationPopup() {
+    document.querySelector('.bg-modal-booking').style.display = 'none';
+    document.querySelector('.bg-modal-reserve').style.display = 'flex';
+    const formLogin = new Vue(
+        {
+            el: '#form-reserve',
+            data: {
+                errorName: '',
+                errorSurname: '',
+                errorEmail: '',
+
+                nameReserve: document.getElementById('nameReserve').value,
+                surnameReserve: document.getElementById('surnameReserve').value,
+                emailReserve: document.getElementById('emailReserve').value,
+            },
+            methods: {
+                checkForm: function (e) {
+                    this.errorName = '';
+                    this.errorSurname = '';
+                    this.errorEmail = '';
+
+                    if (!this.nameReserve) {
+                        this.errorName = "Wprowadź imię.";
+                    } else if (!this.validNameSurname(this.nameReserve)) {
+                        this.errorName = "Niepoprawny format.";
+                    }
+
+                    if (!this.surnameReserve) {
+                        this.errorSurname = "Wprowadź nazwisko.";
+                    } else if (!this.validNameSurname(this.surnameReserve)) {
+                        this.errorSurname = "Niepoprawny format.";
+                    }
+
+                    if (!this.emailReserve) {
+                        this.errorEmail = "Wprowadź email.";
+                    } else if (!this.validEmail(this.emailReserve)) {
+                        this.errorEmail = "Niepoprawny format email.";
+                    }
+
+                    if (!this.errorName.length &&
+                        !this.errorSurname.length &&
+                        !this.errorEmail.length) {
+                        return true;
+                    }
+                    e.preventDefault();
+                },
+                validNameSurname: function (str) {
+                    var nameOrSurname = str.trim();
+                    var nameOrSurnameFormat = /^[a-zA-Z]{3,20}?$/;
+                    return nameOrSurnameFormat.test(nameOrSurname);
+                },
+                validPassword: function (passwordLogin) {
+                    var pass = passwordLogin.trim();
+                    return (pass.length >= 8) && (pass.length <= 20);
+                },
+                validEmail: function (emailReserve) {
+                    var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    return mailFormat.test(emailReserve);
+                }
+            }
+        });
+
+        document.getElementById('reserveButt').addEventListener('click', function() {
+            var name = document.getElementById('nameReserve').value;
+            var surname = document.getElementById('surnameReserve').value;
+            var email = document.getElementById('emailReserve').value;
+
+            requestBooking(choosenType, name, surname, email);
+        });
+}
+
+
+function requestBooking(type, name, surname, email) {
+    var data = {
+        bookingType: type,
+        name: name,
+        surname: surname,
+        email: email
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            alert("Rezerwacja dokonana");
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
 }
