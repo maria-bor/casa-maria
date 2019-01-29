@@ -29,7 +29,6 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
 
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
     document.querySelector('.bg-modal-booking').style.display = 'flex'; 
-    document.querySelector('.bg-modal-booking').scrollTop;
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
     // document.getElementById('numbers-person-room').value = nrPersons;
@@ -64,6 +63,8 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         labelPrice.htmlFor = inputPrice.id;
         labelPrice.innerText = "Cena:";
 
+        var p = document.createElement('p');
+
         var button = document.createElement("INPUT");
         button.id = "bookButt"+idx;
         button.className = "bookButt";
@@ -77,6 +78,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         li.appendChild(labelType);
         inputType.value = v.type;
         li.appendChild(inputType);
+        li.appendChild(p);
 
         li.appendChild(labelPrice);
         var pricePerDay = v.price;
