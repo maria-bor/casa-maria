@@ -22,8 +22,12 @@
     function getAllUserBooking($result_obj) {
         require_once "db.php";
         $id_user = $_SESSION['id_user'];
-        $sql = 'SELECT b.date_to, b.date_from
+        $sql = 'SELECT t.name as type, b.date_to, b.date_from, b.price, b.guests
                 FROM booking b
+                INNER JOIN room r
+                ON b.idRoom = r.idRoom
+                INNER JOIN type t
+                ON r.idType = t.idType
                 WHERE b.idUser = :id_user
                 AND b.isDeleted = 0;';
         $query = $db->prepare($sql);
