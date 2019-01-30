@@ -158,7 +158,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
-    document.querySelector('body').style.overflow = 'auto';
+    document.querySelector('body').style.overflow = 'auto'; 
     logout();
 });
 

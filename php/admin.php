@@ -6,40 +6,42 @@
     require_once "helpers/requestResult.php";
 
     try {
-    // Mozna tu przyjść tylko z konkretnych formularzy:
-    if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
-        addNewRoomType($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
-        getAllRoomTypes($result_obj);
-    } else if(count($_POST) == 4 && isset($_POST['nrRoom']) && isset($_POST['nrFloor']) &&
-              isset($_POST['sleeps']) && isset($_POST['nameType'])) {
-        addNewRoom($result_obj);
-    } else if(count($_POST) == 3 && isset($_POST['name']) &&
-        isset($_POST['from']) && isset($_POST['to'])) {
-        addNewOffer($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
-        getAllOffers($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'all') { // pobranie wszystkich pokoi
-        getAllRooms($result_obj);
-    } else if (count($_POST) == 3 && isset($_POST['idOffer']) &&
-               isset($_POST['nrRoom']) && isset($_POST['price'])) { // dodanie pokoju do oferty
-        addRoomToOffer($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'nr') { // pobranie wszystkich numerow pokoi
-        getAllRoomsNumbers($result_obj);
-    } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
-        getAllBooking($result_obj);
-    } else if(count($_POST) == 3 && isset($_POST['nrRoom']) &&
-        isset($_POST['dateFrom']) && isset($_POST['dateTo'])) { // usuniecie rezerwacji
-        deleteSelectedAdminBooking($result_obj);
-    } else if(count($_POST) == 1 && isset($_POST['admins'])) { // pobranie wszystkich adminow
-        getAllAdmins($result_obj);
-    } else if(count($_POST) == 1 && isset($_POST['email'])) { // usuniecie admina
-        deleteSelectedAdmin($result_obj);
-    } else if(count($_POST) == 1 && isset($_POST['nrRoomForDelete'])) { // usuniecie pokoju
-        deleteSelectedRoom($result_obj);
-    } else {
-        $result_obj->message = 'Nieznane zapytanie';
-    }
+        // Mozna tu przyjść tylko z konkretnych formularzy:
+        if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
+            addNewRoomType($result_obj);
+        } else if (count($_POST) == 1 && isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
+            getAllRoomTypes($result_obj);
+        } else if(count($_POST) == 4 && isset($_POST['nrRoom']) && isset($_POST['nrFloor']) &&
+                isset($_POST['sleeps']) && isset($_POST['nameType'])) {
+            addNewRoom($result_obj);
+        } else if(count($_POST) == 3 && isset($_POST['name']) &&
+            isset($_POST['from']) && isset($_POST['to'])) {
+            addNewOffer($result_obj);
+        } else if (count($_POST) == 1 && isset($_POST['offer'])) { // pobranie wszystkich ofert
+            getAllOffers($result_obj);
+        } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'all') { // pobranie wszystkich pokoi
+            getAllRooms($result_obj);
+        } else if (count($_POST) == 3 && isset($_POST['nameOffer']) &&
+                isset($_POST['nrRoom']) && isset($_POST['price'])) { // dodanie pokoju do oferty
+            addRoomToOffer($result_obj);
+        } else if (count($_POST) == 1 && isset($_POST['room']) && $_POST['room'] == 'nr') { // pobranie wszystkich numerow pokoi
+            getAllRoomsNumbers($result_obj);
+        } else if (count($_POST) == 1 && isset($_POST['booking'])) { // pobranie wszystkich rezerwacji
+            getAllBooking($result_obj);
+        } else if(count($_POST) == 3 && isset($_POST['nrRoom']) &&
+            isset($_POST['dateFrom']) && isset($_POST['dateTo'])) { // usuniecie rezerwacji
+            deleteSelectedAdminBooking($result_obj);
+        } else if(count($_POST) == 1 && isset($_POST['admins'])) { // pobranie wszystkich adminow
+            getAllAdmins($result_obj);
+        } else if(count($_POST) == 1 && isset($_POST['email'])) { // usuniecie admina
+            deleteSelectedAdmin($result_obj);
+        } else if(count($_POST) == 1 && isset($_POST['nrRoomForDelete'])) { // usuniecie pokoju
+            deleteSelectedRoom($result_obj);
+        } else if(count($_POST) == 1 && isset($_POST['name']) && isset($_POST['name']) == 'offersName') { //wypeienei comboxa z nazwami ofert
+            getAllOffersName($result_obj);
+        } else {
+            $result_obj->message = 'Nieznane zapytanie';
+        }
     } catch (PDOException $error) {
         $result_obj->message = 'Niepowodzenie, błąd:'.$error->getMessage();
     }
@@ -314,7 +316,7 @@
             $result_obj->value = $results;
         }
         else {
-            $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
+            $result_obj->message = 'Brak zdefiniowanych ofert.';
         }
     }
 
@@ -355,28 +357,50 @@
             $result_obj->value = $results;
         }
         else {
-            $result_obj->message = 'Brak zdefiniowanych typów pokoi.';
+            $result_obj->message = 'Brak zdefiniowanych pokoi.';
+        }
+    }
+
+    function getAllOffersName($result_obj) {
+        require_once "db.php";
+        $sql = 'SELECT o.name as name
+                FROM offer o
+                WHERE o.isDeleted = 0
+                ORDER BY name;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' ofert';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych ofert.';
         }
     }
 
     function addRoomToOffer($result_obj) {
         require_once "db.php";
-        $id_offer = $_POST['idOffer'];
+        $name_offer = $_POST['nameOffer'];
         $nr_room = $_POST['nrRoom'];
         $price = $_POST['price'];
 
         try {
-            $sql = 'SELECT date_from, date_to
-                    FROM offer
-                    WHERE idOffer = :id_offer;';
+            $sql = 'SELECT idOffer, date_from, date_to
+                    FROM offer o
+                    WHERE o.name = :name_offer
+                    AND isDeleted = 0;';
             $query = $db->prepare($sql);
-            $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
+            $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
             $query->execute();
             $result = $query->fetch();
-            if ($query->rowCount() == 0) {
-                $result_obj->message = "Nieznana oferta.";
+            if ($query->rowCount() != 1) {
+                $result_obj->message = "Nieznana oferta.".$name_offer;
                 return;
             }
+            $id_offer = $result['idOffer'];
             $date_from = $result['date_from'];
             $date_to = $result['date_to'];
 
