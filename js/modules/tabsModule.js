@@ -84,8 +84,14 @@ export function loadSideMenu() {
 }
 
 export function setupSideMenuClickHandler() {
-    setupTabClickHandler("#profile");
+    setupClickHandler("#profile");
     setupSideMenuDeleteClickHandler();
+}
+
+function setupClickHandler(tabName) {
+    $(tabName).on('click', function () {
+        setCookie("nameOfLastClicked", tabName, 30);
+    });
 }
 
 function setupSideMenuDeleteClickHandler() {

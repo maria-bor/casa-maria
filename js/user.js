@@ -10,10 +10,6 @@ import {
     setupSideMenuClickHandler
 }
     from '../js/modules/tabsModule.js';
-import {
-    requestAllUserBooking
-}
-    from './modules/userServerCall.js';
 
 $(function () {
     $(".menu-toggle").on("click", function (e) {
@@ -41,15 +37,7 @@ $(function () {
 });
 
 window.onload = function () {
-    var tab = loadSideMenu();
-    // if (tab === "#home") {
-    //     // window.location.replace("./index.html"); // CHYBA TO ZAMIAST LINIA: 37
-    // } else if (tab === "#reservation") {
-    //     // tej na razie nie będzie zakładki
-    // } else if (tab === "#delete") {
-    //     console.log('load');
-    //     requestAllUserBooking()
-    // }
+    loadSideMenu();
 }
 $(setupSideMenuClickHandler());
 
