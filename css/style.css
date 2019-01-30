@@ -400,3 +400,8 @@ i {
   margin: 40px;
   cursor: pointer;
 }
+
+.booking-form .submit-btn:hover {
+  background: linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);
+  background-color: #80b5ea;
+}
