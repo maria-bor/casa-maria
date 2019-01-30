@@ -1,6 +1,7 @@
 import {
     setCookie,
-    getCookie } 
+    getCookie 
+} 
     from './cookieModule.js';
 import {
     requestAllRoomTypes,

@@ -16,39 +16,25 @@ import {
     requestAddNewRoom,
     deleteRoom,
     /*** TAB-3 ***/
-    requestAllBooking,
     deleteBookingInAdmin,
     /*** TAB-4 ***/
     requestAddNewOffer,
-    requestAllOffers,
-    requestAllRooms,
-    requestAllRoomsNumbers,
     requestAddRoomToOffer,
     /*** TAB-5 ***/
-    requestAllAdmins,
     deleteAdmin
 }
     from './modules/adminServerCalls.js'
+import { setCookie } from './modules/cookieModule.js';
 
 // Putting the logout function as a property on the window object
 window.logout = logout;
 function logout() {
     window.location.replace("./php/logout.php");
+    setCookie('nameOfLastTabClicked', '#tab-1', 30);
 }
 
 window.onload = function () {
-    var tab = loadTab();
-    // if (tab === "#tab-2") {
-    //     requestAllRoomTypes();
-    //     requestAllRooms();
-    // } else if (tab === "#tab-3") {
-    //     requestAllBooking();
-    // } else if (tab === "#tab-4") {
-    //     requestAllOffers();
-    //     requestAllRoomsNumbers();
-    // }else if (tab === "#tab-5") {
-    //     requestAllAdmins();
-    // }
+    loadTab();
 }
 
 $(setupTabClickHandlers());

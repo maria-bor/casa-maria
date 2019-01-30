@@ -116,7 +116,6 @@ function deleteRoomFromTable(id) {
     var select = document.getElementById("selectedRoom");
     select.remove(id);
 }
-
 /*** END TAB-2 ***/
 
 /*** TAB-3 ***/
