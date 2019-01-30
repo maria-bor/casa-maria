@@ -249,7 +249,8 @@
                 INNER JOIN booking b
                 ON r.idRoom = b.idRoom
                 INNER JOIN user u
-                ON u.idUser = b.idUser;';
+                ON u.idUser = b.idUser
+                WHERE b.isDeleted = 0;';
         $query = $db->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -425,7 +426,8 @@
         $nr_room = $_POST['nrRoom'];
         $date_from = $_POST['dateFrom'];
         $date_to = $_POST['dateTo'];
-        $sql = 'DELETE FROM booking
+        $sql = 'UPDATE booking
+                SET isDeleted = 1
                 WHERE idRoom = (SELECT idRoom FROM room WHERE nrRoom = :nr_room)
                 AND date_from = :date_from
                 AND date_to = :date_to';
