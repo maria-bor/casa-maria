@@ -13,6 +13,7 @@ document.getElementById('clickLogin').addEventListener('click', function () {
     let label = document.getElementById('clickLogin').innerText;
     if (label === 'Zaloguj się') {
         document.querySelector('.bg-modal-login').style.display = 'flex';
+        document.querySelector('body').style.overflow = 'hidden';
         const formLogin = new Vue(
             {
                 el: '#form-login',
@@ -61,6 +62,7 @@ document.getElementById('clickLogin').addEventListener('click', function () {
 
 document.querySelector('.close-login').addEventListener('click', function () {
     document.querySelector('.bg-modal-login').style.display = 'none';
+    document.querySelector('body').style.overflow = 'auto';
     logout();
 });
 
@@ -69,6 +71,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
     let label = document.getElementById('clickRegister').innerText;
     if (label === 'Zarejestruj się') {
         document.querySelector('.bg-modal-register').style.display = 'flex';
+        document.querySelector('body').style.overflow = 'hidden';
         const formRegister = new Vue(
             {
                 el: '#form-register',
@@ -155,6 +158,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
+    document.querySelector('body').style.overflow = 'auto';
     logout();
 });
 
@@ -168,7 +172,7 @@ function checkError(error) {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText == ("error_" + error.toLowerCase())){
+            if (this.responseText == ("error_" + error.toLowerCase())) {
                 document.getElementById("click" + error).click();
             }
         }
