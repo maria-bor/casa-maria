@@ -47,6 +47,12 @@
 
         try 
         {
+            // TODO INŻ może być tak, że ktoś zarezerwuje a potem będzie chciał założyć
+            // konto. Poniższy SQL spowoduje, że będzie dwóch userów o tych samych danych
+            // bo on będzie w DB a inne spowoduje, że go nie znajdziemy.
+            // SOLUTION sprawdzać tylko user.emil bez joina i jeśli jest to spr. imie i
+            // nazwisko i dodać userlogged i role
+
             // Sprawdzamy czy nie ma juz konta dla podanego emaila (rola nie wazna):
             $sql = 'SELECT u.idUser id_user
                     FROM User u
