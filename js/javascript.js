@@ -8,12 +8,12 @@ function logout() {
 }
 
 /*** POPUP LOGIN ***/
-document.getElementById('clickLogin').addEventListener('click', loginButtonCallback);
-function loginButtonCallback() {
+document.getElementById('clickLogin').addEventListener('click', function () {
     // Sprawdzamy co jest na buttonie napisane
     let label = document.getElementById('clickLogin').innerText;
     if (label === 'Zaloguj się') {
         document.querySelector('.bg-modal-login').style.display = 'flex';
+        document.querySelector('body').style.overflow = 'hidden';
         const formLogin = new Vue(
             {
                 el: '#form-login',
@@ -21,7 +21,7 @@ function loginButtonCallback() {
                     errorLogin: '',
                     errorPassword: '',
                     emailLogin: document.getElementById('emailLogin').value,
-                    passwordLogin: document.getElementById('passwordLogin').value
+                    passwordLogin: ''
                 },
                 methods: {
                     checkForm: function (e) {
@@ -58,9 +58,11 @@ function loginButtonCallback() {
     } else if (label === 'Wyloguj się') {
         logout();
     }
-}
+});
+
 document.querySelector('.close-login').addEventListener('click', function () {
     document.querySelector('.bg-modal-login').style.display = 'none';
+    document.querySelector('body').style.overflow = 'auto';
     logout();
 });
 
@@ -69,6 +71,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
     let label = document.getElementById('clickRegister').innerText;
     if (label === 'Zarejestruj się') {
         document.querySelector('.bg-modal-register').style.display = 'flex';
+        document.querySelector('body').style.overflow = 'hidden';
         const formRegister = new Vue(
             {
                 el: '#form-register',
@@ -82,8 +85,8 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                     nameRegister: document.getElementById('nameRegister').value,
                     surnameRegister: document.getElementById('surnameRegister').value,
                     email: document.getElementById('email').value,
-                    passwordRegister: document.getElementById('passwordRegister').value,
-                    passwordConfirm: document.getElementById('passwordConfirm').value
+                    passwordRegister: '',
+                    passwordConfirm: ''
                 },
                 methods: {
                     checkForm: function (e) {
@@ -155,6 +158,7 @@ document.getElementById('clickRegister').addEventListener('click', function () {
 });
 document.querySelector('.close-register').addEventListener('click', function () {
     document.querySelector('.bg-modal-register').style.display = 'none';
+    document.querySelector('body').style.overflow = 'auto'; 
     logout();
 });
 
@@ -168,8 +172,9 @@ function checkError(error) {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText == ("error_" + error.toLowerCase()))
+            if (this.responseText == ("error_" + error.toLowerCase())) {
                 document.getElementById("click" + error).click();
+            }
         }
     }
     ajax.open("GET", "./php/helpers/checkError" + error + ".php", true);

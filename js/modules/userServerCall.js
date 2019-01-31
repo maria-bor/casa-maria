@@ -47,9 +47,12 @@ export function fillBookingTable(values) {
         var newRow = tableRef.insertRow(tableRef.rows.length)
         // Insert a cell in the row at index 0 and // Append a text node to the cell
         newRow.insertCell(0).appendChild(document.createTextNode(idx));
-        newRow.insertCell(1).appendChild(document.createTextNode(v.date_from));
-        newRow.insertCell(2).appendChild(document.createTextNode(v.date_to));
-        newRow.insertCell(3).appendChild(buttonDelete);
+        newRow.insertCell(1).appendChild(document.createTextNode(v.type));
+        newRow.insertCell(2).appendChild(document.createTextNode(v.date_from));
+        newRow.insertCell(3).appendChild(document.createTextNode(v.date_to));
+        newRow.insertCell(4).appendChild(document.createTextNode(v.price));
+        newRow.insertCell(5).appendChild(document.createTextNode(v.guests));
+        newRow.insertCell(6).appendChild(buttonDelete);
 
         idx++;
     }

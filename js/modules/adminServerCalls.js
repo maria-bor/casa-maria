@@ -116,7 +116,6 @@ function deleteRoomFromTable(id) {
     var select = document.getElementById("selectedRoom");
     select.remove(id);
 }
-
 /*** END TAB-2 ***/
 
 /*** TAB-3 ***/
@@ -242,8 +241,8 @@ export function fillOffersTable(values) {
     tableRef.innerHTML = '';
     let idx = 1;
 
-    var select = document.getElementById("offers");
-    select.innerHTML = '';
+    // var select = document.getElementById("offers");
+    // select.innerHTML = '';
 
     for (var v of values) {
         // Insert a row in the table at row index 0
@@ -264,9 +263,10 @@ export function fillOffersTable(values) {
         newRow.insertCell(4).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(5).appendChild(document.createTextNode(v.date_to));
 
-        var option = document.createElement('option')
-        option.innerHTML = idx++;
-        select.appendChild(option);
+        // var option = document.createElement('option')
+        // option.innerHTML = v.name;
+        // select.appendChild(option);
+        idx++;
     }
 }
 
@@ -294,10 +294,33 @@ function fillOffersCombobox(values) {
     }
 }
 
-export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
-    let idOffer = allOffers[nrOffer - 1].idOffer;
+export function requestAllOffersName() {
     var data = {
-        idOffer: idOffer,
+        name: 'offersNam'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            fillOffersNameCombobox(response.value);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function fillOffersNameCombobox(values) {
+    var select = document.getElementById("offers");
+    select.innerHTML = '';
+    for (var v of values) {
+        var option = document.createElement('option')
+        option.innerHTML = v.name;
+        select.appendChild(option);
+    }
+}
+
+export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
+    var data = {
+        nameOffer: nameOffer,
         nrRoom: nrRoom,
         price: price
     };
@@ -305,7 +328,8 @@ export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
     function callback(response) {
         $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
-            fillRoomInOffers(nrOffer, nrRoom, price);
+            // fillRoomInOffers(nameOffer, nrRoom, price);
+            requestAllOffers();
         }
     }
     requestServer(url, data, callback);
@@ -313,7 +337,7 @@ export function requestAddRoomToOffer(nrOffer, nrRoom, price) {
 
 function fillRoomInOffers(nrOffer, nrRoom, price) {
     var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nrOffer - 1];
+    var row = tableRef.rows[nrOffer];
     row.cells[2].innerHTML = price;
     row.cells[3].innerHTML = nrRoom;
 }

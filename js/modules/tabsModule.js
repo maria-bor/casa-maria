@@ -1,11 +1,13 @@
 import {
     setCookie,
-    getCookie } 
+    getCookie 
+} 
     from './cookieModule.js';
 import {
     requestAllRoomTypes,
     requestAllOffers,
     requestAllRoomsNumbers,
+    requestAllOffersName,
     requestAllRooms,
     requestAllBooking,
     requestAllAdmins
@@ -62,6 +64,7 @@ function setupTab4ClickHandler() {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
         requestAllOffers();
         requestAllRoomsNumbers();
+        requestAllOffersName();
     });
 }
 
@@ -84,8 +87,14 @@ export function loadSideMenu() {
 }
 
 export function setupSideMenuClickHandler() {
-    setupTabClickHandler("#profile");
+    setupClickHandler("#profile");
     setupSideMenuDeleteClickHandler();
+}
+
+function setupClickHandler(tabName) {
+    $(tabName).on('click', function () {
+        setCookie("nameOfLastClicked", tabName, 30);
+    });
 }
 
 function setupSideMenuDeleteClickHandler() {

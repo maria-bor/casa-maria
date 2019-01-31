@@ -38,6 +38,7 @@
         // Sprawdzenie czy jest taki user o podanym emailu:
         if ($query->rowCount() == 0) {
             $_SESSION['error_login_email'] = 'Konto nie istnieje!';
+            $_SESSION['error_login'] = true;
             header('Location: ../index.html');
 		    exit();
         }
