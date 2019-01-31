@@ -195,11 +195,12 @@ function reserve($result_obj)
     $email = $_POST['email'];
     
     // Sprawdzamy czy dane zalogowanego są identyczne z podanymi w rezerwacji
-    if (!isset($_SESSION['is_user_logged']) || !isset($_SESSION['id_user']) || 
-        ($name != $_SESSION['name']) || ($surname != $_SESSION['surname']) ||
-        ($email != $_SESSION['email'])) {
-        $result_obj->message = 'Dane konta i rezerwacji nie zgadzają się';
-        return;
+    if (isset($_SESSION['is_user_logged']))
+        if (!isset($_SESSION['id_user']) ||
+            ($name != $_SESSION['name']) || ($surname != $_SESSION['surname']) ||
+            ($email != $_SESSION['email'])) {
+                $result_obj->message = 'Dane konta i rezerwacji nie zgadzają się';
+                return;
     }
 
     require_once "db.php";
@@ -241,7 +242,8 @@ function reserve($result_obj)
                 AND NOT (b.date_from > :date_to2
                 OR b.date_to < :date_from2)
                 AND ro.isDeleted = 0
-                AND r.isDeleted = 0))
+                AND r.isDeleted = 0
+                AND b.isDeleted = 0))
                 ORDER BY r.nrRoom
                 LIMIT 1;';
 
@@ -263,10 +265,51 @@ function reserve($result_obj)
     // echo json_encode($result_obj);
     // exit();
         
+    $db->beginTransaction();
+
+    $id_booking_user = 0;
+
+    // Jeśli nie jest zalogowany user to może go trzeba dodać
+    if (!isset($_SESSION['is_user_logged'])) {
+        $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if ((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) == false) ||
+            ($emailSanitized != $email)) {
+            $result_obj->message = 'Niepoprawny adres email';
+            return;
+        }
+
+        // TODO INŻ trzebaby tu strawdzać czy jak jest user to czy ma rolę i jak ma to
+        // czy nie jest przypadkiem usunięty
+        // SOLUTION szukać w tych bez userlogged jak i tych z userlogged ale nie delete
+
+        // Sprwadzamy czy już nie ma takiego użytkownika
+        $sql = 'SELECT u.idUser id_user
+                    FROM User u
+                    WHERE u.email = :emailLogin;';
+        $query = $db->prepare($sql);
+        $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
+        $query->execute();
+        if ($query->rowCount() > 0) {
+            $id_booking_user = $result['id_user'];
+        } else {
+            // Wstawienie do tabeli User:
+            $sql = 'INSERT INTO User
+            VALUES (NULL, :surname, :name, :email);';
+            $query = $db->prepare($sql);
+            $query->bindValue(':surname', $surname, PDO::PARAM_STR);
+            $query->bindValue(':name', $name, PDO::PARAM_STR);
+            $query->bindValue(':email', $email, PDO::PARAM_STR);
+            $query->execute();
+            $id_booking_user = $db->lastInsertId();
+        }
+    } else {
+        $id_booking_user = $_SESSION['id_user'];
+    }
+
     $sql = 'INSERT INTO Booking(idUser, idRoom, date_from, date_to, price, guests)
                 VALUES (:id_user, :id_room, :date_from, :date_to, :price, :guests);';
     $query = $db->prepare($sql);
-    $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_INT);
+    $query->bindValue(':id_user', $id_booking_user, PDO::PARAM_INT);
     $query->bindValue(':id_room', $results[0]['id_room'], PDO::PARAM_INT);
     $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
     $query->bindValue(':date_to', $date_to, PDO::PARAM_STR);
@@ -282,6 +325,5 @@ function reserve($result_obj)
         $result_obj->message = 'Nie udało się dokonać rezerwacji, spróbuj jeszcze raz';
     }
 
-    // TODO dodanie usera niezalogowanego
-    // TRANSAKCJA
+    $db->commit();
 }
