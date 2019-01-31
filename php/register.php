@@ -8,7 +8,6 @@
         isset($_POST['passwordConfirm']))
     {
         $all_valid = true;
-        //TODO validacja danych
         $name = $_POST['nameRegister'];
         $surname = $_POST['surnameRegister'];
         $email = $_POST['email'];
