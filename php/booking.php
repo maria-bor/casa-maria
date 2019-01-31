@@ -165,7 +165,8 @@ function checkAvailability($result_obj)
                 AND NOT (b.date_from > :date_to2
                 OR b.date_to < :date_from2)
                 AND ro.isDeleted = 0
-                AND r.isDeleted = 0));';
+                AND r.isDeleted = 0
+                AND b.isDeleted = 0));';
 
     $query = $db->prepare($sql);
     $query->bindValue(':persons1', $persons, PDO::PARAM_INT);
