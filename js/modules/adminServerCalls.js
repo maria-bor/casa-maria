@@ -241,9 +241,6 @@ export function fillOffersTable(values) {
     tableRef.innerHTML = '';
     let idx = 1;
 
-    // var select = document.getElementById("offers");
-    // select.innerHTML = '';
-
     for (var v of values) {
         // Insert a row in the table at row index 0
         var newRow = tableRef.insertRow(tableRef.rows.length)
@@ -263,9 +260,6 @@ export function fillOffersTable(values) {
         newRow.insertCell(4).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(5).appendChild(document.createTextNode(v.date_to));
 
-        // var option = document.createElement('option')
-        // option.innerHTML = v.name;
-        // select.appendChild(option);
         idx++;
     }
 }

@@ -27,7 +27,7 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
 var choosenType = null;
 
 function fillAvailability(values, dateFrom, dateTo, nrPersons) {
-    document.querySelector('.bg-modal-booking').style.display = 'flex'; 
+    document.querySelector('.bg-modal-booking').style.display = 'flex';
     document.querySelector('body').style.overflow = 'hidden';
     document.getElementById('book-from').value = dateFrom;
     document.getElementById('book-to').value = dateTo;
@@ -42,7 +42,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         ul.setAttribute('class', 'input-booking');
 
         var inputType = document.createElement("INPUT");
-        inputType.id = "type-room"+idx;
+        inputType.id = "type-room" + idx;
         inputType.name = "type-room";
         inputType.type = "text";
         inputType.disabled = true;
@@ -52,7 +52,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         labelType.innerText = "Typ pokoju:";
 
         var inputPrice = document.createElement("INPUT");
-        inputPrice.id = "price-room"+idx;
+        inputPrice.id = "price-room" + idx;
         inputPrice.name = "price-room";
         inputPrice.type = "text";
         inputPrice.disabled = true;
@@ -64,15 +64,15 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         var p = document.createElement('p');
 
         var button = document.createElement("INPUT");
-        button.id = "bookButt"+idx;
+        button.id = "bookButt" + idx;
         button.className = "bookButt";
         button.value = "Zarezerwuj";
         button.type = "button";
         button.setAttribute('input-type-id', inputType.id);
 
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
-            console.log("type"+choosenType);
+            console.log("type" + choosenType);
             showReservationPopup();
         });
 
@@ -87,7 +87,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
         li.appendChild(labelPrice);
         var pricePerDay = v.price;
-        inputPrice.value = date_diff_indays(dateFrom, dateTo)*pricePerDay;
+        inputPrice.value = date_diff_indays(dateFrom, dateTo) * pricePerDay;
         li.appendChild(inputPrice);
 
         fieldset.appendChild(button);
@@ -95,9 +95,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
     }
 }
 
-function showUnavailable() {
-
-}
+function showUnavailable() {}
 
 function showReservationPopup() {
     document.querySelector('.bg-modal-booking').style.display = 'none';
@@ -161,15 +159,14 @@ function showReservationPopup() {
             }
         });
 
-        document.getElementById('reserveButt').addEventListener('click', function() {
-            var name = document.getElementById('nameReserve').value;
-            var surname = document.getElementById('surnameReserve').value;
-            var email = document.getElementById('emailReserve').value;
+    document.getElementById('reserveButt').addEventListener('click', function () {
+        var name = document.getElementById('nameReserve').value;
+        var surname = document.getElementById('surnameReserve').value;
+        var email = document.getElementById('emailReserve').value;
 
-            requestBooking(choosenType, name, surname, email);
-        });
+        requestBooking(choosenType, name, surname, email);
+    });
 }
-
 
 function requestBooking(type, name, surname, email) {
     var data = {
@@ -181,6 +178,7 @@ function requestBooking(type, name, surname, email) {
     function callback(response) {
         if (response.result === 'OK') {
             alert("Rezerwacja dokonana");
+            document.querySelector('.bg-modal-reserve').style.display = 'none';
         } else {
             alert(response.message);
         }

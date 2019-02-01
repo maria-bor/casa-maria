@@ -122,7 +122,7 @@ function reserve($result_obj)
     $persons = $_SESSION['persons'];
 
     // Szukamy id pierwszego dostępnego pokoju
-    $sql = 'SELECT r.idRoom as id_room, r.nrRoom
+    $sql = 'SELECT r.idRoom as id_room, r.nrRoom, ro.price as price
                 FROM room_offer ro
                 INNER JOIN room r
                 ON r.idRoom = ro.idRoom
@@ -202,6 +202,7 @@ function reserve($result_obj)
         $query = $db->prepare($sql);
         $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
         $query->execute();
+        $result = $query->fetch();
         if ($query->rowCount() > 0) {
             $id_booking_user = $result['id_user'];
         } else {
@@ -219,6 +220,12 @@ function reserve($result_obj)
         $id_booking_user = $_SESSION['id_user'];
     }
 
+    $dStart = new DateTime($_SESSION['date_from']);
+    $dEnd  = new DateTime($_SESSION['date_to']);
+    $dDiff = $dStart->diff($dEnd);
+    $price = $results[0]['price'];
+    $whole_price = $dDiff->days*$price;
+
     $sql = 'INSERT INTO Booking(idUser, idRoom, date_from, date_to, price, guests)
                 VALUES (:id_user, :id_room, :date_from, :date_to, :price, :guests);';
     $query = $db->prepare($sql);
@@ -226,16 +233,17 @@ function reserve($result_obj)
     $query->bindValue(':id_room', $results[0]['id_room'], PDO::PARAM_INT);
     $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
     $query->bindValue(':date_to', $date_to, PDO::PARAM_STR);
-    $query->bindValue(':price', 0, PDO::PARAM_INT);
+    $query->bindValue(':price', $whole_price, PDO::PARAM_INT);
     $query->bindValue(':guests', $persons, PDO::PARAM_INT);
     $query->execute();
 
     $id = $db->lastInsertId();
+
     if ($id) {
         $result_obj->result = 'OK';
         $result_obj->message = 'Rezerwacja dokonana';
     } else {
-        $result_obj->message = 'Nie udało się dokonać rezerwacji, spróbuj jeszcze raz';
+        $result_obj->message = 'Nie udało się dokonać rezerwacji, spróbuj jeszcze raz'.$id;
     }
 
     $db->commit();
