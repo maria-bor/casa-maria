@@ -2,7 +2,7 @@ var map;
 
 function initialize() {
 
-    document.getElementById('map-canvas').style.height = document.getElementById('body').clientHeight + 'px';
+    document.getElementById('map-canvas').style.height = document.querySelector('article').clientHeight + 'px';
 
     var mapOptions = {
         zoom: 15,

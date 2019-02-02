@@ -1,24 +1,52 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    /* to avoid scrollbars */
-    font-family: 'Alegreya', serif;
-    font-size: 32px;
-    text-align: center;
-    padding: 10px;
-}
-#wrapper {
-    display: flex;
-    min-height: 100%;
-    flex-direction: column;
-    /* learn more: http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
-}
-#header {
-    height: 100px;
+* {
+  box-sizing: border-box; 
+  text-align: center;
+  font-family: 'Alegreya', serif;
 }
 
-#body {
-    flex: 1;
-    height: 100%;
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0;
+}
+
+#main {
+  display: flex;
+  flex: 1;
+}
+
+#main > article {
+  flex: 1;
+  order: 1;
+  min-height: 100%;
+  margin-left: 10px;
+}
+
+#main > aside {
+  flex: 0 0 40vw;
+  order: 2;
+}
+
+aside {
+  /* margin: auto; */
+  width: 60%;
+  padding: 10px;
+}
+
+header {
+  font-size: 26px;
+}
+
+header, footer {
+  height: 20vh;
+}
+
+header, footer, article, aside {
+  padding: 1em;
+}
+
+footer div {
+  margin-top: 140px;
+  vertical-align: bottom;
 }
