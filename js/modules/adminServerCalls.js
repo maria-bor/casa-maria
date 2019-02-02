@@ -322,18 +322,10 @@ export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
     function callback(response) {
         $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
-            // fillRoomInOffers(nameOffer, nrRoom, price);
             requestAllOffers();
         }
     }
     requestServer(url, data, callback);
-}
-
-function fillRoomInOffers(nrOffer, nrRoom, price) {
-    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
-    var row = tableRef.rows[nrOffer];
-    row.cells[2].innerHTML = price;
-    row.cells[3].innerHTML = nrRoom;
 }
 /*** END TAB-4 ***/
 
