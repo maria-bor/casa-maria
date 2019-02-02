@@ -15,6 +15,9 @@ CREATE TABLE User (
                 surname VARCHAR(50) NOT NULL,
                 name VARCHAR(50) NOT NULL,
                 email VARCHAR(50) NOT NULL,
+                verified BIT NOT NULL COMMENT '0=NO, 1=YES',
+                verification_code VARCHAR(264) NOT NULL,
+                `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 PRIMARY KEY (idUser)
 );
 
