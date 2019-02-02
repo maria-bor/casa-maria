@@ -215,6 +215,7 @@ export function requestAddNewOffer(name, from, to) {
         $('#addOfferInfo').text(response.message);
         if (response.result === 'OK') {
             requestAllOffers();
+            requestAllOffersName();
         }
     }
     requestServer(url, data, callback);
