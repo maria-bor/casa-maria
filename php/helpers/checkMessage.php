@@ -17,7 +17,7 @@ function getMessage() {
 // Metoda do sprawdzania czy jest jakaś wiadomość z serwera, jeśli tak to pokazuje okienko
 function checkIsMessage() {
     if (isset($_SESSION['msg'])) {
-        return 'display:block;';
+        return 'display:flex;';
     } else {
         return 'display:none;';
     }

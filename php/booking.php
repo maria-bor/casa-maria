@@ -120,6 +120,7 @@ function reserve($result_obj)
     $date_from = $_SESSION['date_from'];
     $date_to = $_SESSION['date_to'];
     $persons = $_SESSION['persons'];
+    $typeRoom = $_POST['bookingType'];
 
     // Szukamy id pierwszego dostępnego pokoju
     $sql = 'SELECT r.idRoom as id_room, r.nrRoom, ro.price as price
@@ -130,7 +131,8 @@ function reserve($result_obj)
                 ON t.idType = r.idType
                 INNER JOIN offer o
                 ON o.idOffer = ro.idOffer
-                WHERE ro.idRoom IN
+                WHERE t.name = :typeRoom
+                AND ro.idRoom IN
                 (SELECT r.idRoom
                 FROM room r
                 INNER JOIN room_offer ro
@@ -167,6 +169,7 @@ function reserve($result_obj)
     $query->bindValue(':persons2', $persons, PDO::PARAM_INT);
     $query->bindValue(':date_from2', $date_from, PDO::PARAM_STR);
     $query->bindValue(':date_to2', $date_to, PDO::PARAM_STR);
+    $query->bindValue(':typeRoom', $typeRoom, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
