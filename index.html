@@ -113,16 +113,14 @@
           </ul>
         </p>
         <?= checkFormError('error_email'); ?>
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister"
-          <?=inputValue('form_password'); ?> required>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister" required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
         <?= checkFormError('error_password'); ?>
-        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm"
-          <?=inputValue('form_confirm'); ?> required>
+        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm" required>
         <p v-if="errorPasswordConfirm.length">
           <ul>
             <li>{{ errorPasswordConfirm }}</li>
