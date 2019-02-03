@@ -21,8 +21,12 @@ CREATE TABLE User (
 
 CREATE TABLE UserLogged (
                 idUserLogged INT AUTO_INCREMENT NOT NULL,
-                password VARCHAR(255) NOT NULL,
                 idUser INT NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                activated BIT NOT NULL COMMENT '0=NO, 1=YES',
+                activation_code VARCHAR(264) NOT NULL,
+                created_at DATETIME NOT NULL,
+                modified_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 isDeleted BIT DEFAULT 0,
                 PRIMARY KEY (idUserLogged)
 );

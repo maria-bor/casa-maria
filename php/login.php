@@ -5,10 +5,13 @@
 
     require_once "db.php";
 
-    // Mozna tu przyjść tylko z formularza logowania:
+    // Można tu przyjść tylko z formularza logowania:
     if (isset($_POST['emailLogin']) && isset($_POST['passwordLogin'])) {
         $login = $_POST['emailLogin'];
         $password = $_POST['passwordLogin'];
+        $login = htmlentities($login, ENT_QUOTES, "UTF-8");
+        $password = htmlentities($password, ENT_QUOTES, "UTF-8");
+
         $_SESSION['form_login_email'] = $login;
         $_SESSION['form_login_password'] = $password;
 
@@ -28,6 +31,7 @@
                 JOIN role r
                 ON ur.idRole = r.idRole
                 WHERE u.email = :emailLogin
+                AND ul.activated = 1
                 AND ul.isDeleted = 0;';
         $query = $db->prepare($sql);
 		$query->bindValue(':emailLogin', $login, PDO::PARAM_STR);
@@ -37,13 +41,13 @@
         // print_r($user);
         // Sprawdzenie czy jest taki user o podanym emailu:
         if ($query->rowCount() == 0) {
-            $_SESSION['error_login_email'] = 'Konto nie istnieje!';
+            $_SESSION['error_login_email'] = 'Konto nie istnieje lub jest nieaktywne!';
             $_SESSION['error_login'] = true;
             header('Location: ../index.html');
 		    exit();
         }
 
-        // Sprawdzamy haslo:
+        // Sprawdzamy hasło:
         if ($user && password_verify($password, $user['password'])) {
             // Zapamietujemy dane logujacego:
             $_SESSION['id_user'] = $user['id_user'];
@@ -72,7 +76,7 @@
     redirect();
 
     function redirect() {
-        // Jesli ktos jest juz zalogowany:
+        // Jeśli ktoś jest już zalogowany:
         if (isset($_SESSION['is_user_logged'])) {
             header('Location: ../user.html');
             exit();
