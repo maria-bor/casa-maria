@@ -254,6 +254,17 @@
     </div>
   </div>
 
+  <!--MODAL POPUP-->
+  <div class="bg-modal-popup" style=<?= checkIsMessage(); ?>>
+    <div class="modal-content-popup">
+      <div class="close-popup">+</div>
+        <form id="form-popup" novalidate="true">
+          <p id="popup-message"><?= getMessage(); ?></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- jQuery first, then own JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
