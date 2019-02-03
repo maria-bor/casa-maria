@@ -50,7 +50,8 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                         return (pass.length >= 8) && (pass.length <= 20);
                     },
                     validEmail: function (emailLogin) {
-                        var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;                        
                         return mailFormat.test(emailLogin);
                     }
                 }
@@ -139,7 +140,8 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                         return nameOrSurnameFormat.test(nameOrSurname);
                     },
                     validEmail: function (email) {
-                        var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         return mailFormat.test(email);
                     },
                     validPassword: function (passwordRegister) {
