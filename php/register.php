@@ -44,8 +44,6 @@
         $_SESSION['form_name'] = $name;
         $_SESSION['form_surname'] = $surname;
         $_SESSION['form_email'] = $email;
-        $_SESSION['form_password'] = $password1;
-        $_SESSION['form_confirm'] = $password2;
 
         require_once 'db.php';
 
