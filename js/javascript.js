@@ -226,3 +226,8 @@ document.querySelector('.close-booking').addEventListener('click', function () {
 document.querySelector('.close-reserve').addEventListener('click', function () {
     document.querySelector('.bg-modal-reserve').style.display = 'none';
 });
+
+
+document.querySelector('.close-popup').addEventListener('click', function () {
+    document.querySelector('.bg-modal-popup').style.display = 'none';
+});
