@@ -9,6 +9,9 @@
     if (isset($_POST['emailLogin']) && isset($_POST['passwordLogin'])) {
         $login = $_POST['emailLogin'];
         $password = $_POST['passwordLogin'];
+        $login = htmlentities($login, ENT_QUOTES, "UTF-8");
+        $password = htmlentities($password, ENT_QUOTES, "UTF-8");
+
         $_SESSION['form_login_email'] = $login;
         $_SESSION['form_login_password'] = $password;
 

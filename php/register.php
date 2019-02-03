@@ -11,6 +11,9 @@
         $name = $_POST['nameRegister'];
         $surname = $_POST['surnameRegister'];
         $email = $_POST['email'];
+        $name = htmlentities($name, ENT_QUOTES, "UTF-8");
+        $surname = htmlentities($surname, ENT_QUOTES, "UTF-8");
+        $email = htmlentities($email, ENT_QUOTES, "UTF-8");
         $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         if ((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) == false) ||
@@ -21,6 +24,8 @@
 
         $password1 = $_POST['passwordRegister'];
         $password2 = $_POST['passwordConfirm'];
+        $password1 = htmlentities($password1, ENT_QUOTES, "UTF-8");
+        $password2 = htmlentities($password2, ENT_QUOTES, "UTF-8");
         
         if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
