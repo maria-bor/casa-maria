@@ -3,6 +3,7 @@
 
   require_once './php/helpers/checkFormError.php';
   require_once './php/helpers/inputValue.php';
+  require_once './php/helpers/checkMessage.php';
 
   if ((isset($_SESSION['is_admin_logged'])) && ($_SESSION['is_admin_logged'] == true))
 	{
@@ -113,16 +114,14 @@
           </ul>
         </p>
         <?= checkFormError('error_email'); ?>
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister"
-          <?=inputValue('form_password'); ?> required>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Hasło" v-model="passwordRegister" required>
         <p v-if="errorPassword.length">
           <ul>
             <li>{{ errorPassword }}</li>
           </ul>
         </p>
         <?= checkFormError('error_password'); ?>
-        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm"
-          <?=inputValue('form_confirm'); ?> required>
+        <input id="passwordConfirm" type="password" name="passwordConfirm" placeholder="Potwierdź hasło" v-model="passwordConfirm" required>
         <p v-if="errorPasswordConfirm.length">
           <ul>
             <li>{{ errorPasswordConfirm }}</li>
@@ -253,6 +252,17 @@
           <input id="clickBooking" type="button" class="submit-btn" value="Sprawdź dostępność" disabled="true">
         </div>
       </form>
+    </div>
+  </div>
+
+  <!--MODAL POPUP-->
+  <div class="bg-modal-popup" style=<?= checkIsMessage(); ?>>
+    <div class="modal-content-popup">
+      <div class="close-popup">+</div>
+        <form id="form-popup" novalidate="true">
+          <p id="popup-message"><?= getMessage(); ?></p>
+        </form>
+      </div>
     </div>
   </div>
 

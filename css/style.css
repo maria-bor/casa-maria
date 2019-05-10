@@ -31,7 +31,7 @@
   text-transform: uppercase;
 }
 
-.bg-modal-login, .bg-modal-register, .bg-modal-booking, .bg-modal-reserve {
+.bg-modal-login, .bg-modal-register, .bg-modal-booking, .bg-modal-reserve, .bg-modal-popup {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
@@ -52,7 +52,7 @@ i {
   color: #bddbfa;
 }
 
-.bg-modal-login ul, .bg-modal-register ul, .bg-modal-booking ul, .bg-modal-reserve ul {
+.bg-modal-login ul, .bg-modal-register ul, .bg-modal-booking ul, .bg-modal-reserve ul, .bg-modal-popup {
   list-style: none;
 }
 
@@ -66,7 +66,7 @@ i {
   margin-left: 10px;
 }
 
-.modal-content-login, .modal-content-register, .modal-content-booking, .modal-content-reserve {
+.modal-content-login, .modal-content-register, .modal-content-booking, .modal-content-reserve, .modal-content-popup {
   width: 25%;
   background-color: #FFF;
   border-radius: 4px;
@@ -93,7 +93,7 @@ i {
   margin-top: 50%
 }
 
-#form-login input, #form-register input, #form-reserve input {
+#form-login input, #form-register input, #form-reserve input, #form-popup {
   width: 50%;
   display: block;
   margin: 15px auto;
@@ -125,7 +125,7 @@ i {
   width: 95px;
 }
 
-.close-login, .close-register, .close-booking, .close-reserve {
+.close-login, .close-register, .close-booking, .close-reserve, .close-popup {
   position: absolute;
   top: 0;
   right: 14px;

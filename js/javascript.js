@@ -50,7 +50,8 @@ document.getElementById('clickLogin').addEventListener('click', function () {
                         return (pass.length >= 8) && (pass.length <= 20);
                     },
                     validEmail: function (emailLogin) {
-                        var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;                        
                         return mailFormat.test(emailLogin);
                     }
                 }
@@ -139,7 +140,8 @@ document.getElementById('clickRegister').addEventListener('click', function () {
                         return nameOrSurnameFormat.test(nameOrSurname);
                     },
                     validEmail: function (email) {
-                        var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         return mailFormat.test(email);
                     },
                     validPassword: function (passwordRegister) {
@@ -223,70 +225,11 @@ document.querySelector('.close-booking').addEventListener('click', function () {
 
 });
 
-/*** POPUP RESERVE***/
-// document.getElementById('bookButt').addEventListener('click', function () {
-//     document.querySelector('.bg-modal-booking').style.display = 'none';
-//     document.querySelector('.bg-modal-reserve').style.display = 'flex';
-//     const formLogin = new Vue(
-//         {
-//             el: '#form-reserve',
-//             data: {
-//                 errorName: '',
-//                 errorSurname: '',
-//                 errorEmail: '',
-
-//                 nameReserve: null,
-//                 surnameReserve: null,
-//                 emailReserve: null
-//             },
-//             methods: {
-//                 checkForm: function (e) {
-//                     this.errorName = '';
-//                     this.errorSurname = '';
-//                     this.errorEmail = '';
-
-//                     if (!this.nameReserve) {
-//                         this.errorName = "Wprowadź imię.";
-//                     } else if (!this.validNameSurname(this.nameReserve)) {
-//                         this.errorName = "Niepoprawny format.";
-//                     }
-
-//                     if (!this.surnameReserve) {
-//                         this.errorSurname = "Wprowadź nazwisko.";
-//                     } else if (!this.validNameSurname(this.surnameReserve)) {
-//                         this.errorSurname = "Niepoprawny format.";
-//                     }
-
-//                     if (!this.emailReserve) {
-//                         this.errorEmail = "Wprowadź email.";
-//                     } else if (!this.validEmail(this.emailReserve)) {
-//                         this.errorEmail = "Niepoprawny format email.";
-//                     }
-
-//                     if (!this.errorName.length &&
-//                         !this.errorSurname.length &&
-//                         !this.errorEmail.length) {
-//                         return true;
-//                     }
-//                     e.preventDefault();
-//                 },
-//                 validNameSurname: function (str) {
-//                     var nameOrSurname = str.trim();
-//                     var nameOrSurnameFormat = /^[a-zA-Z]{3,20}?$/;
-//                     return nameOrSurnameFormat.test(nameOrSurname);
-//                 },
-//                 validPassword: function (passwordLogin) {
-//                     var pass = passwordLogin.trim();
-//                     return (pass.length >= 8) && (pass.length <= 20);
-//                 },
-//                 validEmail: function (emailReserve) {
-//                     var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//                     return mailFormat.test(emailReserve);
-//                 }
-//             }
-//         });
-// });
-
 document.querySelector('.close-reserve').addEventListener('click', function () {
     document.querySelector('.bg-modal-reserve').style.display = 'none';
+});
+
+
+document.querySelector('.close-popup').addEventListener('click', function () {
+    document.querySelector('.bg-modal-popup').style.display = 'none';
 });

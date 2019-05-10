@@ -73,8 +73,8 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         button.addEventListener('click', function () {
             choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
             console.log("type" + choosenType);
-            showReservationPopup();
-        });
+            showReservationPopup(choosenType);
+        }); 
 
         root.appendChild(fieldset);
         fieldset.appendChild(ul);
@@ -97,7 +97,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
 function showUnavailable() {}
 
-function showReservationPopup() {
+function showReservationPopup(choosenType) {
     document.querySelector('.bg-modal-booking').style.display = 'none';
     document.querySelector('.bg-modal-reserve').style.display = 'flex';
     const formLogin = new Vue(
@@ -153,7 +153,8 @@ function showReservationPopup() {
                     return (pass.length >= 8) && (pass.length <= 20);
                 },
                 validEmail: function (emailReserve) {
-                    var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                    var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return mailFormat.test(emailReserve);
                 }
             }
@@ -163,12 +164,13 @@ function showReservationPopup() {
         var name = document.getElementById('nameReserve').value;
         var surname = document.getElementById('surnameReserve').value;
         var email = document.getElementById('emailReserve').value;
-
+        console.log("[requestBooking] choosenType: " + choosenType)
         requestBooking(choosenType, name, surname, email);
     });
 }
 
 function requestBooking(type, name, surname, email) {
+    console.log("[requestBooking] TYPE: " + type)
     var data = {
         bookingType: type,
         name: name,
