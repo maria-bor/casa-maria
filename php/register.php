@@ -24,13 +24,10 @@
 
         $password1 = $_POST['passwordRegister'];
         $password2 = $_POST['passwordConfirm'];
-<<<<<<< HEAD
 
-=======
         $password1 = htmlentities($password1, ENT_QUOTES, "UTF-8");
         $password2 = htmlentities($password2, ENT_QUOTES, "UTF-8");
         
->>>>>>> 4dbfbe17837265ccd12436dcbecf8ef643b19d71
         if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
             $all_valid = false;
@@ -65,49 +62,12 @@
                 $query = $db->prepare($sql);
                 $query->bindValue(':emailLogin', $email, PDO::PARAM_STR);
                 $query->execute();
-<<<<<<< HEAD
-                $id_user = $db->lastInsertId();
 
-                // Wstawienie do tabeli UserLogged:
-                $sql = 'INSERT INTO UserLogged (idUserLogged, password, idUser)
-                        VALUES (
-                            NULL,
-                            :password_hash,
-                            :id_user);';
-                $query = $db->prepare($sql);
-                $query->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
-                $query->bindValue(':id_user', $id_user, PDO::PARAM_STR);
-                $query->execute();
-
-                // Wstawienie do tabeli UserRole:
-                $sql = 'INSERT INTO UserRole
-                        VALUES (:id_user_logged, :id_role);';
-                $query = $db->prepare($sql);
-                $query->bindValue(':id_user_logged', $db->lastInsertId(), PDO::PARAM_STR);
-                $query->bindValue(':id_role', $id_role, PDO::PARAM_STR);
-                $query->execute();
-
-                $db->commit();
-
-                // Zapamietujemy dane rejestrujacego( a potem logujacego):
-                if (!isset($_SESSION['is_admin_logged'])) {
-                    $_SESSION['id_user'] = $id_user;
-                    $_SESSION['surname'] = $surname;
-                    $_SESSION['name'] = $name;
-                    $_SESSION['email'] = $email;
-                    $_SESSION['id_role'] = $id_role;
-                    $_SESSION['role_name'] = $role_name;
-                    $_SESSION['is_user_logged'] = true;
-                    $_SESSION['registered'] = true;
-
-                    header('Location: ../user.html');
-=======
                 if ($query->rowCount() > 0) {
                     $all_valid = false;
                     $_SESSION['error_email'] = 'Konto już istnieje!';
                     header('Location: ../index.html');
                     exit();
->>>>>>> 4dbfbe17837265ccd12436dcbecf8ef643b19d71
                 } else {
                     // Sprawdzamy czy jest konto ale nie aktywne:
                     $sql = 'SELECT u.idUser id_user
@@ -225,10 +185,6 @@
                         header('Location: ../index.html');
                     }
                 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 4dbfbe17837265ccd12436dcbecf8ef643b19d71
             } else {
                 $_SESSION['error_register'] = true;
                 header('Location: ../index.html');
