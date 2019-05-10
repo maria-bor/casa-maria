@@ -21,7 +21,7 @@
 
         $password1 = $_POST['passwordRegister'];
         $password2 = $_POST['passwordConfirm'];
-        
+
         if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
             $all_valid = false;
@@ -44,7 +44,7 @@
 
         require_once 'db.php';
 
-        try 
+        try
         {
             // TODO INŻ może być tak, że ktoś zarezerwuje a potem będzie chciał założyć
             // konto. Poniższy SQL spowoduje, że będzie dwóch userów o tych samych danych
@@ -122,7 +122,7 @@
                 $query->execute();
 
                 $db->commit();
-            
+
                 // Zapamietujemy dane rejestrujacego( a potem logujacego):
                 if (!isset($_SESSION['is_admin_logged'])) {
                     $_SESSION['id_user'] = $id_user;
@@ -138,12 +138,12 @@
                 } else {
                     header('Location: ../admin.html');
                 }
-                
+
             } else {
                 $_SESSION['error_register'] = true;
                 header('Location: ../index.html');
             }
-        } catch (Exception $e) 
+        } catch (Exception $e)
         {
             echo '<br />'.$e;
         }

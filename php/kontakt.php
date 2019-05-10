@@ -12,8 +12,5 @@ if(isset($_POST['nameContact']) && isset($_POST['emailContact']) && isset($_POST
 	} else {
 		echo 'Something go wrong..';
 	}
-} 
+}
 ?>
-
-
-

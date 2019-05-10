@@ -65,5 +65,5 @@
         $result_obj->result = 'OK';
         $result_obj->message = 'Rezerwacja usunięty.';
     }
-    
+
     echo json_encode($result_obj);

@@ -106,7 +106,7 @@ function reserve($result_obj)
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $email = $_POST['email'];
-    
+
     // Sprawdzamy czy dane zalogowanego są identyczne z podanymi w rezerwacji
     if (isset($_SESSION['is_user_logged']))
         if (!isset($_SESSION['id_user']) ||
@@ -177,7 +177,7 @@ function reserve($result_obj)
     // $result_obj->message = 'init'.$results[0]['id_room'];
     // echo json_encode($result_obj);
     // exit();
-        
+
     $db->beginTransaction();
 
     $id_booking_user = 0;
