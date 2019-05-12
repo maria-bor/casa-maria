@@ -57,6 +57,10 @@
     </nav>
   </div>
 
+  <div id="logged" style="display: none;"
+      <?=isset($_SESSION['is_user_logged']) ? 'data-islogged="true"' : 'data-islogged="false"'?>>
+  </div>
+
   <!--MODAL SECTION-->
   <!--MODAL LOGIN-->
   <div class="bg-modal-login">

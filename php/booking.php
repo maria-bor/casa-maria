@@ -12,11 +12,12 @@ try {
         isset($_POST['dateTo']) &&
         isset($_POST['nrPersons'])) { // dodawanie typu pokoju
         checkAvailability($result_obj);
-    } else if (count($_POST) == 4 &&
+    } else if ((count($_POST) == 4 &&
         isset($_POST['bookingType']) &&
         isset($_POST['name']) &&
         isset($_POST['surname']) &&
-        isset($_POST['email'])) { // rezerwowanie
+        isset($_POST['email'])) ||
+        (count($_POST) == 1 && isset($_POST['bookingType']))) { // rezerwowanie
         reserve($result_obj);
     } else {
         $result_obj->message = 'Nieznane zapytanie';
@@ -101,19 +102,15 @@ function checkAvailability($result_obj)
     }
 }
 
-function reserve($result_obj)
-{
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-
-    // Sprawdzamy czy dane zalogowanego są identyczne z podanymi w rezerwacji
-    if (isset($_SESSION['is_user_logged']))
-        if (!isset($_SESSION['id_user']) ||
-            ($name != $_SESSION['name']) || ($surname != $_SESSION['surname']) ||
-            ($email != $_SESSION['email'])) {
-                $result_obj->message = 'Dane konta i rezerwacji nie zgadzają się';
-                return;
+function reserve($result_obj) {
+    if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email'])) {
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $email = $_POST['email'];
+    } else {
+        $name = $_SESSION['name'];
+        $surname = $_SESSION['surname'];
+        $email = $_SESSION['email'];
     }
 
     require_once "db.php";
