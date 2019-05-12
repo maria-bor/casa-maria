@@ -113,7 +113,7 @@
 
                         // Wysłanie emaila
                         if( mail($recipient_email, $subject, $body, $headers) ) {
-                            $_SESSION['msg'] = 'Link aktywacyjny zostało wysłany na adres <b>'.$email.
+                            $_SESSION['msg'] = 'Link aktywacyjny został wysłany na adres <b>'.$email.
                                             '</b> Prosimy otwórz swoją skrzynkę mailową i aktywuj swoje konto.';
 
                             // Wyciągnięcie roli jeszcze przed transakcją

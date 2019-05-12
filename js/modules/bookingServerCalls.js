@@ -72,9 +72,14 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
 
         button.addEventListener('click', function () {
             choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
-            console.log("type" + choosenType);
-            showReservationPopup(choosenType);
-        }); 
+            var user = document.getElementById("logged")
+            var isUserLogged = user.dataset.islogged
+            if(isUserLogged) {
+                requestBookingForLogged(choosenType)
+            } else {
+                showReservationPopup(choosenType);
+            }
+        });
 
         root.appendChild(fieldset);
         fieldset.appendChild(ul);
@@ -169,6 +174,23 @@ function showReservationPopup(choosenType) {
     });
 }
 
+function onRequestBookingCallback(response) {
+    if (response.result === 'OK') {
+        alert("Rezerwacja dokonana");
+        document.querySelector('.bg-modal-reserve').style.display = 'none';
+        document.querySelector('.bg-modal-booking').style.display = 'none';
+    } else {
+        alert(response.message);
+    }
+}
+
+function requestBookingForLogged(type) {
+    var data = {
+        bookingType: type
+    };
+    requestServer(url, data, onRequestBookingCallback);
+}
+
 function requestBooking(type, name, surname, email) {
     console.log("[requestBooking] TYPE: " + type)
     var data = {
@@ -177,13 +199,5 @@ function requestBooking(type, name, surname, email) {
         surname: surname,
         email: email
     };
-    function callback(response) {
-        if (response.result === 'OK') {
-            alert("Rezerwacja dokonana");
-            document.querySelector('.bg-modal-reserve').style.display = 'none';
-        } else {
-            alert(response.message);
-        }
-    }
-    requestServer(url, data, callback);
+    requestServer(url, data, onRequestBookingCallback);
 }
