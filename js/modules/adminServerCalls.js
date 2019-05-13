@@ -292,7 +292,7 @@ function fillOffersCombobox(values) {
 
 export function requestAllOffersName() {
     var data = {
-        name: 'offersNam'
+        name: 'offersName'
     };
     function callback(response) {
         if (response.result === 'OK') {
@@ -312,6 +312,14 @@ function fillOffersNameCombobox(values) {
         option.innerHTML = v.name;
         select.appendChild(option);
     }
+
+    var selectNameForDelete = document.getElementById("selectedOffer");
+    selectNameForDelete.innerHTML = '';
+    for (var v of values) {
+        var optionName = document.createElement('option')
+        optionName.innerHTML = v.name;
+        selectNameForDelete.appendChild(optionName);
+    }
 }
 
 export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
@@ -328,6 +336,30 @@ export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
         }
     }
     requestServer(url, data, callback);
+}
+
+export function deleteOffer(nameOffer, id) {
+    var data = {
+        nameOfferToDelete: nameOffer
+    };
+    function callback(response) {
+        $('#deleteOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteOfferFromTable(id);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteOfferFromTable(id) {
+    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
+    tableRef.deleteRow(id);
+
+    var select = document.getElementById("selectedOffer");
+    select.remove(id);
+
+    var selectNameOffer = document.getElementById("offers");
+    selectNameOffer.remove(id);
 }
 /*** END TAB-4 ***/
 
