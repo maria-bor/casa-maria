@@ -95,7 +95,7 @@
       <div class="close-register">+</div>
       <form id="form-register" @submit="checkForm" method="POST" action="php/register.php" novalidate="true">
         <input id="nameRegister" type="text" name="nameRegister" placeholder="Imię" v-model='nameRegister'
-        <?=inputValue('form_name'); ?> required>
+          <?=inputValue('form_name'); ?> required>
         <p v-if="errorName.length">
           <ul>
             <li>{{ errorName }}</li>

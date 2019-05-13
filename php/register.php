@@ -27,7 +27,7 @@
 
         $password1 = htmlentities($password1, ENT_QUOTES, "UTF-8");
         $password2 = htmlentities($password2, ENT_QUOTES, "UTF-8");
-        
+
         if((strlen($password1) < 8) || (strlen($password1) > 20))
         {
             $all_valid = false;
@@ -66,6 +66,7 @@
                 if ($query->rowCount() > 0) {
                     $all_valid = false;
                     $_SESSION['error_email'] = 'Konto już istnieje!';
+                    $_SESSION['error_register'] = true;
                     header('Location: ../index.html');
                     exit();
                 } else {
@@ -84,10 +85,10 @@
                         $all_valid = false;
                         $_SESSION['error_email'] =  'Konto nieaktywne!'.
                                                     'Aktywuj je klikając w link wysłany na adres podany przy rejestracji.';
+                        $_SESSION['error_register'] = true;
                         header('Location: ../index.html');
                         exit();
                     } else {
-
                         // Tworzymy wiadomość email:
                         $code = substr(md5(mt_rand()),0,15);
                         $verification_link = "http://localhost/casa-maria/php/activate.php?code=".$code."&email=".urlencode($email);
