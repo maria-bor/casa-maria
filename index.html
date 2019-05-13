@@ -156,7 +156,7 @@
       <div class="close-reserve">+</div>
       <i class="far fa-address-card"></i>
       <h3>Podaj swoje dane, żeby dokonać rezerwacji.</h3>
-      <form id="form-reserve" @submit.prevent="checkForm" method="POST" novalidate="true">
+      <form id="form-reserve" @submit.prevent="onSubmit" novalidate="true">
         <input id="nameReserve" type="text" name="nameReserve" placeholder="Imię" v-model='nameReserve'
           <?= inputValue('name'); ?> required>
         <p v-if="errorName.length">
@@ -178,11 +178,11 @@
             <li>{{ errorEmail }}</li>
           </ul>
         </p>
-        <button id="reserveButt" type="submit" name="reserveButt">Rezerwuj</button>
+        <button id="reserveButt" @click="checkForm" type="submit" name="reserveButt">Rezerwuj</button>
       </form>
     </div>
   </div>
-  
+
   <!--BANNER-->
   <div class="banner">
     <div class="banner-text">

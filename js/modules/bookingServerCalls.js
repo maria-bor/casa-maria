@@ -89,7 +89,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
             choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
             var user = document.getElementById("logged")
             var isUserLogged = user.dataset.islogged
-            if(isUserLogged) {
+            if(isUserLogged == true) {
                 requestBookingForLogged(choosenType)
             } else {
                 showReservationPopup(choosenType);
@@ -112,8 +112,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         li.appendChild(p2);
 
         li.appendChild(labelDescription);
-        // inputDescription.value = v.description;
-        inputDescription.value = "Czajnik, kjbsdfkbskbdfnkfnksnfknsknfd, sdnfkskfsdkfn, skfnskdnfks, sfndsknfs";
+        inputDescription.value = v.description;
         li.appendChild(inputDescription);
         // li.appendChild(p);
 
@@ -127,7 +126,7 @@ function showUnavailable() {}
 function showReservationPopup(choosenType) {
     document.querySelector('.bg-modal-booking').style.display = 'none';
     document.querySelector('.bg-modal-reserve').style.display = 'flex';
-    const formLogin = new Vue(
+    const formReserve = new Vue(
         {
             el: '#form-reserve',
             data: {
@@ -183,17 +182,12 @@ function showReservationPopup(choosenType) {
                     // var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     var mailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return mailFormat.test(emailReserve);
+                },
+                onSubmit: function () {
+                    requestBooking(choosenType, this.nameReserve, this.surnameReserve, this.emailReserve);
                 }
             }
         });
-
-    document.getElementById('reserveButt').addEventListener('click', function () {
-        var name = document.getElementById('nameReserve').value;
-        var surname = document.getElementById('surnameReserve').value;
-        var email = document.getElementById('emailReserve').value;
-        console.log("[requestBooking] choosenType: " + choosenType)
-        requestBooking(choosenType, name, surname, email);
-    });
 }
 
 function onRequestBookingCallback(response) {

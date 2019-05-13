@@ -46,7 +46,7 @@ function checkAvailability($result_obj)
     require_once "db.php";
 
         // $sql = 'SELECT r.idRoom, o.date_from, o.date_to, ro.price, t.name as type
-    $sql = 'SELECT DISTINCT ro.price, t.name, t.description as type
+    $sql = 'SELECT DISTINCT ro.price, t.name as type, t.description
                 FROM room_offer ro
                 INNER JOIN room r
                 ON r.idRoom = ro.idRoom
@@ -107,10 +107,29 @@ function reserve($result_obj) {
         $name = $_POST['name'];
         $surname = $_POST['surname'];
         $email = $_POST['email'];
-    } else {
+        //Walidacja:
+        $name = htmlentities($name, ENT_QUOTES, "UTF-8");
+        if(strlen($name) < 3) {
+            $result_obj->message = 'Minimalna długość imienia to 3 znaki. ';
+        }
+        $surname = htmlentities($surname, ENT_QUOTES, "UTF-8");
+        if(strlen($surname) < 3) {
+            $result_obj->message = $result_obj->message.'Minimalna długość nazwiska to 3 znaki. ';
+        }
+        $email = htmlentities($email, ENT_QUOTES, "UTF-8");
+        $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if ((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) == false) ||
+            ($emailSanitized != $email)) {
+            $result_obj->message = $result_obj->message.'Niepoprawny format adresu email.';
+            return $result_obj;
+        }
+    } else if (isset($_SESSION['name']) && isset($_SESSION['surname']) && isset($_SESSION['email'])){
         $name = $_SESSION['name'];
         $surname = $_SESSION['surname'];
         $email = $_SESSION['email'];
+    } else {
+        $result_obj->message = "Brak wystarczających danych do rezerwacji.";
+        return $result_obj;
     }
 
     require_once "db.php";
@@ -184,13 +203,6 @@ function reserve($result_obj) {
 
     // Jeśli nie jest zalogowany user to może go trzeba dodać
     if (!isset($_SESSION['is_user_logged'])) {
-        $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
-        if ((filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) == false) ||
-            ($emailSanitized != $email)) {
-            $result_obj->message = 'Niepoprawny adres email';
-            return;
-        }
-
         // TODO INŻ trzebaby tu strawdzać czy jak jest user to czy ma rolę i jak ma to
         // czy nie jest przypadkiem usunięty
         // SOLUTION szukać w tych bez userlogged jak i tych z userlogged ale nie delete
