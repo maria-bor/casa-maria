@@ -83,6 +83,17 @@
                                 <li>{{ errorName }}</li>
                             </ul>
                         </p>
+
+                        <div class="form-input">
+                            <label for="nameType">Wyposażenie</label>
+                            <textarea id="description" row="6" name="description" type="text" placeholder="Wyposażenie" v-model="description"
+                                required></textarea>
+                        </div>
+                        <p v-if="errorDescription.length">
+                            <ul>
+                                <li>{{ errorDescription }}</li>
+                            </ul>
+                        </p>
                         <p id=nameTypeInfo></p>
                         <div class="form-input butt">
                             <input id='add-type-room' type="submit" value="Dodaj">

@@ -46,6 +46,7 @@ CREATE TABLE Offer (
 CREATE TABLE Type (
                 idType INT AUTO_INCREMENT NOT NULL,
                 name VARCHAR(50) NOT NULL,
+				description VARCHAR(1024) NOT NULL,
                 idUserLogged INT NOT NULL,
                 PRIMARY KEY (idType)
 );

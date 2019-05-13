@@ -7,7 +7,7 @@
 
     try {
         // Mozna tu przyjść tylko z konkretnych formularzy:
-        if (count($_POST) == 1 && isset($_POST['nameType'])) { // dodawanie typu pokoju
+        if (count($_POST) == 2 && isset($_POST['nameType']) && isset($_POST['description'])) { // dodawanie typu pokoju
             addNewRoomType($result_obj);
         } else if (count($_POST) == 1 && isset($_POST['roomTypes'])) { // pobranie wszystkich typów pokoi
             getAllRoomTypes($result_obj);
@@ -61,6 +61,7 @@
 
     function addNewRoomType($result_obj) {
         $name_type = $_POST['nameType'];
+        $description = $_POST['description'];
         $_SESSION['form_name_type'] = $name_type;
 
         require_once "db.php";
@@ -85,10 +86,12 @@
                 VALUES (
                     NULL,
                     :name_type,
+                    :description,
                     :id_user
                 );';
             $query = $db->prepare($sql);
             $query->bindValue(':name_type', $name_type, PDO::PARAM_STR);
+		    $query->bindValue(':description', $description, PDO::PARAM_STR);
             $query->bindValue(':id_user', $_SESSION['id_user'], PDO::PARAM_STR);
             $query->execute();
             $id = $db->lastInsertId();
@@ -106,8 +109,8 @@
                 $result_obj->message = 'Niepoprawne żądanie';
             return;
         }
-        
-        if ($column == 'all') { 
+
+        if ($column == 'all') {
             $column = '*';
         }
 

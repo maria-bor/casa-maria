@@ -61,7 +61,22 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         labelPrice.htmlFor = inputPrice.id;
         labelPrice.innerText = "Cena:";
 
+        var inputDescription = document.createElement("TEXTAREA");
+        inputDescription.id = "about-room" + idx;
+        inputDescription.name = "about-room";
+        inputDescription.rows = "5";
+        // inputDescription.cols = "30";
+        inputDescription.resize = "none";
+        inputDescription.disabled = true;
+        inputDescription.style.padding = "0";
+
+        var labelDescription = document.createElement("LABEL");
+        labelDescription.htmlFor = inputDescription.id;
+        labelDescription.innerText = "Wyposażenie:";
+        labelDescription.style.verticalAlign = "top";
+
         var p = document.createElement('p');
+        var p2 = document.createElement('p');
 
         var button = document.createElement("INPUT");
         button.id = "bookButt" + idx;
@@ -94,6 +109,13 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         var pricePerDay = v.price;
         inputPrice.value = date_diff_indays(dateFrom, dateTo) * pricePerDay;
         li.appendChild(inputPrice);
+        li.appendChild(p2);
+
+        li.appendChild(labelDescription);
+        // inputDescription.value = v.description;
+        inputDescription.value = "Czajnik, kjbsdfkbskbdfnkfnksnfknsknfd, sdnfkskfsdkfn, skfnskdnfks, sfndsknfs";
+        li.appendChild(inputDescription);
+        // li.appendChild(p);
 
         fieldset.appendChild(button);
         idx++;

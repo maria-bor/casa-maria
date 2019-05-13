@@ -4,9 +4,10 @@ import { requestServer }
 var url = "./php/admin.php";
 
 /***  TAB-2 ***/
-export function requestAddNewRoomType(nameType) {
+export function requestAddNewRoomType(nameType, description) {
     var data = {
-        nameType: nameType
+        nameType: nameType,
+        description: description
     };
     function callback(response) {
         $('#nameTypeInfo').text(response.message);

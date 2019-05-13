@@ -46,7 +46,7 @@ function checkAvailability($result_obj)
     require_once "db.php";
 
         // $sql = 'SELECT r.idRoom, o.date_from, o.date_to, ro.price, t.name as type
-    $sql = 'SELECT DISTINCT ro.price, t.name as type
+    $sql = 'SELECT DISTINCT ro.price, t.name, t.description as type
                 FROM room_offer ro
                 INNER JOIN room r
                 ON r.idRoom = ro.idRoom

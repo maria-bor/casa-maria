@@ -44,12 +44,15 @@ const formAddTypeRoom = new Vue(
         el: '#form-add-type',
         data: {
             errorName: '',
+            errorDescription: '',
 
             nameType: null,
+            description: null
         },
         methods: {
             checkForm: function (e) {
                 this.errorName = '';
+                this.errorDescription = '';
 
                 if (!this.nameType) {
                     this.errorName = "Wprowadź nazwe typu pokoju.";
@@ -57,8 +60,12 @@ const formAddTypeRoom = new Vue(
                     this.errorName = "Niepoprawny format.";
                 }
 
-                if (!this.errorName.length) { // Jak sukces walidacji to zapytanie do serwera o dodanie nowego typu
-                    requestAddNewRoomType(this.nameType);
+                if(!this.description) {
+                    this.errorDescription = "Wprowadź wyposażenie pokoju."
+                }
+
+                if (!this.errorName.length && !this.errorDescription.length) { // Jak sukces walidacji to zapytanie do serwera o dodanie nowego typu
+                    requestAddNewRoomType(this.nameType, this.description);
                     return true;
                 }
                 e.preventDefault();
