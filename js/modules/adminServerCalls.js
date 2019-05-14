@@ -305,6 +305,7 @@ export function requestAllOffersName() {
 }
 
 function fillOffersNameCombobox(values) {
+    //dodaj pokoj do oferty
     var select = document.getElementById("offers");
     select.innerHTML = '';
     for (var v of values) {
@@ -312,7 +313,23 @@ function fillOffersNameCombobox(values) {
         option.innerHTML = v.name;
         select.appendChild(option);
     }
+}
 
+export function requestAllOffersNameForDelete() {
+    var data = {
+        offersNameForDelete: 'offersNameForDelete'
+    };
+    function callback(response) {
+        if (response.result === 'OK') {
+            fillOffersNameComboboxForDelete(response.value);
+        } else {
+            alert(response.message);
+        }
+    }
+    requestServer(url, data, callback);
+}
+function fillOffersNameComboboxForDelete(values) {
+    //usun oferte
     var selectNameForDelete = document.getElementById("selectedOffer");
     selectNameForDelete.innerHTML = '';
     for (var v of values) {

@@ -39,6 +39,8 @@
             deleteSelectedRoom($result_obj);
         } else if(count($_POST) == 1 && isset($_POST['nameOfferToDelete'])) { // usuniecie oferty
             deleteSelectedOffer($result_obj);
+        }else if(count($_POST) == 1 && isset($_POST['offersNameForDelete'])) { // pobranie ofert mozliwych do usuniecia
+            getOffersForDelete($result_obj);
         }else if(count($_POST) == 1 && isset($_POST['name']) && isset($_POST['name']) == 'offersName') { //wypeienei comboxa z nazwami ofert
             getAllOffersName($result_obj);
         } else {
@@ -510,13 +512,53 @@
         $result_obj->message = 'Pokój usunięty.';
     }
 
+    function getOffersForDelete($result_obj) {
+        require_once "db.php";
+        // Wyrzucamy te oferty, ktore maja zarezerwowany juz pokoj
+        $sql = 'SELECT o.NAME
+                FROM offer o
+                WHERE o.isDeleted = 0 AND o.idOffer NOT IN (
+                SELECT DISTINCT ro.idOffer
+                FROM room_offer ro
+                INNER JOIN booking b
+                ON b.idRoom = ro.idRoom
+                INNER JOIN room r
+                ON b.idRoom = r.idRoom
+                WHERE  (ro.price * DATEDIFF(b.date_to, b.date_from)) = b.price
+                AND b.isDeleted = 0
+                AND ro.isDeleted = 0
+                AND r.isDeleted = 0
+                )
+                ORDER BY name;';
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($query->rowCount() >= 0) {
+            $result_obj->result = 'OK';
+            $result_obj->message = 'Pobrano '.$query->rowCount().' ofert';
+            $result_obj->value = $results;
+        }
+        else {
+            $result_obj->message = 'Brak zdefiniowanych ofert.';
+        }
+    }
+
     function deleteSelectedOffer($result_obj) {
         require_once "db.php";
         $name_offer = $_POST['nameOfferToDelete'];
 
-        $sql = 'UPDATE offer
+        $sql = 'UPDATE offer o
                 SET isDeleted = 1
-                WHERE name = :name_offer';
+                WHERE name = :name_offer
+                AND o.isDeleted =  0';
+        $query = $db->prepare($sql);
+        $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
+        $query->execute();
+
+        $sql = 'UPDATE room_offer
+                SET isDeleted = 1
+                WHERE idOffer = (SELECT idOffer FROM offer WHERE name = :name_offer)';
         $query = $db->prepare($sql);
         $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
         $query->execute();
