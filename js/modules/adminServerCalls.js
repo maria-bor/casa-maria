@@ -157,8 +157,7 @@ export function fillBookingTable(values) {
         newRow.insertCell(6).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(7).appendChild(document.createTextNode(v.date_to));
 
-        var payment = date_diff_indays(v.date_from, v.date_to);
-        newRow.insertCell(8).appendChild(document.createTextNode(payment * v.price));
+        newRow.insertCell(8).appendChild(document.createTextNode(v.price));
 
         var option = document.createElement('option')
         option.innerHTML = idx++;
