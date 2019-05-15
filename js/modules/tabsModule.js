@@ -6,7 +6,6 @@ import {
 import {
     requestAllRoomTypes,
     requestAllOffers,
-    requestAllRoomsNumbers,
     requestAllOffersName,
     requestAllRooms,
     requestAllBooking,
@@ -63,7 +62,7 @@ function setupTab4ClickHandler() {
     $("#tab-4").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
         requestAllOffers();
-        requestAllRoomsNumbers();
+        requestAllRooms();
         requestAllOffersName();
     });
 }

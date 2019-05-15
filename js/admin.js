@@ -20,6 +20,7 @@ import {
     /*** TAB-4 ***/
     requestAddNewOffer,
     requestAddRoomToOffer,
+    onAddRoomToOfferSelectChanged,
     deleteOffer,
     /*** TAB-5 ***/
     deleteAdmin
@@ -379,3 +380,6 @@ $('#deleteOffer').on('click', function() {
     var id = selectOffer.selectedIndex;
     deleteOffer(nameOffer, id);
 });
+
+$('#offers').on('change', function() { onAddRoomToOfferSelectChanged() });
+$('#rooms').on('change', function() { onAddRoomToOfferSelectChanged() });
