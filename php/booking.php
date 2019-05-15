@@ -130,47 +130,40 @@ function reserve($result_obj) {
     $date_from = $_SESSION['date_from'];
     $date_to = $_SESSION['date_to'];
     $persons = $_SESSION['persons'];
-    $typeRoom = $_POST['bookingType'];
+    $type_room = $_POST['bookingType'];
 
     // Szukamy id pierwszego dostępnego pokoju
     $sql = 'SELECT r.idRoom as id_room, r.nrRoom, ro.price as price
-                FROM room_offer ro
-                INNER JOIN room r
-                ON r.idRoom = ro.idRoom
-                INNER JOIN type t
-                ON t.idType = r.idType
-                INNER JOIN offer o
-                ON o.idOffer = ro.idOffer
-                WHERE t.name = :typeRoom
-                AND ro.idRoom IN
-                (SELECT r.idRoom
-                FROM room r
-                INNER JOIN room_offer ro
-                ON ro.idRoom = r.idRoom
-                INNER JOIN offer o
-                ON o.idOffer = ro.idOffer
-                WHERE r.sleeps = :persons1
-                AND o.date_from <= :date_from1
-                AND o.date_to >= :date_to1
-                AND ro.isDeleted = 0
-                AND r.isDeleted = 0
-                AND r.idRoom NOT IN
-                (SELECT DISTINCT r.idRoom
-                FROM room r
-                INNER JOIN booking b
-                ON b.idRoom = r.idRoom
-                INNER JOIN room_offer ro
-                ON ro.idRoom = r.idRoom
-                INNER JOIN offer o
-                ON o.idOffer = ro.idOffer
-                WHERE r.sleeps = :persons2
-                AND NOT (b.date_from > :date_to2
-                OR b.date_to < :date_from2)
-                AND ro.isDeleted = 0
-                AND r.isDeleted = 0
-                AND b.isDeleted = 0))
-                ORDER BY r.nrRoom
-                LIMIT 1;';
+            FROM room_offer ro
+            INNER JOIN room r
+            ON r.idRoom = ro.idRoom
+            INNER JOIN type t
+            ON t.idType = r.idType
+            INNER JOIN offer o
+            ON o.idOffer = ro.idOffer
+            WHERE t.name = :typeRoom
+            AND r.sleeps = :persons1
+            AND o.date_from <= :date_from1
+            AND o.date_to >= :date_to1
+            AND ro.isDeleted = 0
+            AND r.isDeleted = 0
+            AND r.idRoom NOT IN
+            (SELECT DISTINCT r.idRoom
+            FROM room r
+            INNER JOIN booking b
+            ON b.idRoom = r.idRoom
+            INNER JOIN room_offer ro
+            ON ro.idRoom = r.idRoom
+            INNER JOIN offer o
+            ON o.idOffer = ro.idOffer
+            WHERE r.sleeps = :persons2
+            AND NOT (b.date_from >= :date_to2
+            OR b.date_to <= :date_from2)
+            AND ro.isDeleted = 0
+            AND r.isDeleted = 0
+            AND b.isDeleted = 0)
+            ORDER BY r.nrRoom
+            LIMIT 1;';
 
     $query = $db->prepare($sql);
     $query->bindValue(':persons1', $persons, PDO::PARAM_INT);
@@ -179,7 +172,7 @@ function reserve($result_obj) {
     $query->bindValue(':persons2', $persons, PDO::PARAM_INT);
     $query->bindValue(':date_from2', $date_from, PDO::PARAM_STR);
     $query->bindValue(':date_to2', $date_to, PDO::PARAM_STR);
-    $query->bindValue(':typeRoom', $typeRoom, PDO::PARAM_STR);
+    $query->bindValue(':typeRoom', $type_room, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
