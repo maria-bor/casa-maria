@@ -120,15 +120,13 @@ function deleteRoomFromTable(id) {
 /*** END TAB-2 ***/
 
 /*** TAB-3 ***/
-var allBooking = null;
 export function requestAllBooking() {
     var data = {
         booking: 'all'
     };
     function callback(response) {
         if (response.result === 'OK') {
-            allBooking = response.value;
-            fillBookingTable(allBooking);
+            fillBookingTable(response.value);
         } else {
             alert(response.message);
         }
@@ -398,15 +396,13 @@ function deleteAdminFromTable(nr) {
     }
 }
 
-var allAdmins = null;
 export function requestAllAdmins() {
     var data = {
         admins: 'all'
     };
     function callback(response) {
         if (response.result === 'OK') {
-            allAdmins = response.value;
-            fillAdminsTable(allAdmins);
+            fillAdminsTable(response.value);
         } else {
             alert(response.message);
         }
