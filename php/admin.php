@@ -395,6 +395,7 @@
         $price = $_POST['price'];
 
         try {
+            // Pobranie informacji o ofercie, do której chcemy dod
             $sql = 'SELECT idOffer, date_from, date_to
                     FROM offer o
                     WHERE o.name = :name_offer
@@ -404,13 +405,14 @@
             $query->execute();
             $result = $query->fetch();
             if ($query->rowCount() != 1) {
-                $result_obj->message = "Nieznana oferta.".$name_offer;
+                $result_obj->message = "Nieznana oferta lub niejednoznaczność w wyborze docelowej oferty.".$name_offer;
                 return;
             }
             $id_offer = $result['idOffer'];
             $date_from = $result['date_from'];
             $date_to = $result['date_to'];
 
+            // Sprawdzanie czy pokój nie jest już gdzieś dodany w tym samym okresie w innej ofercie:
             $sql = 'SELECT count(o.idOffer) as nrOffers
                     FROM offer o
                     INNER JOIN room_offer ro
@@ -418,7 +420,8 @@
                     INNER JOIN room r
                     ON r.idRoom = ro.idRoom
                     WHERE r.nrRoom = :nr_room
-                    AND ((o.date_from BETWEEN :date_from AND :date_to) OR (o.date_to BETWEEN :date_from1 AND :date_to1));';
+                    AND ((o.date_from BETWEEN :date_from AND :date_to) OR (o.date_to BETWEEN :date_from1 AND :date_to1))
+                    AND o.isDeleted = 0 AND ro.isDeleted = 0 AND r.isDeleted = 0;';
             $query = $db->prepare($sql);
             $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
             $query->bindValue(':date_from', $date_from, PDO::PARAM_STR);
@@ -436,7 +439,7 @@
             $sql = 'INSERT INTO room_offer(idOffer, idRoom, price)
                     VALUES (
                         :id_offer,
-                        (SELECT idRoom FROM room WHERE nrRoom = :nr_room),
+                        (SELECT idRoom FROM room WHERE nrRoom = :nr_room AND isDeleted = 0),
                         :price);';
             $query = $db->prepare($sql);
             $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
