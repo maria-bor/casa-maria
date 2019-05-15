@@ -311,6 +311,7 @@
                 LEFT JOIN room r
                 ON r.idRoom = ro.idRoom
                 WHERE o.isDeleted = 0
+                AND ro.isDeleted = 0
                 ORDER BY name;';
         $query = $db->prepare($sql);
         $query->execute();
