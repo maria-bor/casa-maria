@@ -347,15 +347,20 @@ export function deleteOffer(nameOffer, id) {
     function callback(response) {
         $('#deleteOfferInfo').text(response.message);
         if (response.result === 'OK') {
-            deleteOfferFromTable(id);
+            deleteOfferFromTable(nameOffer, id);
         }
     }
     requestServer(url, data, callback);
 }
 
-function deleteOfferFromTable(id) {
+function deleteOfferFromTable(nameOffer, id) {
     var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
-    tableRef.deleteRow(id);
+    for (let i = 0; i < tableRef.rows.length; ++i) {
+        if (tableRef.rows[i].cells[1].innerHTML === nameOffer) {
+            tableRef.deleteRow(i)
+            i--
+        }
+    }
 
     var select = document.getElementById("selectedOffer");
     select.remove(id);
