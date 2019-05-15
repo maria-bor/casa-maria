@@ -20,6 +20,7 @@ import {
     /*** TAB-4 ***/
     requestAddNewOffer,
     requestAddRoomToOffer,
+    deleteOffer,
     /*** TAB-5 ***/
     deleteAdmin
 }
@@ -340,7 +341,7 @@ $('#delete').on('click', function() {
     var nrBooking = selectBooking.options[selectBooking.selectedIndex].value;
 
     var tableRef = document.getElementById("tableRezerwacje").getElementsByTagName('tbody')[0];
-    
+
     var id = nrBooking - 1;
     var row = tableRef.rows[id];
 
@@ -356,7 +357,7 @@ $('#deleteAdmin').on('click', function() {
     var nrAdmin = selectAdmin.options[selectAdmin.selectedIndex].value;
 
     var tableRef = document.getElementById("tableAdmin").getElementsByTagName('tbody')[0];
-    
+
     var id = nrAdmin - 1;
     var row = tableRef.rows[id];
 
@@ -370,4 +371,11 @@ $('#deleteRoom').on('click', function() {
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
     var id = selectRoom.selectedIndex;
     deleteRoom(nrRoom, id);
+});
+
+$('#deleteOffer').on('click', function() {
+    var selectOffer = document.querySelector('#selectedOffer');
+    var nameOffer = selectOffer.options[selectOffer.selectedIndex].value;
+    var id = selectOffer.selectedIndex;
+    deleteOffer(nameOffer, id);
 });

@@ -37,7 +37,9 @@
             deleteSelectedAdmin($result_obj);
         } else if(count($_POST) == 1 && isset($_POST['nrRoomForDelete'])) { // usuniecie pokoju
             deleteSelectedRoom($result_obj);
-        } else if(count($_POST) == 1 && isset($_POST['name']) && isset($_POST['name']) == 'offersName') { //wypeienei comboxa z nazwami ofert
+        } else if(count($_POST) == 1 && isset($_POST['nameOfferToDelete'])) { // usuniecie oferty
+            deleteSelectedOffer($result_obj);
+        } else if(count($_POST) == 1 && isset($_POST['name']) && isset($_POST['name']) == 'offersName') { //wypelienie comboxa z nazwami ofert
             getAllOffersName($result_obj);
         } else {
             $result_obj->message = 'Nieznane zapytanie';
@@ -218,7 +220,8 @@
         $sql = 'SELECT idOffer FROM Offer WHERE
                     name = :name AND
                     date_from = :date_from AND
-                    date_to = :date_to
+                    date_to = :date_to AND
+                    isDeleted = 0
         ;';
         $query = $db->prepare($sql);
         $query->bindValue(':name', $name, PDO::PARAM_STR);
@@ -285,7 +288,7 @@
                 AND u.email != :email
                 AND l.isDeleted = 0;';
         $query = $db->prepare($sql);
-        $query->bindValue(':email', $email, PDO::PARAM_STR);        
+        $query->bindValue(':email', $email, PDO::PARAM_STR);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -308,6 +311,7 @@
                 LEFT JOIN room r
                 ON r.idRoom = ro.idRoom
                 WHERE o.isDeleted = 0
+                AND ro.isDeleted = 0
                 ORDER BY name;';
         $query = $db->prepare($sql);
         $query->execute();
@@ -327,7 +331,7 @@
         require_once "db.php";
         $sql = 'SELECT r.nrRoom, r.floor, r.sleeps, t.name as name
                 FROM room r
-                INNER JOIN type t 
+                INNER JOIN type t
                 ON r.idType = t.idType
                 WHERE r.isDeleted = 0;';
         $query = $db->prepare($sql);
@@ -422,7 +426,7 @@
             $query->bindValue(':date_from1', $date_from, PDO::PARAM_STR);
             $query->bindValue(':date_to1', $date_to, PDO::PARAM_STR);
             $query->execute();
-            
+
             $result = $query->fetch();
             if($result['nrOffers'] > 0) {
                 $result_obj->message = "Nie można dodać pokoju do innej oferty w tych samych datach.";
@@ -487,7 +491,7 @@
         $query->bindValue(':email', $email, PDO::PARAM_STR);
         $query->bindValue(':role_name', 'admin', PDO::PARAM_STR);
         $query->execute();
-    
+
         $result_obj->result = 'OK';
         $result_obj->message = 'Admin usunięty.';
     }
@@ -505,4 +509,27 @@
 
         $result_obj->result = 'OK';
         $result_obj->message = 'Pokój usunięty.';
+    }
+
+    function deleteSelectedOffer($result_obj) {
+        require_once "db.php";
+        $name_offer = $_POST['nameOfferToDelete'];
+
+        $sql = 'UPDATE offer o
+                SET isDeleted = 1
+                WHERE name = :name_offer
+                AND o.isDeleted =  0';
+        $query = $db->prepare($sql);
+        $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
+        $query->execute();
+
+        $sql = 'UPDATE room_offer
+                SET isDeleted = 1
+                WHERE idOffer = (SELECT idOffer FROM offer WHERE name = :name_offer)';
+        $query = $db->prepare($sql);
+        $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
+        $query->execute();
+
+        $result_obj->result = 'OK';
+        $result_obj->message = 'Oferta została usunięta.';
     }

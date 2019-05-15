@@ -157,8 +157,7 @@ export function fillBookingTable(values) {
         newRow.insertCell(6).appendChild(document.createTextNode(v.date_from));
         newRow.insertCell(7).appendChild(document.createTextNode(v.date_to));
 
-        var payment = date_diff_indays(v.date_from, v.date_to);
-        newRow.insertCell(8).appendChild(document.createTextNode(payment * v.price));
+        newRow.insertCell(8).appendChild(document.createTextNode(v.price));
 
         var option = document.createElement('option')
         option.innerHTML = idx++;
@@ -292,7 +291,7 @@ function fillOffersCombobox(values) {
 
 export function requestAllOffersName() {
     var data = {
-        name: 'offersNam'
+        name: 'offersName'
     };
     function callback(response) {
         if (response.result === 'OK') {
@@ -305,12 +304,22 @@ export function requestAllOffersName() {
 }
 
 function fillOffersNameCombobox(values) {
+    //dodaj pokoj do oferty
     var select = document.getElementById("offers");
     select.innerHTML = '';
     for (var v of values) {
         var option = document.createElement('option')
         option.innerHTML = v.name;
         select.appendChild(option);
+    }
+
+    //usun oferte
+    var selectNameForDelete = document.getElementById("selectedOffer");
+    selectNameForDelete.innerHTML = '';
+    for (var v of values) {
+        var optionName = document.createElement('option')
+        optionName.innerHTML = v.name;
+        selectNameForDelete.appendChild(optionName);
     }
 }
 
@@ -328,6 +337,35 @@ export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
         }
     }
     requestServer(url, data, callback);
+}
+
+export function deleteOffer(nameOffer, id) {
+    var data = {
+        nameOfferToDelete: nameOffer
+    };
+    function callback(response) {
+        $('#deleteOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteOfferFromTable(nameOffer, id);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteOfferFromTable(nameOffer, id) {
+    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
+    for (let i = 0; i < tableRef.rows.length; ++i) {
+        if (tableRef.rows[i].cells[1].innerHTML === nameOffer) {
+            tableRef.deleteRow(i)
+            i--
+        }
+    }
+
+    var select = document.getElementById("selectedOffer");
+    select.remove(id);
+
+    var selectNameOffer = document.getElementById("offers");
+    selectNameOffer.remove(id);
 }
 /*** END TAB-4 ***/
 
