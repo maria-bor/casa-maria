@@ -17,7 +17,6 @@ export function requestAvailability(dateFrom, dateTo, nrPersons) {
             fillAvailability(response.value, dateFrom, dateTo, nrPersons);
         } else {
             alert(response.message);
-            console.log('showUnavailable');
             showUnavailable();
         }
     }
@@ -88,8 +87,7 @@ function fillAvailability(values, dateFrom, dateTo, nrPersons) {
         button.addEventListener('click', function () {
             choosenType = document.getElementById(this.getAttribute('input-type-id')).value;
             var user = document.getElementById("logged")
-            var isUserLogged = user.dataset.islogged
-            if(isUserLogged == true) {
+            if(user.dataset.islogged == "true") {
                 requestBookingForLogged(choosenType)
             } else {
                 showReservationPopup(choosenType);
