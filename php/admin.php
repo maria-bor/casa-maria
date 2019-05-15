@@ -503,11 +503,20 @@
         require_once "db.php";
         $nr_room = $_POST['nrRoomForDelete'];
 
+        // Usunięcie z room_offer, jeżeli pokój już jest gdzieś dodany:
+        $sql = 'UPDATE room_offer
+                SET isDeleted = 1
+                WHERE idRoom IN (SELECT idRoom FROM room WHERE nrRoom = :nr_room AND isDeleted = 0)';
+        $query = $db->prepare($sql);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
+        $query->execute();
+
+        // Usunięcie pokoju:
         $sql = 'UPDATE room
                 SET isDeleted = 1
-                WHERE nrRoom = :nr_room';
+                WHERE nrRoom = :nr_room AND isDeleted = 0';
         $query = $db->prepare($sql);
-        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
+        $query->bindValue(':nr_room', $nr_room, PDO::PARAM_STR);
         $query->execute();
 
         $result_obj->result = 'OK';
@@ -528,7 +537,7 @@
 
         $sql = 'UPDATE room_offer
                 SET isDeleted = 1
-                WHERE idOffer = (SELECT idOffer FROM offer WHERE name = :name_offer)';
+                WHERE idOffer = (SELECT idOffer FROM offer WHERE name = :name_offer AND isDeleted = 0)';
         $query = $db->prepare($sql);
         $query->bindValue(':name_offer', $name_offer, PDO::PARAM_STR);
         $query->execute();
