@@ -281,23 +281,31 @@ function fillOffersNameCombobox(values) {
     //Uzupełnienie dodaj pokoj do oferty:
     var select = document.getElementById("offers");
     select.innerHTML = '';
-    for (var v of values) {
-        var option = document.createElement('option')
-        option.innerHTML = v.name;
-        select.appendChild(option);
-    }
-    fillOffersCombobox(allRooms);
+
+    // Uzupelninie usun pokoj z oferty
+    var select2 = document.getElementById("selectedOfferSignedToRoom");
+    select2.innerHTML = '';
 
     // Uzupełnienie usuń ofertę:
     var selectNameForDelete = document.getElementById("selectedOffer");
     selectNameForDelete.innerHTML = '';
+
     for (var v of values) {
+        var optionOffers = document.createElement('option')
+        optionOffers.innerHTML = v.name;
+        select.appendChild(optionOffers);
+
         var optionName = document.createElement('option')
         optionName.innerHTML = v.name;
-        selectNameForDelete.appendChild(optionName);
-    }
+        select2.appendChild(optionName);
 
+        var optionSelectedOffer = document.createElement('option')
+        optionSelectedOffer.innerHTML = v.name;
+        selectNameForDelete.appendChild(optionSelectedOffer);
+    }
+    fillOffersCombobox(allRooms);
     onAddRoomToOfferSelectChanged()
+    onRoomFromOfferSelectChanged()
 }
 
 function fillOffersCombobox(values) {
@@ -408,7 +416,55 @@ function deleteOfferFromTable(nameOffer, id) {
     var selectNameOffer = document.getElementById("offers");
     selectNameOffer.remove(id);
 
+    var selectedOfferSignedToRoom = document.getElementById("selectedOfferSignedToRoom");
+    selectedOfferSignedToRoom.remove(id);
+
     onAddRoomToOfferSelectChanged()
+}
+
+export function deleteRoomFromOffer(nrRoom, idRowRoom, offerName) {
+    var data = {
+        nrRoom: nrRoom,
+        offerName: offerName
+    };
+    function callback(response) {
+        $('#deleteRoomInOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteRoomFromOfferTable(nrRoom, offerName, idRowRoom);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteRoomFromOfferTable(nrRoom, offerName, idRowRoom) {
+    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
+    for (let i = 0; i < tableRef.rows.length; ++i) {
+        if (tableRef.rows[i].cells[1].innerHTML === offerName &&
+            tableRef.rows[i].cells[3].innerHTML === nrRoom) {
+            tableRef.deleteRow(i)
+            break
+        }
+    }
+
+    var selectedRoomInOffer = document.getElementById("selectedRoomInOffer");
+    selectedRoomInOffer.remove(idRowRoom);
+
+    onRoomFromOfferSelectChanged()
+}
+
+export function onRoomFromOfferSelectChanged() {
+    var selectOfferSignedToRoom = document.querySelector('#selectedOfferSignedToRoom');
+    var offerName = selectOfferSignedToRoom.options[selectOfferSignedToRoom.selectedIndex].value;
+
+    var selectRoomInOffer = document.querySelector('#selectedRoomInOffer');
+    selectRoomInOffer.innerHTML = '';
+    for(var i = 0; i< allOffers.length; i++) {
+        if(allOffers[i].name == offerName) {
+            var option = document.createElement('option')
+            option.innerHTML = allOffers[i].nrRoom
+            selectRoomInOffer.appendChild(option)
+        }
+    }
 }
 /*** END TAB-4 ***/
 
