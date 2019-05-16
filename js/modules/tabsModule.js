@@ -61,8 +61,8 @@ function setupTab3ClickHandler() {
 function setupTab4ClickHandler() {
     $("#tab-4").on('click', function () {
         setCookie("nameOfLastTabClicked", "#tab-4", 30);
-        requestAllOffers();
         requestAllRooms();
+        requestAllOffers();
         requestAllOffersName();
     });
 }

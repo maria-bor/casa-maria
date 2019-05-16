@@ -21,7 +21,9 @@ import {
     requestAddNewOffer,
     requestAddRoomToOffer,
     onAddRoomToOfferSelectChanged,
+    onRoomFromOfferSelectChanged,
     deleteOffer,
+    deleteRoomFromOffer,
     /*** TAB-5 ***/
     deleteAdmin
 }
@@ -325,7 +327,6 @@ $('#password-change-butt').on('click', function () {
 $('#add-room-offer').on('click', function () {
     var selectOffer = document.querySelector('#offers');
     var nameOffer = selectOffer.options[selectOffer.selectedIndex].value;
-    // var nrOffer = selectOffer.selectedIndex;
     var selectRoom = document.querySelector('#rooms');
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
     var price = document.getElementById('price').value;
@@ -383,3 +384,16 @@ $('#deleteOffer').on('click', function() {
 
 $('#offers').on('change', function() { onAddRoomToOfferSelectChanged() });
 $('#rooms').on('change', function() { onAddRoomToOfferSelectChanged() });
+
+$('#deleteRoomInOffer').on('click', function() {
+    var selectRoomInOffer = document.querySelector('#selectedRoomInOffer');
+    var nrRoom = selectRoomInOffer.options[selectRoomInOffer.selectedIndex].value;
+    var idRowRoom = selectRoomInOffer.selectedIndex;
+
+    var selectOfferSignedToRoom = document.querySelector('#selectedOfferSignedToRoom');
+    var offerName = selectOfferSignedToRoom.options[selectOfferSignedToRoom.selectedIndex].value;
+
+    deleteRoomFromOffer(nrRoom, idRowRoom, offerName);
+});
+
+$('#selectedOfferSignedToRoom').on('change', function() { onRoomFromOfferSelectChanged() });

@@ -219,8 +219,9 @@ export function requestAddNewOffer(name, from, to) {
     requestServer(url, data, callback);
 }
 
-var allOffers = null;
+var allOffers = null
 export function requestAllOffers() {
+    allOffers = null
     var data = {
         offer: 'all'
     };
@@ -228,6 +229,12 @@ export function requestAllOffers() {
         if (response.result === 'OK') {
             allOffers = response.value;
             fillOffersTable(allOffers);
+            if (isComboboxesFilled != undefined &&
+                isComboboxesFilled == false) {
+                isComboboxesFilled = true
+                onAddRoomToOfferSelectChanged()
+                onRoomFromOfferSelectChanged()
+            }
         } else {
             alert(response.message);
         }
@@ -277,30 +284,46 @@ export function requestAllOffersName() {
     requestServer(url, data, callback);
 }
 
+var isComboboxesFilled = undefined
 function fillOffersNameCombobox(values) {
     //Uzupełnienie dodaj pokoj do oferty:
     var select = document.getElementById("offers");
     select.innerHTML = '';
-    for (var v of values) {
-        var option = document.createElement('option')
-        option.innerHTML = v.name;
-        select.appendChild(option);
-    }
-    fillOffersCombobox(allRooms);
+
+    // Uzupelninie usun pokoj z oferty
+    var select2 = document.getElementById("selectedOfferSignedToRoom");
+    select2.innerHTML = '';
 
     // Uzupełnienie usuń ofertę:
     var selectNameForDelete = document.getElementById("selectedOffer");
     selectNameForDelete.innerHTML = '';
+
     for (var v of values) {
+        var optionOffers = document.createElement('option')
+        optionOffers.innerHTML = v.name;
+        select.appendChild(optionOffers);
+
         var optionName = document.createElement('option')
         optionName.innerHTML = v.name;
-        selectNameForDelete.appendChild(optionName);
-    }
+        select2.appendChild(optionName);
 
-    onAddRoomToOfferSelectChanged()
+        var optionSelectedOffer = document.createElement('option')
+        optionSelectedOffer.innerHTML = v.name;
+        selectNameForDelete.appendChild(optionSelectedOffer);
+    }
+    fillRoomsCombobox(allRooms);
+
+    if (allOffers != null) {
+        isComboboxesFilled = true
+        onAddRoomToOfferSelectChanged()
+        onRoomFromOfferSelectChanged()
+    }
+    else {
+        isComboboxesFilled = false
+    }
 }
 
-function fillOffersCombobox(values) {
+function fillRoomsCombobox(values) {
     var select = document.getElementById("rooms");
     select.innerHTML = '';
     for (var v of values) {
@@ -330,15 +353,18 @@ export function onAddRoomToOfferSelectChanged() {
         select = document.getElementById("offers")
         var price = document.getElementById("price")
         var offerName = select.options[select.selectedIndex].text
-        for (var o of allOffers) {
+
+        var roomPrice = checkPriceRoomInOffer(offerName, nrRoom)
+        if (roomPrice != -1) { // jeśli pokój już jest w ofercie
+            price.value = roomPrice
+            price.disabled = true
+            $('#add-room-offer').prop('disabled', true)
+            return
+        }
+
+        for (var o of allOffers) { // jeśli nie ma to szukamy po typie i liczbie osób
             if (o.name != offerName) {
                 continue
-            }
-            if (o.nrRoom == nrRoom) { // pokój jest już w ofercie
-                price.value = ''
-                price.disabled = true
-                $('#add-room-offer').prop('disabled', true)
-                return
             }
             if (compareRooms(roomIdx, o.nrRoom)) {
                 price.value = o.price
@@ -351,6 +377,15 @@ export function onAddRoomToOfferSelectChanged() {
         price.disabled = false
         $('#add-room-offer').prop('disabled', false)
     }
+}
+
+function checkPriceRoomInOffer(offerName, nrRoom) {
+    for (var o of allOffers) {
+        if (o.name == offerName && o.nrRoom == nrRoom) {
+            return o.price
+        }
+    }
+    return -1
 }
 
 function compareRooms(roomIdx, nrRoom) {
@@ -374,6 +409,7 @@ export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
     function callback(response) {
         $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
+            isComboboxesFilled = false
             requestAllOffers();
         }
     }
@@ -408,7 +444,56 @@ function deleteOfferFromTable(nameOffer, id) {
     var selectNameOffer = document.getElementById("offers");
     selectNameOffer.remove(id);
 
+    var selectedOfferSignedToRoom = document.getElementById("selectedOfferSignedToRoom");
+    selectedOfferSignedToRoom.remove(id);
+
     onAddRoomToOfferSelectChanged()
+}
+
+export function deleteRoomFromOffer(nrRoom, idRowRoom, offerName) {
+    var data = {
+        nrRoom: nrRoom,
+        offerName: offerName
+    };
+    function callback(response) {
+        $('#deleteRoomInOfferInfo').text(response.message);
+        if (response.result === 'OK') {
+            deleteRoomFromOfferTable(nrRoom, offerName, idRowRoom);
+        }
+    }
+    requestServer(url, data, callback);
+}
+
+function deleteRoomFromOfferTable(nrRoom, offerName, idRowRoom) {
+    var tableRef = document.getElementById("tableOferty").getElementsByTagName('tbody')[0];
+    for (let i = 0; i < tableRef.rows.length; ++i) {
+        if (tableRef.rows[i].cells[1].innerHTML === offerName &&
+            tableRef.rows[i].cells[3].innerHTML === nrRoom) {
+            tableRef.deleteRow(i)
+            allOffers.splice(i, 1)
+            break
+        }
+    }
+
+    var selectedRoomInOffer = document.getElementById("selectedRoomInOffer");
+    selectedRoomInOffer.remove(idRowRoom);
+
+    onRoomFromOfferSelectChanged()
+}
+
+export function onRoomFromOfferSelectChanged() {
+    var selectOfferSignedToRoom = document.querySelector('#selectedOfferSignedToRoom');
+    var offerName = selectOfferSignedToRoom.options[selectOfferSignedToRoom.selectedIndex].value;
+
+    var selectRoomInOffer = document.querySelector('#selectedRoomInOffer');
+    selectRoomInOffer.innerHTML = '';
+    for(var i = 0; i< allOffers.length; i++) {
+        if(allOffers[i].name == offerName) {
+            var option = document.createElement('option')
+            option.innerHTML = allOffers[i].nrRoom
+            selectRoomInOffer.appendChild(option)
+        }
+    }
 }
 /*** END TAB-4 ***/
 
