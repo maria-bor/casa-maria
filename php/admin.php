@@ -442,11 +442,13 @@
                     VALUES (
                         :id_offer,
                         (SELECT idRoom FROM room WHERE nrRoom = :nr_room AND isDeleted = 0),
-                        :price);';
+                        :price)
+                    ON DUPLICATE KEY UPDATE isDeleted = 0, price = :price1;';
             $query = $db->prepare($sql);
             $query->bindValue(':id_offer', $id_offer, PDO::PARAM_INT);
             $query->bindValue(':nr_room', $nr_room, PDO::PARAM_INT);
             $query->bindValue(':price', $price, PDO::PARAM_INT);
+            $query->bindValue(':price1', $price, PDO::PARAM_INT);
             $query->execute();
 
             $result_obj->result = 'OK';

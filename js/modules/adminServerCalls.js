@@ -219,8 +219,9 @@ export function requestAddNewOffer(name, from, to) {
     requestServer(url, data, callback);
 }
 
-var allOffers = null;
+var allOffers = null
 export function requestAllOffers() {
+    allOffers = null
     var data = {
         offer: 'all'
     };
@@ -228,6 +229,12 @@ export function requestAllOffers() {
         if (response.result === 'OK') {
             allOffers = response.value;
             fillOffersTable(allOffers);
+            if (isComboboxesFilled != undefined &&
+                isComboboxesFilled == false) {
+                isComboboxesFilled = true
+                onAddRoomToOfferSelectChanged()
+                onRoomFromOfferSelectChanged()
+            }
         } else {
             alert(response.message);
         }
@@ -277,6 +284,7 @@ export function requestAllOffersName() {
     requestServer(url, data, callback);
 }
 
+var isComboboxesFilled = undefined
 function fillOffersNameCombobox(values) {
     //Uzupełnienie dodaj pokoj do oferty:
     var select = document.getElementById("offers");
@@ -304,8 +312,15 @@ function fillOffersNameCombobox(values) {
         selectNameForDelete.appendChild(optionSelectedOffer);
     }
     fillRoomsCombobox(allRooms);
-    onAddRoomToOfferSelectChanged()
-    onRoomFromOfferSelectChanged()
+
+    if (allOffers != null) {
+        isComboboxesFilled = true
+        onAddRoomToOfferSelectChanged()
+        onRoomFromOfferSelectChanged()
+    }
+    else {
+        isComboboxesFilled = false
+    }
 }
 
 function fillRoomsCombobox(values) {
@@ -382,6 +397,7 @@ export function requestAddRoomToOffer(nameOffer, nrRoom, price) {
     function callback(response) {
         $('#errorPrice').text(response.message);
         if (response.result === 'OK') {
+            isComboboxesFilled = false
             requestAllOffers();
         }
     }
@@ -442,6 +458,7 @@ function deleteRoomFromOfferTable(nrRoom, offerName, idRowRoom) {
         if (tableRef.rows[i].cells[1].innerHTML === offerName &&
             tableRef.rows[i].cells[3].innerHTML === nrRoom) {
             tableRef.deleteRow(i)
+            allOffers.splice(i, 1)
             break
         }
     }

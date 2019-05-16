@@ -327,7 +327,6 @@ $('#password-change-butt').on('click', function () {
 $('#add-room-offer').on('click', function () {
     var selectOffer = document.querySelector('#offers');
     var nameOffer = selectOffer.options[selectOffer.selectedIndex].value;
-    // var nrOffer = selectOffer.selectedIndex;
     var selectRoom = document.querySelector('#rooms');
     var nrRoom = selectRoom.options[selectRoom.selectedIndex].value;
     var price = document.getElementById('price').value;
