@@ -353,15 +353,18 @@ export function onAddRoomToOfferSelectChanged() {
         select = document.getElementById("offers")
         var price = document.getElementById("price")
         var offerName = select.options[select.selectedIndex].text
-        for (var o of allOffers) {
+
+        var roomPrice = checkPriceRoomInOffer(offerName, nrRoom)
+        if (roomPrice != -1) { // jeśli pokój już jest w ofercie
+            price.value = roomPrice
+            price.disabled = true
+            $('#add-room-offer').prop('disabled', true)
+            return
+        }
+
+        for (var o of allOffers) { // jeśli nie ma to szukamy po typie i liczbie osób
             if (o.name != offerName) {
                 continue
-            }
-            if (o.nrRoom == nrRoom) { // pokój jest już w ofercie
-                price.value = ''
-                price.disabled = true
-                $('#add-room-offer').prop('disabled', true)
-                return
             }
             if (compareRooms(roomIdx, o.nrRoom)) {
                 price.value = o.price
@@ -374,6 +377,15 @@ export function onAddRoomToOfferSelectChanged() {
         price.disabled = false
         $('#add-room-offer').prop('disabled', false)
     }
+}
+
+function checkPriceRoomInOffer(offerName, nrRoom) {
+    for (var o of allOffers) {
+        if (o.name == offerName && o.nrRoom == nrRoom) {
+            return o.price
+        }
+    }
+    return -1
 }
 
 function compareRooms(roomIdx, nrRoom) {
