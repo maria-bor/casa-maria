@@ -395,7 +395,7 @@
         $price = $_POST['price'];
 
         try {
-            // Pobranie informacji o ofercie, do której chcemy dod
+            // Pobranie informacji o ofercie, do której chcemy dodać pokój
             $sql = 'SELECT idOffer, date_from, date_to
                     FROM offer o
                     WHERE o.name = :name_offer
