@@ -303,12 +303,12 @@ function fillOffersNameCombobox(values) {
         optionSelectedOffer.innerHTML = v.name;
         selectNameForDelete.appendChild(optionSelectedOffer);
     }
-    fillOffersCombobox(allRooms);
+    fillRoomsCombobox(allRooms);
     onAddRoomToOfferSelectChanged()
     onRoomFromOfferSelectChanged()
 }
 
-function fillOffersCombobox(values) {
+function fillRoomsCombobox(values) {
     var select = document.getElementById("rooms");
     select.innerHTML = '';
     for (var v of values) {
