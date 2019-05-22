@@ -466,7 +466,7 @@
         $date_to = $_POST['dateTo'];
         $sql = 'UPDATE booking
                 SET isDeleted = 1
-                WHERE idRoom = (SELECT idRoom FROM room WHERE nrRoom = :nr_room)
+                WHERE idRoom = (SELECT idRoom FROM room WHERE nrRoom = :nr_room AND isDeleted = 0)
                 AND date_from = :date_from
                 AND date_to = :date_to';
         $query = $db->prepare($sql);
